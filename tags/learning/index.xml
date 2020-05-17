@@ -2,31 +2,31 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Learning on Shrayas</title>
-    <link>http://shrayasr.github.io/tags/learning/</link>
+    <link>https://shrayasr.github.io/tags/learning/</link>
     <description>Recent content in Learning on Shrayas</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 30 Aug 2015 10:51:00 +0530</lastBuildDate>
     
-	<atom:link href="http://shrayasr.github.io/tags/learning/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://shrayasr.github.io/tags/learning/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Dynamic prepared statements in Clojure</title>
-      <link>http://shrayasr.github.io/posts/dynamic-prepared-statements-in-clojure/</link>
+      <link>https://shrayasr.github.io/posts/dynamic-prepared-statements-in-clojure/</link>
       <pubDate>Sun, 30 Aug 2015 10:51:00 +0530</pubDate>
       
-      <guid>http://shrayasr.github.io/posts/dynamic-prepared-statements-in-clojure/</guid>
+      <guid>https://shrayasr.github.io/posts/dynamic-prepared-statements-in-clojure/</guid>
       <description>So just recently, at Logic Soft, we put our first (small) clojure project into production. It was a small library management system that was custom developed for one of our existing clients.
 At Logic Soft, we are majorly a .NET house but we&amp;rsquo;re beginning to experiment with different platforms and technologies and felt that this was a small enough project to give clojure a shot (alongside other experiments we conducted with it).</description>
     </item>
     
     <item>
       <title>A day with Clojure</title>
-      <link>http://shrayasr.github.io/posts/a-day-with-clojure/</link>
+      <link>https://shrayasr.github.io/posts/a-day-with-clojure/</link>
       <pubDate>Mon, 19 Jan 2015 00:15:00 +0530</pubDate>
       
-      <guid>http://shrayasr.github.io/posts/a-day-with-clojure/</guid>
+      <guid>https://shrayasr.github.io/posts/a-day-with-clojure/</guid>
       <description>It has been a hectic month for me at Logic Soft. I&amp;rsquo;m working on quite a few design related activities for the upcoming book fairs and other internal office work. In doing all of this, most of my programming related activities have been put on hold.
 This was ok at first, but then it kind of started getting to me. I really enjoy design but then I find it less satisfying than writing programs.</description>
     </item>

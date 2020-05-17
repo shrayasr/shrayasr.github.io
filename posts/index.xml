@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Shrayas</title>
+    <link>http://shrayasr.github.io/posts/</link>
+    <description>Recent content in Posts on Shrayas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 24 Sep 2018 09:45:00 +0530</lastBuildDate>
+    
+	<atom:link href="http://shrayasr.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>On Running; The Full Marathon experience</title>
+      <link>http://shrayasr.github.io/posts/on-running-the-fm-experience/</link>
+      <pubDate>Mon, 24 Sep 2018 09:45:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/on-running-the-fm-experience/</guid>
+      <description>For context, I&amp;rsquo;ve been running since a good 4 years now.
+ 4 years of putting 1 foot ahead of another. 4 years of braving through pain. 4 years of surviving injuries. 4 years of meeting wonderful people. 4 years of time to reflect.  After doing 4 years of running, I thought I had it under my belt. I thought that I had &amp;ldquo;figured out&amp;rdquo; running. After having run so many kilometers with so many people across so many cities and clocking so many hours, I was under the impression that I was &amp;ldquo;comfortable&amp;rdquo; with the sport of running.</description>
+    </item>
+    
+    <item>
+      <title>Generate a quick AWS dashboard using LINQPad</title>
+      <link>http://shrayasr.github.io/posts/generate-a-quick-aws-dashboard-using-linqpad/</link>
+      <pubDate>Mon, 31 Jul 2017 22:30:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/generate-a-quick-aws-dashboard-using-linqpad/</guid>
+      <description>Context Logic Soft&amp;rsquo;s mainline product &amp;ndash; WINBDS is an on premise software i.e. we install it at the client location and we support them remotely.
+Since a while now,this has been seeing a change. For small installations, usually an instance on the cloud works out cheaper and better. So we&amp;rsquo;ve begun suggesting people to move to AWS when the installation is small enough.
+Turns out, if we&amp;rsquo;re diligent about turning the instances off when we don&amp;rsquo;t need them, a windows box on AWS is actually pretty affordable.</description>
+    </item>
+    
+    <item>
+      <title>Express solutions elegantly using your programming language</title>
+      <link>http://shrayasr.github.io/posts/express-solutions-elegantly-using-your-prog-lang/</link>
+      <pubDate>Sun, 16 Jul 2017 15:00:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/express-solutions-elegantly-using-your-prog-lang/</guid>
+      <description>Introduction The post features a case study of a real life problem and the C# programming language. It explains how we went about trying to best express the solution within the bounds of the C# language.
+Although we use the C# programming language here,the ideas shared in this post aren&amp;rsquo;t specific to it and can be applied to any high level language you are working with.
+Problem Recently, for a customer requirement we had to work with a document that has both metadata and data.</description>
+    </item>
+    
+    <item>
+      <title>On Running</title>
+      <link>http://shrayasr.github.io/posts/on-running/</link>
+      <pubDate>Sat, 19 Mar 2016 18:58:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/on-running/</guid>
+      <description>Background Circa 2013 - 2014, I was quite the couch potato. Sure I had played a bit of Basket ball in school and got my everyday quota of India&amp;rsquo;s favourite game - gully cricket, but I wasn&amp;rsquo;t ever an active person.
+That is, until The Himalayas happened.
+Soon after my first trek, Raghu and I decided one evening that we&amp;rsquo;d just take a bus to some part of town. Our rendezvous point was about 1 Kilometer from where I stayed at that point.</description>
+    </item>
+    
+    <item>
+      <title>Simple NGINX hosting</title>
+      <link>http://shrayasr.github.io/posts/simple-nginx-hosting/</link>
+      <pubDate>Fri, 11 Dec 2015 22:40:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/simple-nginx-hosting/</guid>
+      <description>Start by installing NGINX. It comes with a decent set of defaults that are enough to get started. A quick set of things to remember (on an Ubuntu box) are:
+ /etc/NGINX/sites-enabled/ holds configuration for different sites behind the reverse proxy Logs (access &amp;amp; error) can be found in /var/log/NGINX/ The main NGINX configuration can be found at /etc/NGINX/NGINX.conf  Before we start adding in the NGINX configuration. Let us make http://foobar redirect to our computer.</description>
+    </item>
+    
+    <item>
+      <title>Hiccups with Hosting ASP .NET 5 apps on Linux (RC1)</title>
+      <link>http://shrayasr.github.io/posts/aspnet5-hosting-hiccups-nginx-kestrel/</link>
+      <pubDate>Fri, 11 Dec 2015 20:45:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/aspnet5-hosting-hiccups-nginx-kestrel/</guid>
+      <description>Background After the recent dance with multiple Mono versions, the next step was to actually host the application.
+Even though the app is largely still unfinished, I wanted to give it a shot on the staging instance to get a feel for things.
+The general way to host apps on a Linux box is to have a NGINX reverse proxy in front, listening to different names on port 80 and to proxy the requests to internally running servers.</description>
+    </item>
+    
+    <item>
+      <title>ASP .NET 5, Npgsql, Linux &amp; Mono 4.2</title>
+      <link>http://shrayasr.github.io/posts/asp-net-5-npgsql-linux-mono-4-2/</link>
+      <pubDate>Wed, 09 Dec 2015 21:30:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/asp-net-5-npgsql-linux-mono-4-2/</guid>
+      <description>Background Logic Soft&amp;lsquo;s primary application is a Windows based application written in C# using Windows.Forms. So when Microsoft announced ASP .NET 5 RC1, needless to say, we were quite excited.
+We picked it up and started our experimentation - writing smaller applications and porting some of our side projects to the CoreCLR platform. As long as we didn&amp;rsquo;t go to the place that needed WIN32 APIs, it worked seamlessly.
+With a small sum of experience, we took up the task of writing one of our internal dashboards with it.</description>
+    </item>
+    
+    <item>
+      <title>Dynamic prepared statements in Clojure</title>
+      <link>http://shrayasr.github.io/posts/dynamic-prepared-statements-in-clojure/</link>
+      <pubDate>Sun, 30 Aug 2015 10:51:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/dynamic-prepared-statements-in-clojure/</guid>
+      <description>So just recently, at Logic Soft, we put our first (small) clojure project into production. It was a small library management system that was custom developed for one of our existing clients.
+At Logic Soft, we are majorly a .NET house but we&amp;rsquo;re beginning to experiment with different platforms and technologies and felt that this was a small enough project to give clojure a shot (alongside other experiments we conducted with it).</description>
+    </item>
+    
+    <item>
+      <title>A day with Clojure</title>
+      <link>http://shrayasr.github.io/posts/a-day-with-clojure/</link>
+      <pubDate>Mon, 19 Jan 2015 00:15:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/a-day-with-clojure/</guid>
+      <description>It has been a hectic month for me at Logic Soft. I&amp;rsquo;m working on quite a few design related activities for the upcoming book fairs and other internal office work. In doing all of this, most of my programming related activities have been put on hold.
+This was ok at first, but then it kind of started getting to me. I really enjoy design but then I find it less satisfying than writing programs.</description>
+    </item>
+    
+    <item>
+      <title>On Education</title>
+      <link>http://shrayasr.github.io/posts/on-education/</link>
+      <pubDate>Fri, 17 Oct 2014 18:10:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/on-education/</guid>
+      <description>Education has always eluded me. Don&amp;rsquo;t get me wrong, I really enjoy learning, unlearning and relearning. I just think that the &amp;ldquo;education&amp;rdquo; I&amp;rsquo;ve had, didn&amp;rsquo;t teach me this.
+I&amp;rsquo;ve never really been a top achiever. I&amp;rsquo;ve never really been the one whose parents could show him off saying he&amp;rsquo;s achieved top grades in class. I&amp;rsquo;ve never really been the one getting into &amp;ldquo;enrichment&amp;rdquo; classes. I&amp;rsquo;ve never been the one who revises before exams; heck I&amp;rsquo;ve never finished studying my portions before the exams.</description>
+    </item>
+    
+    <item>
+      <title>The Himalayas</title>
+      <link>http://shrayasr.github.io/posts/the-himalayas/</link>
+      <pubDate>Mon, 25 Aug 2014 16:47:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/the-himalayas/</guid>
+      <description>In February this year, I visited the holy shrine of Vaishnodevi in Jammu. It is about a 12 KM walk from the base camp - Katra till the holy shrine and I enjoyed that walk more than the darshan itself. The idea of a himalayan trek has been with me for really long but when I looked at the nature surrounding me during that trek, I decided i’d go to the Himalayas this year; I decided i’d do the trek.</description>
+    </item>
+    
+    <item>
+      <title>Reality, perspective and God -II</title>
+      <link>http://shrayasr.github.io/posts/reality-perspective-and-god-ii/</link>
+      <pubDate>Sat, 20 Apr 2013 14:57:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/reality-perspective-and-god-ii/</guid>
+      <description>Some people see him in deities. Some people see him as a spiritual being. Some people believe he was a human living among us.
+Me, I dont believe in religion. Don&amp;rsquo;t get me wrong. I believe in a god. I believe in a power but im not a part of those groups that separate this being into different sects demarked by religion. When we are born, inside our mothers womb .</description>
+    </item>
+    
+    <item>
+      <title>MMXII</title>
+      <link>http://shrayasr.github.io/posts/mmxii/</link>
+      <pubDate>Mon, 31 Dec 2012 12:17:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/mmxii/</guid>
+      <description>Remember MMXL? I wrote it 2 years ago. If you dont remember , click here.
+Anyway here goes,
+2 years have passed since i last wrote about who i am / what i do. Has anything really changed? Have things become better? Have things become worse? Whatsup?
+I think over the past 2 years i&amp;rsquo;ve learnt more about what the world is about and how people are but more importantly i think i&amp;rsquo;ve learnt more about how i fit into this world and how i am and how people are towards me.</description>
+    </item>
+    
+    <item>
+      <title>Reality , Perspective and .. God</title>
+      <link>http://shrayasr.github.io/posts/reality-perspective-and-god/</link>
+      <pubDate>Wed, 08 Aug 2012 20:03:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/reality-perspective-and-god/</guid>
+      <description>The title indicates something very spiritual , but trust me its not . I&amp;rsquo;m not a very spiritual guy and i don&amp;rsquo;t think i will ever be.
+These 3 words have meanings associated with them . But today i&amp;rsquo;m going to try and side track you away from what you know of reality , from what you know of perspectives and what you believe in of god and give you my take on them.</description>
+    </item>
+    
+    <item>
+      <title>A Story, A Moment, A Picture.</title>
+      <link>http://shrayasr.github.io/posts/story-moment-picture/</link>
+      <pubDate>Sun, 17 Jun 2012 19:38:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/story-moment-picture/</guid>
+      <description>Its been a really long time since i wrote something .. I guess i lacked that push , i guess i was focussing on other things . But today , i got that push.
+7:25PM , was just chilling in my room taking some classes on Natural Language Processing when i got a call &amp;ldquo;Macha, I&amp;rsquo;m in Bangalore, come lets shoot&amp;rdquo;
+8:05PM , Brigade Road , i met Waseem . Its been a while since we met and shot together .</description>
+    </item>
+    
+    <item>
+      <title>The big ugly &#34;gets-work-done&#34; guy</title>
+      <link>http://shrayasr.github.io/posts/big-ugly-gets-work-done-guy/</link>
+      <pubDate>Mon, 23 May 2011 09:49:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/big-ugly-gets-work-done-guy/</guid>
+      <description>Right now, i sit in one of the most corrupt offices in the city . Which city? every single one of them in India .
+Let me tell you 1 simple fact about how stupid i am . I lost my wallet , A couple of months ago . With it went woooosh my:
+ Pan Card License Landmark fellowship card .. You may ask why this is so important ?</description>
+    </item>
+    
+    <item>
+      <title>iRreplaceable.</title>
+      <link>http://shrayasr.github.io/posts/irreplaceable/</link>
+      <pubDate>Sat, 19 Feb 2011 18:28:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/irreplaceable/</guid>
+      <description>I&amp;rsquo;ve always had a secret dream. Something that iHavent shared with anyone. Something not even the closest of friends know. Thats because iThought there was still more time. But it so turns out that sometimes even though you think you have time , it is stolen right royally from your hands.
+This secret dream that iHave i&amp;rsquo;m going to share today.
+This dream is one that iHave had ever since iWas a kid.</description>
+    </item>
+    
+    <item>
+      <title>MMXL</title>
+      <link>http://shrayasr.github.io/posts/mmxl/</link>
+      <pubDate>Fri, 31 Dec 2010 15:45:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/mmxl/</guid>
+      <description>As i sit here in this room , music in my ear , distraction free editor in front of me i can feel thousands of people thanking god for a new year from tomorrow , even thousands more making resolutions and even more partying .. Yet why do i sit here ?
+For me, a new year means nothing . Its just another day . Does it mean anything ? The earth just spinning around its own axis , and just revolving around the sun - Night turning into Day , Day turning into Night .</description>
+    </item>
+    
+  </channel>
+</rss>

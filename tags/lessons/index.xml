@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>lessons on Shrayas</title>
+    <link>http://shrayasr.github.io/tags/lessons/</link>
+    <description>Recent content in lessons on Shrayas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 25 Aug 2014 16:47:00 +0530</lastBuildDate>
+    
+	<atom:link href="http://shrayasr.github.io/tags/lessons/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>The Himalayas</title>
+      <link>http://shrayasr.github.io/posts/the-himalayas/</link>
+      <pubDate>Mon, 25 Aug 2014 16:47:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/the-himalayas/</guid>
+      <description>In February this year, I visited the holy shrine of Vaishnodevi in Jammu. It is about a 12 KM walk from the base camp - Katra till the holy shrine and I enjoyed that walk more than the darshan itself. The idea of a himalayan trek has been with me for really long but when I looked at the nature surrounding me during that trek, I decided i’d go to the Himalayas this year; I decided i’d do the trek.</description>
+    </item>
+    
+    <item>
+      <title>The big ugly &#34;gets-work-done&#34; guy</title>
+      <link>http://shrayasr.github.io/posts/big-ugly-gets-work-done-guy/</link>
+      <pubDate>Mon, 23 May 2011 09:49:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/big-ugly-gets-work-done-guy/</guid>
+      <description>Right now, i sit in one of the most corrupt offices in the city . Which city? every single one of them in India .
+Let me tell you 1 simple fact about how stupid i am . I lost my wallet , A couple of months ago . With it went woooosh my:
+ Pan Card License Landmark fellowship card .. You may ask why this is so important ?</description>
+    </item>
+    
+  </channel>
+</rss>

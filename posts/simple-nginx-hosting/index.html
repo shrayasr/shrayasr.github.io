@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Simple NGINX hosting - Shrayas</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="Simple NGINX hosting" />
+<meta property="og:description" content="Start by installing NGINX. It comes with a decent set of defaults that are enough to get started. A quick set of things to remember (on an Ubuntu box) are:
+ /etc/NGINX/sites-enabled/ holds configuration for different sites behind the reverse proxy Logs (access &amp; error) can be found in /var/log/NGINX/ The main NGINX configuration can be found at /etc/NGINX/NGINX.conf  Before we start adding in the NGINX configuration. Let us make http://foobar redirect to our computer." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://shrayasr.github.io/posts/simple-nginx-hosting/" />
+<meta property="article:published_time" content="2015-12-11T22:40:00+05:30" />
+<meta property="article:modified_time" content="2015-12-11T22:40:00+05:30" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Simple NGINX hosting"/>
+<meta name="twitter:description" content="Start by installing NGINX. It comes with a decent set of defaults that are enough to get started. A quick set of things to remember (on an Ubuntu box) are:
+ /etc/NGINX/sites-enabled/ holds configuration for different sites behind the reverse proxy Logs (access &amp; error) can be found in /var/log/NGINX/ The main NGINX configuration can be found at /etc/NGINX/NGINX.conf  Before we start adding in the NGINX configuration. Let us make http://foobar redirect to our computer."/>
+<script src="http://shrayasr.github.io/js/feather.min.js"></script>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="screen" href="http://shrayasr.github.io/css/main.css" />
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://shrayasr.github.io/">Shrayas</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">Blog</a>
+		
+		<a href="/tags">Tags</a>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">Simple NGINX hosting</h1>
+			<div class="meta">Posted on Dec 11, 2015</div>
+		</div>
+		
+
+		<section class="body">
+			<p>Start by <a href="https://www.NGINX.com/resources/wiki/start/topics/tutorials/install/">installing
+NGINX</a>.
+It comes with a decent set of defaults that are enough to get started. A
+quick set of things to remember (on an Ubuntu box) are:</p>
+<ul>
+<li><code>/etc/NGINX/sites-enabled/</code> holds configuration for different sites behind
+the reverse proxy</li>
+<li>Logs (access &amp; error) can be found in <code>/var/log/NGINX/</code></li>
+<li>The main NGINX configuration can be found at <code>/etc/NGINX/NGINX.conf</code></li>
+</ul>
+<p>Before we start adding in the NGINX configuration. Let us make http://foobar
+redirect to our computer. This helps because we&rsquo;re using a name instead of IP
+as production will be.</p>
+<p>The <strong>hosts</strong> file can be used to map a IP to a name. We&rsquo;ll use this file to
+map <code>foobar</code> to <code>localhost</code>. On Ubuntu, this file is found at <code>/etc/hosts</code>.
+Edit this file and include the following line</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">127.0.0.1   foobar
+</code></pre></div><p>To test if the hosts file works, issue this command <code>ping foobar</code> and you
+should see something like</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">&gt; ping foobar
+PING foobar (127.0.0.1) 56(84) bytes of data.
+64 bytes from localhost (127.0.0.1): icmp_seq=1 ttl=64 time=0.016 ms
+64 bytes from localhost (127.0.0.1): icmp_seq=4 ttl=64 time=0.027 ms
+</code></pre></div><p>As you see, localhost is replying back. Which is your own system. Great. Let&rsquo;s
+move on.</p>
+<p>Create a new file under <code>/etc/NGINX/sites-enabled</code> with the name of your
+application. Since we mapped <code>foobar</code> in the hosts file, we&rsquo;ll use <code>foobar</code>
+here as well.</p>
+<p>Edit <code>/etc/NGINX/sites-enabled/foobar</code> and add the following lines in:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">server {
+  listen 80;
+  server_name foobar;
+
+  location / {
+    proxy_pass http://localhost:5000;
+  }
+}
+</code></pre></div><p>This very simply tells NGINX to <strong>listen</strong> on port <strong>80</strong> to any requests that
+come in with the host <strong>foobar</strong>. Among those requests, anything that
+matches the location <strong><code>/</code></strong> (which is everything) should be forwarded to
+<strong><code>http://localhost:5000</code></strong>.</p>
+<p>With this, any application that is listening at port <code>5000</code> on localhost will
+now receive the request and can respond as usual.</p>
+<p>NGINX will forward the response back to where it got the request from.</p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/nginx">Nginx</a></li>
+					
+					<li><a href="/tags/linux">Linux</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/shrayasr" title="GitHub"><i data-feather="github"></i></a>|<a class="soc" href="https://twitter.com/shrayasr" title="Twitter"><i data-feather="twitter"></i></a>|⚡️
+	2020  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script>
+
+</div>
+    </body>
+</html>

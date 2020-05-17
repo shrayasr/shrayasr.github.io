@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Dynamic prepared statements in Clojure - Shrayas</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="Dynamic prepared statements in Clojure" />
+<meta property="og:description" content="So just recently, at Logic Soft, we put our first (small) clojure project into production. It was a small library management system that was custom developed for one of our existing clients.
+At Logic Soft, we are majorly a .NET house but we&rsquo;re beginning to experiment with different platforms and technologies and felt that this was a small enough project to give clojure a shot (alongside other experiments we conducted with it)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://shrayasr.github.io/posts/dynamic-prepared-statements-in-clojure/" />
+<meta property="article:published_time" content="2015-08-30T10:51:00+05:30" />
+<meta property="article:modified_time" content="2015-08-30T10:51:00+05:30" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Dynamic prepared statements in Clojure"/>
+<meta name="twitter:description" content="So just recently, at Logic Soft, we put our first (small) clojure project into production. It was a small library management system that was custom developed for one of our existing clients.
+At Logic Soft, we are majorly a .NET house but we&rsquo;re beginning to experiment with different platforms and technologies and felt that this was a small enough project to give clojure a shot (alongside other experiments we conducted with it)."/>
+<script src="http://shrayasr.github.io/js/feather.min.js"></script>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="screen" href="http://shrayasr.github.io/css/main.css" />
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://shrayasr.github.io/">Shrayas</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">Blog</a>
+		
+		<a href="/tags">Tags</a>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">Dynamic prepared statements in Clojure</h1>
+			<div class="meta">Posted on Aug 30, 2015</div>
+		</div>
+		
+
+		<section class="body">
+			<p>So just recently, at <a href="http://www.logicsoft.co.in">Logic Soft</a>, we put our first
+(small) clojure project into production. It was a small library management
+system that was custom developed for one of our existing clients.</p>
+<p>At Logic Soft, we are majorly a .NET house but we&rsquo;re beginning to experiment
+with different platforms and technologies and felt that this was a small enough
+project to give clojure a shot (alongside other experiments we conducted with
+it).</p>
+<p>This is our first time writing clojure code (at all) so the code is quite naive
+and very imperative in nature. Because clojure natively enforces immutability,
+that was something that we got for free with the choice of language itself.</p>
+<p>One of the challenges we faced was to dynamically create prepared statements to
+query the DB. The requirement for this came from having to generate reports in
+the app with a variety of inputs. We didn&rsquo;t want to just append everything into
+a single query string since that is a huge risk. Prepared statements are the
+way to go.</p>
+<p>Also, we just went with using plain old <code>clojure.java.jdbc</code> without any DSLs.
+We made the decision to use as less libraries as possible and stick to the
+absolute essentials writing the major chunk of code ourselves for the sake of
+experience.</p>
+<hr>
+<p><strong>Disclaimer:</strong> Since this is our first project and my first time as well
+writing anything <em>for</em> production in clojure so there might be a <strong>lot</strong> of
+mistakes. I am always looking to learn more so please feel free to write in /
+tweet me with any constructive criticism and feedback.</p>
+<p>Also this post is <em>long</em> because it has a lot of code in it.</p>
+<hr>
+<p>Today I&rsquo;d like to share how we went about constructing these dynamic prepared
+statements in clojure.</p>
+<h3 id="dependencies">Dependencies</h3>
+<p>I totally recommend the <a href="https://github.com/rkneufeld/lein-try">lein-try</a>
+plugin by <a href="http://www.rkn.io/">Ryan Neufeld</a> to quickly try stuff out in the
+REPL before using it in the project itself.</p>
+<p>These are my dependencies both in <code>lein-try</code> format for you to throw into the
+command line or in <code>project.clj</code> format.</p>
+<h4 id="lein-try">lein-try</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">$ lein try org.clojure/java.jdbc &#34;0.3.0&#34; org.postgresql/postgresql &#34;9.2-1003-jdbc4&#34;
+</code></pre></div><h4 id="projectclj">project.clj</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+:dependencies [;...
+               [org.clojure/java.jdbc &#34;0.3.0&#34;]
+               [org.postgresql/postgresql &#34;9.2-1003-jdbc4&#34;]]
+</code></pre></div><h3 id="querying">Querying</h3>
+<p>Issuing queries on to a db with <code>clojure.java.jdbc</code> is really super simple.
+Let us start off by <code>require</code>ing the <code>clojure.java.jdbc</code> namespace in the REPL</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(require &#39;[clojure.java.jdbc :as j])
+</code></pre></div><p>A <code>map</code> is used to define the connection parameters.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(def conn {:classname &#34;org.postgresql.Driver&#34;
+           :subprotocol &#34;postgresql&#34;
+           :subname &#34;//localhost:5432/DB&#34;
+           :user &#34;postgres&#34;
+           :password &#34;postgres&#34;})
+</code></pre></div><p>With that defined, we can fire a query to get a list of authors from the DB:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(j/query conn
+         [&#34;select id, trim(name) as name from author order by id&#34;])
+</code></pre></div><p>To fetch a <em>particular</em> author, we use <code>?</code> in the query followed by the
+parameter in the vector we pass to the <code>query</code> method:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(j/query db/conn
+         [&#34;select id, trim(name) as name from author where id = ?&#34; 1])
+</code></pre></div><p>To insert a new author:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(j/insert! conn
+           :author
+           {:name name}))
+</code></pre></div><p>You can find a lot more great documentation for <code>clojure.java.jdbc</code> over on the
+<a href="http://clojure-doc.org/articles/ecosystem/java_jdbc/home.html">API Reference</a>
+or on the <a href="http://clojure-doc.org/articles/ecosystem/java_jdbc/home.html">community driven documentation
+site</a></p>
+<h3 id="understanding-the-case-at-hand">Understanding the case at hand</h3>
+<p>Let us consider a report that allows us to filter out the books based on the
+author, the publisher and parts of the title itself. The base query to get the
+columns is quite simple for this:</p>
+<p><strong>Note:</strong> let us for the sake of not diverging from the topic, not discuss the
+<em>reasoning</em> behind the schema</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::sql
+select  i.isbn, 
+        i.title. 
+        a.name as author, 
+        p.name as publisher
+
+from item as i
+
+inner join author as a 
+  on i.author_id = a.id
+
+inner join publisher as p 
+  on i.publisher_id = p.id
+
+where i.type = 1
+</code></pre></div><p>If an Author is provided, the query needs to be appended with</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::sql
+and a.id = 1
+</code></pre></div><p>If a Publisher is provided, the query needs to be appended with</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::sql
+and p.id = 2
+</code></pre></div><p>If parts of a title are provided, say <strong>Art</strong> and <strong>Programming</strong>, then the
+query needs to be appended with</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::sql
+and upper(i.title) like &#39;%ART%&#39; and upper(i.title) like &#39;%PROGRAMMING%&#39;
+</code></pre></div><h3 id="preparing-the-prepared-statement">Preparing the Prepared Statement</h3>
+<p>We now know that for substitution, we just need to have <code>?</code> in the query string
+and pass in the arguments appropriately. So considering all the filter are
+applied as in the last section, our call to <code>query</code> should be something like
+this</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(j/query conn
+         [&#34;select i.isbn, 
+                  i.title,
+                  a.name as author, 
+                  p.name as publisher
+
+          from item as i
+
+          inner join author as a 
+          on i.author_id = a.id
+
+          inner join publisher as p 
+          on i.publisher_id = p.id
+
+          where i.type = 1
+                and a.id = ?
+                and p.id = ?
+                and upper(i.title) like ?
+                and upper(i.title) like ?&#34;
+
+          1 2 &#34;%ART%&#34; &#34;%PROGRAMMING%&#34;])
+</code></pre></div><p>How hard can this be?</p>
+<p>Since the core of clojure&rsquo;s data structures are immutable, thinking about how
+to do such a thing <em>dynamically</em> took me a bit to figure out.</p>
+<p>I took to expressing the construction of the prepared statement in terms of a
+map, with a <code>:query</code> key to store the base query and a <code>:params</code> key to store a
+vector of params to be passed in relative to all the <code>?</code>s in the <code>:query</code></p>
+<p>This went into a <code>let</code> block in a function <code>filter-titles</code>. All of the prepared
+statement construction had to happen with the <code>let</code> block since that is one
+among the only places where one can <em>define</em> things in clojure.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(defn filter-titles [author publisher title-parts]
+  (let [ps-params {:query &#34;select i.isbn, 
+                                  i.title. 
+                                  a.name as author, 
+                                  p.name as publisher
+
+                           from item as i
+
+                           inner join author as a 
+                           on i.author_id = a.id
+
+                           inner join publisher as p 
+                           on i.publisher_id = p.id
+
+                           where i.type = 1&#34;
+                   :params []}
+
+        ;...
+</code></pre></div><p>Based on the presence of the filters I had to append a piece of text to the 
+query and an argument to the argument list.</p>
+<p>For discussion purposes I&rsquo;ve abstracted the part that ensures that <code>author</code>,
+<code>publisher</code> and <code>title-parts</code> either has some value or <code>nil</code>. This means that
+I can use a simple <code>if</code> to check for their presence and then append and return
+a new <code>ps-params</code>.</p>
+<p>To take the old <code>ps-params</code> and return a new one with the appended where clause
+to <code>:query</code> and the respective parameter to <code>:params</code>, I wrote a function that
+takes the old <code>ps-params</code>, a <code>where-clause</code> to be appended and a
+<code>where-clause-value</code> to be substituted, if any and returns a new map with the
+query and parameter appended</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(defn add-to-prepared-statement [prepared-statement
+                                 where-clause
+                                 where-clause-value]
+  (let [{:keys [query params]} prepared-statement]
+    {:query (str query &#34; &#34; where-clause)
+     :params (if where-clause-value
+               (conj params where-clause-value)
+               params)}))
+</code></pre></div><p>It first extracts the <code>:query</code> and <code>:params</code> from the given prepared statement</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(let [{:keys [query params]} prepared-statement]
+</code></pre></div><p>then, return a map with the where clause appended to <code>:query</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+{:query (str query &#34; &#34; where-clause)
+</code></pre></div><p>And if there is a <code>where-clause-value</code>, <code>conj</code> that into the <code>:params</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+:params (if where-clause-value
+         (conj params where-clause-value)
+         params)}
+</code></pre></div><p>With the <code>add-to-prepared-statement</code> function in my arsenal, appending to
+<code>ps-params</code> became easier and the <code>let</code> definition of <code>filter-titles</code> could be
+extended with</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+;...
+ps-params (if author
+            (add-to-prepared-statement ps-params
+                                       &#34;and a.id = ?&#34;
+                                       author)
+            ps-params)
+ps-params (if publisher
+            (add-to-prepared-statement ps-params
+                                       &#34;and p.id = ?&#34;
+                                       publisher)
+            ps-params)
+;...
+</code></pre></div><p>Okay! So far so good.</p>
+<p>At this point though, I hit another road block because based on the amount of
+words in <code>title-part</code>, I had to dynamically append that many <code>and upper(i.title) like ?</code> clauses into <code>:query</code> and that many values into
+<code>:params</code>.</p>
+<p>I could&rsquo;ve done this with a loop but decided that I want to do it functionally.</p>
+<p>So first, I had to write a function to clean and split the given <code>title-parts</code>
+string</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(defn clean-and-split [title-parts]
+  (-&gt; title-parts
+      (str/trim)
+      (str/replace #&#34;\ +&#34; &#34; &#34;)
+      (str/split #&#34; &#34;)))
+</code></pre></div><p>For this, I first trim the string, replace multiple spaces with a single space
+and split it at the space character to get a list of words. This function uses
+another neat clojure feature called the <strong>Thread first macro</strong> (<code>-&gt;</code>) which I
+spoke a little about in my <a href="http://www.shrayas.com/a-day-with-clojure.html">previous
+post</a> about clojure. It is
+something that you should definitely <a href="https://clojuredocs.org/clojure.core/-%3E">check
+out</a>.</p>
+<p>Now that we have a list, we need to generate <em>that</em> many <code>and upper(i.title) like ?</code> strings to be appended into <code>:query</code>.</p>
+<p>The way I chose to do this is by using the
+<a href="https://clojuredocs.org/clojure.core/repeat"><code>repeat</code> function</a> in clojure
+which returns a lazy, or if a length is specified, that many number of
+occurrences of whatever is specified.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(let [title-part-splits (clean-and-split title-parts)
+      no-of-parts (count title-part-splits)
+      title-part-queries (repeat no-of-parts &#34;and upper(i.title) = ?&#34;)
+      ;...
+</code></pre></div><p>Now that I had a vector containing as many parts I wanted to be appended into the
+query, I just used a simple <code>reduce</code> to put them all together.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(let [title-part-splits (clean-and-split title-parts)
+      no-of-parts (count title-part-splits)
+      where-clause (reduce #(str %1 &#34; &#34; %2)
+                           (repeat no-of-parts 
+                                   &#34;and upper(i.title) = ?&#34;))
+      ;...
+</code></pre></div><p>before calling <code>add-to-prepared-statement</code>, I needed to append and prepend a
+<code>%</code> character to all the parts of the title and convert them to upper case.
+This was simple enough with a map function</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(let [title-part-splits (clean-and-split title-parts)
+      no-of-parts (count title-part-splits)
+      where-clause (reduce #(str %1 &#34; &#34; %2)
+                           (repeat no-of-parts 
+                                   &#34;and upper(i.title) = ?&#34;))
+      where-clause-values (map #(str &#34;%&#34; (str/upper-case %) &#34;%&#34;)
+                               title-part-splits)
+      ;...
+</code></pre></div><p>Soon enough I hit the next road block with the <code>add-to-prepared-statement</code>
+function since I had originally only intended for it to take a <strong>single</strong>
+<code>where-clause-value</code>. Now I had a vector whose contents needed to be appended
+into the <code>:params</code> vector.</p>
+<p>To do this, I changed the <code>add-to-prepared-statement</code> function and checked if
+the parameter provided was a single value or a <code>sequential</code> and accordingly
+either did a <code>conj</code> or did an <code>into</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(defn add-to-prepared-statement [prepared-statement 
+                                 where-clause 
+                                 where-clause-value]
+  (let [{:keys [query params]} prepared-statement
+        new-query (str query &#34; &#34; where-clause)
+        new-params (if where-clause-value
+                     (if (sequential? where-clause-value)
+                       (into params where-clause-value)
+                       (conj params where-clause-value))
+                     params)]
+    {:query  new-query
+     :params new-params}))
+</code></pre></div><p><a href="http://www.brainonfire.net/files/seqs-and-colls/main.html">This</a> was a great
+guide that helped me understand when to use <code>coll?</code>, <code>sequential?</code> and the
+other collection/sequence comparison functions.</p>
+<p>With these modifications, I could now extend the <code>let</code> of the original
+<code>filter-titles</code> function</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+;...
+ps-params (if title-parts
+            (let [title-part-splits (clean-and-split title-parts)
+                  no-of-parts (count title-part-splits)
+                  where-clause (reduce #(str %1 &#34; &#34; %2)
+                                       (repeat no-of-parts 
+                                               &#34;and upper(i.title) = ?&#34;))
+                  where-clause-values (map #(str &#34;%&#34; (str/upper-case %) &#34;%&#34;)
+                                           title-part-splits)]
+              (add-to-prepared-statement ps-params
+                                         where-clause
+                                         where-clause-values))
+            ps-params)
+;...
+</code></pre></div><p>By the end of this, in <code>ps-params</code>, I had all I wanted to create the prepared
+statement to pass to jdbc&rsquo;s <code>query</code> function.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+;...
+prepared-statement (-&gt; []
+                       (conj (:query ps-params))
+                       (into (:params ps-params)))
+;...
+</code></pre></div><p>Which really left the body of the <code>filter-titles</code> function to be as simple as</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(j/query conn
+         prepared-statement)
+</code></pre></div><p>With this approach, I was able to <em>dynamically</em> create the prepared statement I
+wanted without just appending everything into one single query string.</p>
+<p>Here is the whole <code>filter-titles</code> function for completion sakes</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">::::clojure
+(defn filter-titles [author publisher title-parts]
+  (let [ps-params {:query &#34;select i.isbn, 
+                                  i.title. 
+                                  a.name as author, 
+                                  p.name as publisher
+
+                           from item as i
+
+                           inner join author as a 
+                           on i.author_id = a.id
+
+                           inner join publisher as p 
+                           on i.publisher_id = p.id
+
+                           where i.type = 1&#34;
+                   :params []}
+        ps-params (if author
+                    (add-to-prepared-statement ps-params
+                                               &#34;and a.id = ?&#34;
+                                               author)
+                    ps-params)
+        ps-params (if publisher
+                    (add-to-prepared-statement ps-params
+                                               &#34;and p.id = ?&#34;
+                                               publisher)
+                    ps-params)
+        ps-params (if title-parts
+                    (let [title-part-splits (clean-and-split title-parts)
+                          no-of-parts (count title-part-splits)
+                          where-clause (reduce #(str %1 &#34; &#34; %2)
+                                               (repeat no-of-parts 
+                                                       &#34;and upper(i.title) = ?&#34;))
+                          where-clause-values (map #(str &#34;%&#34; (str/upper-case %) &#34;%&#34;)
+                                                   title-part-splits)]
+                      (add-to-prepared-statement ps-params
+                                                 where-clause
+                                                 where-clause-values))
+                    ps-params)
+        prepared-statement (-&gt; []
+                               (conj (:query ps-params))
+                               (into (:params ps-params)))]
+    (j/query conn
+             prepared-statement)))
+</code></pre></div><h3 id="conclusion">Conclusion</h3>
+<p>This was the approach that I took for the rest of the reports implemented in
+the system as well. Because of my history with mutating variables all around
+and not <em>thinking functionally</em>, it was hard to reason this out initially. But
+when it finally <a href="https://twitter.com/shrayasr/status/637242024563834880">hit</a>,
+the feeling was priceless :)</p>
+<p>My sincerest gratitude goes out <a href="http://rkrishnan.org/">Ramki Sir</a> and
+<a href="http://codepodu.com/">Dheeraj</a> who helped me with pulling this project
+together and seeing it to production. I&rsquo;ve come to notice that people in the
+Clojure community are very forthcoming and helpful and that means a lot to a
+beginner like me with their first project.</p>
+<p>Thank you, everyone! Hope this helped.</p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/clojure">Clojure</a></li>
+					
+					<li><a href="/tags/learning">Learning</a></li>
+					
+					<li><a href="/tags/fp">FP</a></li>
+					
+					<li><a href="/tags/logic-soft">Logic Soft</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/shrayasr" title="GitHub"><i data-feather="github"></i></a>|<a class="soc" href="https://twitter.com/shrayasr" title="Twitter"><i data-feather="twitter"></i></a>|⚡️
+	2020  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script>
+
+</div>
+    </body>
+</html>

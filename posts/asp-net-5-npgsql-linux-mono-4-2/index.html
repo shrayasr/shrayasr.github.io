@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>ASP .NET 5, Npgsql, Linux &amp; Mono 4.2 - Shrayas</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="ASP .NET 5, Npgsql, Linux &amp; Mono 4.2" />
+<meta property="og:description" content="Background Logic Soft&lsquo;s primary application is a Windows based application written in C# using Windows.Forms. So when Microsoft announced ASP .NET 5 RC1, needless to say, we were quite excited.
+We picked it up and started our experimentation - writing smaller applications and porting some of our side projects to the CoreCLR platform. As long as we didn&rsquo;t go to the place that needed WIN32 APIs, it worked seamlessly.
+With a small sum of experience, we took up the task of writing one of our internal dashboards with it." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://shrayasr.github.io/posts/asp-net-5-npgsql-linux-mono-4-2/" />
+<meta property="article:published_time" content="2015-12-09T21:30:00+05:30" />
+<meta property="article:modified_time" content="2015-12-09T21:30:00+05:30" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ASP .NET 5, Npgsql, Linux &amp; Mono 4.2"/>
+<meta name="twitter:description" content="Background Logic Soft&lsquo;s primary application is a Windows based application written in C# using Windows.Forms. So when Microsoft announced ASP .NET 5 RC1, needless to say, we were quite excited.
+We picked it up and started our experimentation - writing smaller applications and porting some of our side projects to the CoreCLR platform. As long as we didn&rsquo;t go to the place that needed WIN32 APIs, it worked seamlessly.
+With a small sum of experience, we took up the task of writing one of our internal dashboards with it."/>
+<script src="http://shrayasr.github.io/js/feather.min.js"></script>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="screen" href="http://shrayasr.github.io/css/main.css" />
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="http://shrayasr.github.io/">Shrayas</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">Blog</a>
+		
+		<a href="/tags">Tags</a>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">ASP .NET 5, Npgsql, Linux &amp; Mono 4.2</h1>
+			<div class="meta">Posted on Dec 9, 2015</div>
+		</div>
+		
+
+		<section class="body">
+			<h3 id="background">Background</h3>
+<p><a href="http://www.logicsoft.co.in">Logic Soft</a>&lsquo;s primary application is a Windows
+based application written in C# using Windows.Forms. So when Microsoft
+<a href="http://blogs.msdn.com/b/webdev/archive/2015/11/18/announcing-asp-net-5-release-candidate-1.aspx">announced</a>
+ASP .NET 5 RC1, needless to say, we were quite excited.</p>
+<p>We picked it up and started our experimentation - writing smaller applications
+and porting some of our side projects to the CoreCLR platform. As long as we
+didn&rsquo;t go to the place that needed WIN32 APIs, it worked seamlessly.</p>
+<p>With a small sum of experience, we took up the task of writing one of our
+internal dashboards with it. The aim was to be <strong>completely</strong> cross platform
+from the start since the it was to be hosted on our Linux server. The Dashboard
+is based on the completely revamped ASP MVC 6 with an Angular JS frontend. It
+uses <a href="http://npgsql.org/">Npgsql</a> to connect to a PostgreSQL database at the
+backend.</p>
+<hr>
+<h3 id="the-tldr-version">The tl;dr version</h3>
+<ul>
+<li>Npgsql can&rsquo;t work on Linux with CoreCLR RC1 because of issues -
+<a href="https://github.com/npgsql/npgsql/issues/874">#874</a>,
+<a href="https://github.com/dotnet/corefx/issues/4631">#4631</a>,
+<a href="https://github.com/dotnet/corefx/pull/4652">#4652</a></li>
+<li>Mono <code>4.2.1</code> is <strong>buggy</strong>. Pin version to <code>4.0.5</code> instead.</li>
+<li>Pinning version to <code>4.0.5</code> on Ubuntu via <a href="http://www.mono-project.com/docs/getting-started/install/linux/#accessing-older-releases">suggested
+method</a>
+results in <code>Conflicting distribution</code> issues when doing <code>apt-get update</code>. Pin
+it to <code>4.0.5.1</code> instead.</li>
+</ul>
+<hr>
+<h3 id="npgsql-on-coreclr-rc1">Npgsql on CoreCLR RC1</h3>
+<p>Because of how easy Visual Studio makes our work, we decided to write the app
+on windows but based on CoreCLR. After a few days of adding a major chunk of
+features, we decided to test the app out on Linux and instantly it failed with
+a <code>TimeoutException</code> when trying to open a connection to the Postgres DB.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">System.TimeoutException: The operation has timed out.
+at Npgsql.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+at Npgsql.NpgsqlConnector.RawOpen(NpgsqlTimeout timeout)
+at Npgsql.NpgsqlConnector.Open(NpgsqlTimeout timeout)
+at Npgsql.NpgsqlConnector.Open()
+at Npgsql.NpgsqlConnectorPool.GetPooledConnector(NpgsqlConnection Connection)
+at Npgsql.NpgsqlConnectorPool.RequestConnector(NpgsqlConnection connection)
+at Npgsql.NpgsqlConnection.OpenInternal(NpgsqlTimeout timeout)
+at Npgsql.NpgsqlConnection.Open()
+</code></pre></div><p>This didn&rsquo;t make sense to me because when I used <code>psql</code>, I was able to connect
+to the Postgres DB. So I begun investigating.</p>
+<p>My investigation led me to <a href="https://github.com/npgsql/npgsql/issues/874">this
+issue</a> filed on Npgsql&rsquo;s repo. It
+talks about a problem with the <code>Socket.Select</code> method under Linux. The reporter
+of the issue opened an associated
+<a href="https://github.com/dotnet/corefx/issues/4631">issue</a> on the CoreFx repo which
+was very quickly <a href="https://github.com/dotnet/corefx/pull/4652">fixed</a> and merged
+in. The only nitpick of mine with this was that the fix would come through only
+in RC2.  From the latest <a href="https://www.youtube.com/watch?v=UvkJJGVq-b0">standup</a>
+it was made clear that RC2 would not be released till Feb 2016. We wanted to
+get this dashboard into production by end of next week. This meant that I had
+to look for alternatives.</p>
+<h3 id="enter-mono-421">Enter Mono (4.2.1)</h3>
+<p>The alternative here is quite simple - <a href="http://www.mono-project.com/">Mono</a>.
+From their site:</p>
+<blockquote>
+<p>Sponsored by Xamarin, Mono is an open source implementation of Microsoft&rsquo;s
+.NET Framework based on the ECMA standards for C# and the Common Language
+Runtime. A growing family of solutions and an active and enthusiastic
+contributing community is helping position Mono to become the leading choice
+for development of cross platform applications.</p>
+</blockquote>
+<p>The first thing I did was to install the <code>mono-complete</code> package as advised on
+their very clear <a href="http://www.mono-project.com/docs/getting-started/install/linux/#debian-ubuntu-and-derivatives">installation
+page</a>.
+This installed Mono 4.2.1. Along with this I installed the associated <code>dnx</code>
+too.</p>
+<p>Once this was done, I used <a href="http://yeoman.io/">yeoman</a> and the <a href="https://www.npmjs.com/package/generator-aspnet">omnisharp
+generators</a> for ASP .NET 5 to
+generate a simple console application. I added Npgsql as a dependency and wrote
+just enough code to open a connection to the Postgres DB and when I ran it, I
+could connect to the DB with no <code>TimeoutException</code> biting my behind. I was
+happy.  With this, my expectation was that I could just run a <code>dnu restore</code> on
+my project, and get cracking.</p>
+<p>After running a <code>dnu restore</code>, I quickly ran <code>dnx web</code> to see the ever friendly
+<code>Now listening on: http://localhost:5000</code> message greet me. With a great sum of
+enthusiasm, I visited <code>http://localhost:5000</code> on my browser only to see it
+never finish. I switched back to the console to check and I saw that the
+request processing was stuck up at one stage:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">&gt; dnx web
+Hosting environment: Production
+Now listening on: http://*:5004
+Application started. Press Ctrl+C to shut down.
+info: Microsoft.AspNet.Hosting.Internal.HostingEngine[1]
+      Request starting HTTP/1.1 GET http://localhost:5004/  
+info: Microsoft.AspNet.Mvc.Controllers.ControllerActionInvoker[1]
+      Executing action method MvcSample.Web.HomeController.Index with arguments () - ModelState is Valid&#39;
+</code></pre></div><p>No matter how long I&rsquo;d let it be, the response wouldn&rsquo;t come through.
+Roadblock.</p>
+<p>After a while of fiddling with <code>DNX</code> by setting <code>DNX_TRACE=1</code>, I decided that
+the best way of understanding better would be to run a &ldquo;Microsoft certified&rdquo;
+basic application. These can be found for over on the <a href="https://github.com/aspnet/home">home
+repo</a> under the aspnet organization.  Here, in
+the <strong>samples</strong> directory one can find applications for each of the releases
+Microsoft has made. All the way from <code>-beta4</code> to <code>-RC1-update1</code> to the cutting
+edge one as well. This would be a good place for me to start debugging the
+issue I was facing, I thought.</p>
+<p>Once I cloned the repo, I went into the <code>1.0.0-rc1-update1/HelloMvc</code> folder and
+did a <code>dnu restore</code> to bring down dependencies. Post this, I ran <code>dnx web</code> and
+navigated to the URL. To my surprise I <strong>again</strong> hit the same problem. It was
+getting stuck at precisely the same place as earlier:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">&gt; dnx web
+Hosting environment: Production
+Now listening on: http://*:5004
+Application started. Press Ctrl+C to shut down.
+info: Microsoft.AspNet.Hosting.Internal.HostingEngine[1]
+      Request starting HTTP/1.1 GET http://localhost:5004/  
+info: Microsoft.AspNet.Mvc.Controllers.ControllerActionInvoker[1]
+      Executing action method MvcSample.Web.HomeController.Index with arguments () - ModelState is Valid&#39;
+</code></pre></div><p>Initially, I was quite skeptical of myself and was convinced that I was doing
+something wrong. So I double checked everything again - <code>dnx</code>, <code>dnu</code> and <code>dnvm</code>
+versions. I reinstalled everything and tried again but alas - Same issue.</p>
+<p>With nothing else possible, I opened an issue on the aspnet/home repo:
+<a href="https://github.com/aspnet/Home/issues/1161">#1161</a> detailing all the steps
+that I followed and the problem that I was facing. Following this, I jumped on
+to the <a href="https://jabbr.net/#/rooms/aspnetvnext">JabbR chat room</a> to see if I
+could find anyone. I posted about the issue there as well and one of the core
+guys at Microsoft - <a href="https://github.com/davidfowl">David Fowler</a> asked me to
+try out Mono 4.0.5 instead of 4.2.1. He went on to mention that 4.2.1 was
+filled with quite a few bugs and the recommendation is to pin the version to
+4.0.5 until the bugs in 4.2.1 were fixed.</p>
+<h3 id="exit-mono-421">Exit Mono (4.2.1)</h3>
+<p>Now, on my Ubuntu box, I had 4.2.1 installed which I now had to uninstall in
+order to replace it with 4.0.5. As with uninstalling any other package, I
+followed the usual steps:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">sudo apt-get remove mono-complete
+sudo apt-get purge mono-complete
+sudo apt-get autoremove
+</code></pre></div><h3 id="enter-mono-405">Enter Mono (4.0.5?)</h3>
+<p>The Mono install page has a section on <a href="http://www.mono-project.com/docs/getting-started/install/linux/#accessing-older-releases">how to access older
+releases</a>
+which was the one I followed in order to pin my Mono version to 4.0.5. I edited
+the <code>/etc/apt/sources.list.d/mono-xamarin.d</code> and changed the line to</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5 main
+</code></pre></div><p>Following this I did a <code>sudo apt-get update</code> to bring update the package
+listing and soon enough ended up with this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">W: Conflicting distribution: http://download.mono-project.com wheezy/snapshots/4.0.5 InRelease <span style="color:#f92672">(</span>expected wheezy/snapshots but got wheezy<span style="color:#f92672">)</span>
+</code></pre></div><p>After some (rather hard) googling, I came across <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=24902">this
+issue</a> filed on Xamarin&rsquo;s
+bugzilla. However this was for installing the <code>3.12.0</code> version and a workaround
+was suggested to suffix a <code>/.</code> to the end of the version. I then updated the <code>mono-xamarin.d</code> file
+to have</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5/. main
+</code></pre></div><p>instead but to no avail. I ended up with the same error message again.</p>
+<p>After some digging around on Mono&rsquo;s <a href="http://download.mono-project.com/repo/debian">download
+server</a> for
+<a href="http://download.mono-project.com/repo/debian/dists/wheezy/snapshots/4.0.5/">4.0.5</a>,
+I noticed that the <a href="http://download.mono-project.com/repo/debian/dists/wheezy/snapshots/4.0.5/InRelease"><code>InRelease</code> file</a>
+for 4.0.5 had the Suite listed as 4.0.5.1. Off a whim, I tried replacing
+4.0.5 with 4.0.5.1 in my <code>mono-xamarin.d</code> file.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5.1/. main
+</code></pre></div><p>Running <code>sudo apt-get update</code> post this didn&rsquo;t leave me with the dreaded
+&ldquo;<code>Conflicting distribution</code>&rdquo; error anymore.  After this I just installed the
+<code>mono-complete</code> package as before.</p>
+<hr>
+<p><strong>Note:</strong> The first time I did this, somehow <code>mono-runtime</code> didn&rsquo;t get removed
+and I was having package clash problems when trying to install the
+<code>mono-complete</code> package after pinning 4.0.5.1 (since the <code>mono-runtime</code> for 4.2.1
+was still installed). I had to explicitly remove the <code>mono-runtime</code> package for
+it to work.</p>
+<hr>
+<p>With mono 4.0.5 installed, I got back to my project and booted it up again
+with <code>dnx web</code>. I visited the URL and finally</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">&gt; dnx web
+Hosting environment: DEVELOPMENT
+Now listening on: http://localhost:5000
+Application started. Press Ctrl+C to shut down.
+info: Microsoft.AspNet.Hosting.Internal.HostingEngine[1]
+      Request starting HTTP/1.1 GET http://localhost:5000/  
+info: Microsoft.AspNet.Mvc.Controllers.ControllerActionInvoker[1]
+      Executing action method SessyDash.Controllers.HomeController.Index with arguments () - ModelState is Valid&#39;
+info: Microsoft.AspNet.Mvc.ViewFeatures.ViewResultExecutor[1]
+      Executing ViewResult, running view at path /Views/Home/Index.cshtml.
+info: Microsoft.Extensions.DependencyInjection.DataProtectionServices[0]
+      User profile is available. Using &#39;/home/shrayasr/.local/share/ASP.NET/DataProtection-Keys&#39; as key repository; keys will not be encrypted at rest.
+info: Microsoft.AspNet.Mvc.Infrastructure.MvcRouteHandler[2]
+      Executed action SessyDash.Controllers.HomeController.Index in 0.4223ms
+info: Microsoft.AspNet.Hosting.Internal.HostingEngine[2]
+      Request finished in 0.468ms 200 text/html; charset=utf-8
+</code></pre></div><p>The page rendered successfully and all the connections to the PostgreSQL DB
+went through as well. Success!</p>
+<h3 id="conclusion">Conclusion</h3>
+<p>This meant that the set of features that we had written for the dashboard now
+worked on both Windows (via CoreCLR) and on Linux (via Mono). This is really
+exciting for us as a team since we&rsquo;ve only worked on the Windows platform for
+so long. Being able to translate those skills (almost) directly to other
+platforms <em>with</em> Microsoft&rsquo;s support is a very <strong>very</strong> big win.</p>
+<p>ASP .NET 5 is a really interesting platform to work on. It feels like Microsoft
+is taking a wonderful way forward. Personally I&rsquo;ve always enjoyed programming
+with C# and this just makes that experience that much better.</p>
+<p>However, this being still a nacent platform, has a few rough edges and adopting
+into it this early has its own set of problems related to documentation and
+finding workarounds. But the dynamic team at Microsoft really eases that out
+too. The <a href="https://jabbr.net/#/rooms/AspNetvNext">JabbR room</a> seems like a very
+interesting place to be on and I intend to be a frequent visitor there helping
+people and seeking help too in the future.</p>
+<p>Heres to more adventures with CoreCLR, ASP .NET 5 et al. Cheers!</p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/csharp">CSharp</a></li>
+					
+					<li><a href="/tags/mono">Mono</a></li>
+					
+					<li><a href="/tags/aspnet5">ASPNET5</a></li>
+					
+					<li><a href="/tags/logic-soft">Logic Soft</a></li>
+					
+					<li><a href="/tags/linux">Linux</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/shrayasr" title="GitHub"><i data-feather="github"></i></a>|<a class="soc" href="https://twitter.com/shrayasr" title="Twitter"><i data-feather="twitter"></i></a>|⚡️
+	2020  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script>
+      feather.replace()
+</script>
+
+</div>
+    </body>
+</html>

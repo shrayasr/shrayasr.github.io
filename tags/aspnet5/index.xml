@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ASPNET5 on Shrayas</title>
+    <link>http://shrayasr.github.io/tags/aspnet5/</link>
+    <description>Recent content in ASPNET5 on Shrayas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 11 Dec 2015 20:45:00 +0530</lastBuildDate>
+    
+	<atom:link href="http://shrayasr.github.io/tags/aspnet5/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Hiccups with Hosting ASP .NET 5 apps on Linux (RC1)</title>
+      <link>http://shrayasr.github.io/posts/aspnet5-hosting-hiccups-nginx-kestrel/</link>
+      <pubDate>Fri, 11 Dec 2015 20:45:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/aspnet5-hosting-hiccups-nginx-kestrel/</guid>
+      <description>Background After the recent dance with multiple Mono versions, the next step was to actually host the application.
+Even though the app is largely still unfinished, I wanted to give it a shot on the staging instance to get a feel for things.
+The general way to host apps on a Linux box is to have a NGINX reverse proxy in front, listening to different names on port 80 and to proxy the requests to internally running servers.</description>
+    </item>
+    
+    <item>
+      <title>ASP .NET 5, Npgsql, Linux &amp; Mono 4.2</title>
+      <link>http://shrayasr.github.io/posts/asp-net-5-npgsql-linux-mono-4-2/</link>
+      <pubDate>Wed, 09 Dec 2015 21:30:00 +0530</pubDate>
+      
+      <guid>http://shrayasr.github.io/posts/asp-net-5-npgsql-linux-mono-4-2/</guid>
+      <description>Background Logic Soft&amp;lsquo;s primary application is a Windows based application written in C# using Windows.Forms. So when Microsoft announced ASP .NET 5 RC1, needless to say, we were quite excited.
+We picked it up and started our experimentation - writing smaller applications and porting some of our side projects to the CoreCLR platform. As long as we didn&amp;rsquo;t go to the place that needed WIN32 APIs, it worked seamlessly.
+With a small sum of experience, we took up the task of writing one of our internal dashboards with it.</description>
+    </item>
+    
+  </channel>
+</rss>

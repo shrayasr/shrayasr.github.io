@@ -182,7 +182,7 @@ queries. It attempts to show your object in the best way possible.</p>
   <span style="color:#e6db74">&#34;Kaalia&#34;</span>
 }.Dump();
 </code></pre></div><p>And this is what we get:</p>
-<p><img src="http://i.imgur.com/RLyQWxu.png" alt="List dump output"></p>
+<p><img src="/img/dashboard/simpledump.png" alt="List dump output"></p>
 <p>Neat and concise, right?</p>
 <p>It gets even better. Let&rsquo;s bump it up, consider an object:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">new</span>
@@ -193,7 +193,7 @@ queries. It attempts to show your object in the best way possible.</p>
   Age = <span style="color:#ae81ff">5</span>
 }.Dump();
 </code></pre></div><p>We get:</p>
-<p><img src="http://i.imgur.com/DlwpphI.png" alt="Object dump output"></p>
+<p><img src="/img/dashboard/objectdump.png" alt="Object dump output"></p>
 <p>Wonderfully formatted into key value pairs, and the list within the object is
 well formatted too.</p>
 <p>Optionally, if we provide the <code>.Dump()</code> function a string argument, it will
@@ -205,7 +205,7 @@ display it as a title for what is being dumped. Eg:</p>
   Genre = <span style="color:#e6db74">&#34;Comedy&#34;</span>,
   Age = <span style="color:#ae81ff">5</span>
 }.Dump(<span style="color:#e6db74">&#34;Ramu -- Details&#34;</span>);
-</code></pre></div><p><img src="http://i.imgur.com/INiW54e.png" alt="Dump with title"></p>
+</code></pre></div><p><img src="/img/dashboard/objectdump-title.png" alt="Dump with title"></p>
 <p>It just doesn&rsquo;t stop there. It gets <strong>even more</strong> powerful when used in a context
 where we query a DB using LINQ.</p>
 <p>Once you&rsquo;ve created a <em>connection</em>, you&rsquo;re able to drop that connection into a
@@ -216,13 +216,13 @@ the first row, you would do:</p>
 </code></pre></div><p>To print them? <code>.Dump()</code>! So:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">Cities.FirstOrDefault().Dump();
 </code></pre></div><p>Would give us:</p>
-<p><img src="http://i.imgur.com/BtRXTHl.png" alt="FirstOrDefault dump output"></p>
+<p><img src="/img/dashboard/db-city.png" alt="FirstOrDefault dump output"></p>
 <p>Just like an object that we printed before.</p>
 <p>But it gets <em>even</em> better! Consider a <code>Prescription</code> table that has FK
 relations out to 3 other tables &ndash; <code>Representative</code>, <code>Dealer</code> and <code>School</code>. Now
 when I pick up the first record in this list with</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">Prescriptions.FirstOrDefault().Dump();
-</code></pre></div><p><img src="http://i.imgur.com/RFHZBEa.png" alt="FK dump output"></p>
+</code></pre></div><p><img src="/img/dashboard/db-fk.png" alt="FK dump output"></p>
 <p>It resolves these dependencies and puts them in place! Absolutely wicked!</p>
 <p>When you&rsquo;re exploring a Database, The <code>Dump()</code> function can be a blessing.
 This is one of the reasons why LINQPad forms such a core part of my development
@@ -231,7 +231,7 @@ environment.</p>
 <p>Let&rsquo;s get back to where we left things off, we now have with us a list of
 objects. Nothing special about that.</p>
 <p>What to we do to display it?</p>
-<p><img src="http://i.imgur.com/xVVkv3x.png" alt="DUMP all the things meme"></p>
+<p><img src="/img/dashboard/dump-all-the-thangs.png" alt="DUMP all the things meme"></p>
 <p>We&rsquo;ll call the <code>.Dump()</code> function with <code>region</code> as the argument. This should
 give us a nicely formatted region wise list of instances and their status.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">client
@@ -254,7 +254,7 @@ give us a nicely formatted region wise list of instances and their status.</p>
       };
   }).Dump(region.DisplayName);
 </code></pre></div><p>Anddddd:</p>
-<p><img src="http://i.imgur.com/GvZlDlk.png" alt="Dashboard output"></p>
+<p><img src="/img/dashboard/dashboard.png" alt="Dashboard output"></p>
 <p>Awesome! It <strong>works</strong>, its <strong>maintainable</strong> and to top it off, it is <strong>low tech</strong>. All but
 for one question lingers in my mind:</p>
 <p><em>&ldquo;You don&rsquo;t expect me to run this all the time to check the results, right?&quot;</em></p>
@@ -291,6 +291,18 @@ cases &ndash; You can scale when the necessity arises</li>
 
 		<div class="post-tags">
 			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/csharp">CSharp</a></li>
+					
+					<li><a href="/tags/linqpad">LINQPad</a></li>
+					
+					<li><a href="/tags/logic-soft">Logic Soft</a></li>
+					
+				</ul>
+			</nav>
 			
 			
 		</div>

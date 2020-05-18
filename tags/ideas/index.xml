@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ideas on Shrayas</title>
+    <link>https://shrayasr.github.io/tags/ideas/</link>
+    <description>Recent content in Ideas on Shrayas</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 16 Jul 2017 15:00:00 +0530</lastBuildDate>
+    
+	<atom:link href="https://shrayasr.github.io/tags/ideas/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Express solutions elegantly using your programming language</title>
+      <link>https://shrayasr.github.io/posts/express-solutions-elegantly-using-your-prog-lang/</link>
+      <pubDate>Sun, 16 Jul 2017 15:00:00 +0530</pubDate>
+      
+      <guid>https://shrayasr.github.io/posts/express-solutions-elegantly-using-your-prog-lang/</guid>
+      <description>Introduction The post features a case study of a real life problem and the C# programming language. It explains how we went about trying to best express the solution within the bounds of the C# language.
+Although we use the C# programming language here,the ideas shared in this post aren&amp;rsquo;t specific to it and can be applied to any high level language you are working with.
+Problem Recently, for a customer requirement we had to work with a document that has both metadata and data.</description>
+    </item>
+    
+  </channel>
+</rss>

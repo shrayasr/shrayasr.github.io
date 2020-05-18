@@ -6,20 +6,10 @@
     <description>Recent content in Nginx on Shrayas</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 Dec 2015 22:40:00 +0530</lastBuildDate>
+    <lastBuildDate>Fri, 11 Dec 2015 20:45:00 +0530</lastBuildDate>
     
 	<atom:link href="https://shrayasr.github.io/tags/nginx/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Simple NGINX hosting</title>
-      <link>https://shrayasr.github.io/posts/simple-nginx-hosting/</link>
-      <pubDate>Fri, 11 Dec 2015 22:40:00 +0530</pubDate>
-      
-      <guid>https://shrayasr.github.io/posts/simple-nginx-hosting/</guid>
-      <description>Start by installing NGINX. It comes with a decent set of defaults that are enough to get started. A quick set of things to remember (on an Ubuntu box) are:
- /etc/NGINX/sites-enabled/ holds configuration for different sites behind the reverse proxy Logs (access &amp;amp; error) can be found in /var/log/NGINX/ The main NGINX configuration can be found at /etc/NGINX/NGINX.conf  Before we start adding in the NGINX configuration. Let us make http://foobar redirect to our computer.</description>
-    </item>
     
     <item>
       <title>Hiccups with Hosting ASP .NET 5 apps on Linux (RC1)</title>

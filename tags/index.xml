@@ -2,174 +2,174 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on Shrayas</title>
-    <link>https://shrayasr.github.io/tags/</link>
+    <link>https://www.shrayas.com/tags/</link>
     <description>Recent content in Tags on Shrayas</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 24 Sep 2018 09:45:00 +0530</lastBuildDate>
     
-	<atom:link href="https://shrayasr.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.shrayas.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Life</title>
-      <link>https://shrayasr.github.io/tags/life/</link>
+      <link>https://www.shrayas.com/tags/life/</link>
       <pubDate>Mon, 24 Sep 2018 09:45:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/life/</guid>
+      <guid>https://www.shrayas.com/tags/life/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Running</title>
-      <link>https://shrayasr.github.io/tags/running/</link>
+      <link>https://www.shrayas.com/tags/running/</link>
       <pubDate>Mon, 24 Sep 2018 09:45:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/running/</guid>
+      <guid>https://www.shrayas.com/tags/running/</guid>
       <description></description>
     </item>
     
     <item>
       <title>CSharp</title>
-      <link>https://shrayasr.github.io/tags/csharp/</link>
+      <link>https://www.shrayas.com/tags/csharp/</link>
       <pubDate>Mon, 31 Jul 2017 22:30:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/csharp/</guid>
+      <guid>https://www.shrayas.com/tags/csharp/</guid>
       <description></description>
     </item>
     
     <item>
       <title>LINQPad</title>
-      <link>https://shrayasr.github.io/tags/linqpad/</link>
+      <link>https://www.shrayas.com/tags/linqpad/</link>
       <pubDate>Mon, 31 Jul 2017 22:30:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/linqpad/</guid>
+      <guid>https://www.shrayas.com/tags/linqpad/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Logic Soft</title>
-      <link>https://shrayasr.github.io/tags/logic-soft/</link>
+      <link>https://www.shrayas.com/tags/logic-soft/</link>
       <pubDate>Mon, 31 Jul 2017 22:30:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/logic-soft/</guid>
+      <guid>https://www.shrayas.com/tags/logic-soft/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Ideas</title>
-      <link>https://shrayasr.github.io/tags/ideas/</link>
+      <link>https://www.shrayas.com/tags/ideas/</link>
       <pubDate>Sun, 16 Jul 2017 15:00:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/ideas/</guid>
+      <guid>https://www.shrayas.com/tags/ideas/</guid>
       <description></description>
     </item>
     
     <item>
       <title>ASPNET5</title>
-      <link>https://shrayasr.github.io/tags/aspnet5/</link>
+      <link>https://www.shrayas.com/tags/aspnet5/</link>
       <pubDate>Fri, 11 Dec 2015 20:45:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/aspnet5/</guid>
+      <guid>https://www.shrayas.com/tags/aspnet5/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Kestrel</title>
-      <link>https://shrayasr.github.io/tags/kestrel/</link>
+      <link>https://www.shrayas.com/tags/kestrel/</link>
       <pubDate>Fri, 11 Dec 2015 20:45:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/kestrel/</guid>
+      <guid>https://www.shrayas.com/tags/kestrel/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Linux</title>
-      <link>https://shrayasr.github.io/tags/linux/</link>
+      <link>https://www.shrayas.com/tags/linux/</link>
       <pubDate>Fri, 11 Dec 2015 20:45:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/linux/</guid>
+      <guid>https://www.shrayas.com/tags/linux/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Nginx</title>
-      <link>https://shrayasr.github.io/tags/nginx/</link>
+      <link>https://www.shrayas.com/tags/nginx/</link>
       <pubDate>Fri, 11 Dec 2015 20:45:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/nginx/</guid>
+      <guid>https://www.shrayas.com/tags/nginx/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Mono</title>
-      <link>https://shrayasr.github.io/tags/mono/</link>
+      <link>https://www.shrayas.com/tags/mono/</link>
       <pubDate>Wed, 09 Dec 2015 21:30:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/mono/</guid>
+      <guid>https://www.shrayas.com/tags/mono/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Clojure</title>
-      <link>https://shrayasr.github.io/tags/clojure/</link>
+      <link>https://www.shrayas.com/tags/clojure/</link>
       <pubDate>Sun, 30 Aug 2015 10:51:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/clojure/</guid>
+      <guid>https://www.shrayas.com/tags/clojure/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Education</title>
-      <link>https://shrayasr.github.io/tags/education/</link>
+      <link>https://www.shrayas.com/tags/education/</link>
       <pubDate>Fri, 17 Oct 2014 18:10:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/education/</guid>
+      <guid>https://www.shrayas.com/tags/education/</guid>
       <description></description>
     </item>
     
     <item>
       <title>India</title>
-      <link>https://shrayasr.github.io/tags/india/</link>
+      <link>https://www.shrayas.com/tags/india/</link>
       <pubDate>Fri, 17 Oct 2014 18:10:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/india/</guid>
+      <guid>https://www.shrayas.com/tags/india/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Himalayas</title>
-      <link>https://shrayasr.github.io/tags/himalayas/</link>
+      <link>https://www.shrayas.com/tags/himalayas/</link>
       <pubDate>Mon, 25 Aug 2014 16:47:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/himalayas/</guid>
+      <guid>https://www.shrayas.com/tags/himalayas/</guid>
       <description></description>
     </item>
     
     <item>
       <title>God</title>
-      <link>https://shrayasr.github.io/tags/god/</link>
+      <link>https://www.shrayas.com/tags/god/</link>
       <pubDate>Sat, 20 Apr 2013 14:57:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/god/</guid>
+      <guid>https://www.shrayas.com/tags/god/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Perspective</title>
-      <link>https://shrayasr.github.io/tags/perspective/</link>
+      <link>https://www.shrayas.com/tags/perspective/</link>
       <pubDate>Sat, 20 Apr 2013 14:57:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/perspective/</guid>
+      <guid>https://www.shrayas.com/tags/perspective/</guid>
       <description></description>
     </item>
     
     <item>
       <title>photography</title>
-      <link>https://shrayasr.github.io/tags/photography/</link>
+      <link>https://www.shrayas.com/tags/photography/</link>
       <pubDate>Sun, 17 Jun 2012 19:38:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/tags/photography/</guid>
+      <guid>https://www.shrayas.com/tags/photography/</guid>
       <description></description>
     </item>
     

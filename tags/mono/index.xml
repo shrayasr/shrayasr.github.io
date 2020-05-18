@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Mono on Shrayas</title>
-    <link>https://shrayasr.github.io/tags/mono/</link>
+    <link>https://www.shrayas.com/tags/mono/</link>
     <description>Recent content in Mono on Shrayas</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 09 Dec 2015 21:30:00 +0530</lastBuildDate>
     
-	<atom:link href="https://shrayasr.github.io/tags/mono/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://www.shrayas.com/tags/mono/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>ASP .NET 5, Npgsql, Linux &amp; Mono 4.2</title>
-      <link>https://shrayasr.github.io/posts/asp-net-5-npgsql-linux-mono-4-2/</link>
+      <link>https://www.shrayas.com/posts/asp-net-5-npgsql-linux-mono-4-2/</link>
       <pubDate>Wed, 09 Dec 2015 21:30:00 +0530</pubDate>
       
-      <guid>https://shrayasr.github.io/posts/asp-net-5-npgsql-linux-mono-4-2/</guid>
+      <guid>https://www.shrayas.com/posts/asp-net-5-npgsql-linux-mono-4-2/</guid>
       <description>Background Logic Soft&amp;lsquo;s primary application is a Windows based application written in C# using Windows.Forms. So when Microsoft announced ASP .NET 5 RC1, needless to say, we were quite excited.
 We picked it up and started our experimentation - writing smaller applications and porting some of our side projects to the CoreCLR platform. As long as we didn&amp;rsquo;t go to the place that needed WIN32 APIs, it worked seamlessly.
 With a small sum of experience, we took up the task of writing one of our internal dashboards with it.</description>

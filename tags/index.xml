@@ -7,7 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Shrayas</copyright>
-    <lastBuildDate>Mon, 24 Sep 2018 09:45:00 +0530</lastBuildDate>
+    <lastBuildDate>Sat, 04 Apr 2020 15:15:39 +0530</lastBuildDate>
     
 	<atom:link href="https://www.shrayas.com/tags/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,16 +15,25 @@
     <item>
       <title>Life</title>
       <link>https://www.shrayas.com/tags/life/</link>
-      <pubDate>Mon, 24 Sep 2018 09:45:00 +0530</pubDate>
+      <pubDate>Sat, 04 Apr 2020 15:15:39 +0530</pubDate>
       
       <guid>https://www.shrayas.com/tags/life/</guid>
       <description></description>
     </item>
     
     <item>
+      <title>Yoga</title>
+      <link>https://www.shrayas.com/tags/yoga/</link>
+      <pubDate>Sat, 04 Apr 2020 15:15:39 +0530</pubDate>
+      
+      <guid>https://www.shrayas.com/tags/yoga/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Running</title>
       <link>https://www.shrayas.com/tags/running/</link>
-      <pubDate>Mon, 24 Sep 2018 09:45:00 +0530</pubDate>
+      <pubDate>Sat, 17 Aug 2019 15:13:06 +0530</pubDate>
       
       <guid>https://www.shrayas.com/tags/running/</guid>
       <description></description>

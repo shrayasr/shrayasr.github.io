@@ -1,4 +1,5 @@
 set gdefault
+set nowrap
 
 set backspace=indent,eol,start
 

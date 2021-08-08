@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Shrayas</copyright>
-    <lastBuildDate>Sat, 04 Apr 2020 15:15:39 +0530</lastBuildDate>
+    <lastBuildDate>Thu, 05 Aug 2021 21:34:00 +0530</lastBuildDate>
     
 	<atom:link href="https://www.shrayas.com/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Quick access with SystemTrayMenu</title>
+      <link>https://www.shrayas.com/posts/quick-access-everything-with-systemtraymenu/</link>
+      <pubDate>Thu, 05 Aug 2021 21:34:00 +0530</pubDate>
+      
+      <guid>https://www.shrayas.com/posts/quick-access-everything-with-systemtraymenu/</guid>
+      <description>Problem Being head of engineering at a firm means having to juggle a lot of context. And in this quest, I am always looking for ways to optimize my workflow. I can (greatly) simplify all of the work I do into these categories:
+ Talking to folks &amp;ndash; Zoom  Usually via pre defined links - My personal link / Standup link / My founder&amp;rsquo;s personal link   My own work &amp;ndash; Visual Studio  Open a project in Visual Studio from my local directory of projects   Collaboration &amp;ndash; GitHub  Open a project in GitHub to log an issue / review a pull request    A tool that I already use quite extensively is Key Pirinha which is the Alfred/Spotlight/Launchy equivalent for windows and is blazing fast.</description>
+    </item>
     
     <item>
       <title>Yoga Revisited</title>
@@ -91,7 +101,7 @@ The general way to host apps on a Linux box is to have a NGINX reverse proxy in 
       <pubDate>Wed, 09 Dec 2015 21:30:00 +0530</pubDate>
       
       <guid>https://www.shrayas.com/posts/asp-net-5-npgsql-linux-mono-4-2/</guid>
-      <description>Background Logic Soft&amp;lsquo;s primary application is a Windows based application written in C# using Windows.Forms. So when Microsoft announced ASP .NET 5 RC1, needless to say, we were quite excited.
+      <description>Background Logic Soft&amp;rsquo;s primary application is a Windows based application written in C# using Windows.Forms. So when Microsoft announced ASP .NET 5 RC1, needless to say, we were quite excited.
 We picked it up and started our experimentation - writing smaller applications and porting some of our side projects to the CoreCLR platform. As long as we didn&amp;rsquo;t go to the place that needed WIN32 APIs, it worked seamlessly.
 With a small sum of experience, we took up the task of writing one of our internal dashboards with it.</description>
     </item>

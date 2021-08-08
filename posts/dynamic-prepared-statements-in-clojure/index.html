@@ -84,7 +84,7 @@ command line or in <code>project.clj</code> format.</p>
 <h4 id="lein-try">lein-try</h4>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">$ lein try org.clojure/java.jdbc &#34;0.3.0&#34; org.postgresql/postgresql &#34;9.2-1003-jdbc4&#34;
 </code></pre></div><h4 id="projectclj">project.clj</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#e6db74">:dependencies</span> [<span style="color:#75715e">;...</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#e6db74">:dependencies</span> [<span style="color:#75715e">;...</span>
                [org.clojure/java.jdbc <span style="color:#e6db74">&#34;0.3.0&#34;</span>]
                [org.postgresql/postgresql <span style="color:#e6db74">&#34;9.2-1003-jdbc4&#34;</span>]]
 </code></pre></div><h3 id="querying">Querying</h3>
@@ -191,7 +191,7 @@ among the only places where one can <em>define</em> things in clojure.</p>
 </span><span style="color:#e6db74">                           where i.type = 1&#34;</span>
                    <span style="color:#e6db74">:params</span> []}
 
-        <span style="color:#75715e">;...</span>
+        <span style="color:#75715e">;...</span>
 </code></pre></div><p>Based on the presence of the filters I had to append a piece of text to the 
 query and an argument to the argument list.</p>
 <p>For discussion purposes I&rsquo;ve abstracted the part that ensures that <code>author</code>,
@@ -222,7 +222,7 @@ query and parameter appended</p>
 </code></pre></div><p>With the <code>add-to-prepared-statement</code> function in my arsenal, appending to
 <code>ps-params</code> became easier and the <code>let</code> definition of <code>filter-titles</code> could be
 extended with</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#75715e">;...</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#75715e">;...</span>
 ps-params (<span style="color:#66d9ef">if </span>author
             (<span style="color:#a6e22e">add-to-prepared-statement</span> ps-params
                                        <span style="color:#e6db74">&#34;and a.id = ?&#34;</span>
@@ -233,7 +233,7 @@ ps-params (<span style="color:#66d9ef">if </span>publisher
                                        <span style="color:#e6db74">&#34;and p.id = ?&#34;</span>
                                        publisher)
             ps-params)
-<span style="color:#75715e">;...</span>
+<span style="color:#75715e">;...</span>
 </code></pre></div><p>Okay! So far so good.</p>
 <p>At this point though, I hit another road block because based on the amount of
 words in <code>title-part</code>, I had to dynamically append that many <code>and upper(i.title) like ?</code> clauses into <code>:query</code> and that many values into
@@ -261,7 +261,7 @@ occurrences of whatever is specified.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">let </span>[title-part-splits (<span style="color:#a6e22e">clean-and-split</span> title-parts)
       no-of-parts (count title-part-splits)
       title-part-queries (repeat no-of-parts <span style="color:#e6db74">&#34;and upper(i.title) = ?&#34;</span>)
-      <span style="color:#75715e">;...</span>
+      <span style="color:#75715e">;...</span>
 </code></pre></div><p>Now that I had a vector containing as many parts I wanted to be appended into the
 query, I just used a simple <code>reduce</code> to put them all together.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">let </span>[title-part-splits (<span style="color:#a6e22e">clean-and-split</span> title-parts)
@@ -269,7 +269,7 @@ query, I just used a simple <code>reduce</code> to put them all together.</p>
       where-clause (reduce <span style="color:#f92672">#</span>(str %1 <span style="color:#e6db74">&#34; &#34;</span> %2)
                            (repeat no-of-parts 
                                    <span style="color:#e6db74">&#34;and upper(i.title) = ?&#34;</span>))
-      <span style="color:#75715e">;...</span>
+      <span style="color:#75715e">;...</span>
 </code></pre></div><p>before calling <code>add-to-prepared-statement</code>, I needed to append and prepend a
 <code>%</code> character to all the parts of the title and convert them to upper case.
 This was simple enough with a map function</p>
@@ -280,7 +280,7 @@ This was simple enough with a map function</p>
                                    <span style="color:#e6db74">&#34;and upper(i.title) = ?&#34;</span>))
       where-clause-values (map <span style="color:#f92672">#</span>(str <span style="color:#e6db74">&#34;%&#34;</span> (<span style="color:#a6e22e">str/upper-case</span> %) <span style="color:#e6db74">&#34;%&#34;</span>)
                                title-part-splits)
-      <span style="color:#75715e">;...</span>
+      <span style="color:#75715e">;...</span>
 </code></pre></div><p>Soon enough I hit the next road block with the <code>add-to-prepared-statement</code>
 function since I had originally only intended for it to take a <strong>single</strong>
 <code>where-clause-value</code>. Now I had a vector whose contents needed to be appended
@@ -305,7 +305,7 @@ guide that helped me understand when to use <code>coll?</code>, <code>sequential
 other collection/sequence comparison functions.</p>
 <p>With these modifications, I could now extend the <code>let</code> of the original
 <code>filter-titles</code> function</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#75715e">;...</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#75715e">;...</span>
 ps-params (<span style="color:#66d9ef">if </span>title-parts
             (<span style="color:#66d9ef">let </span>[title-part-splits (<span style="color:#a6e22e">clean-and-split</span> title-parts)
                   no-of-parts (count title-part-splits)
@@ -318,14 +318,14 @@ ps-params (<span style="color:#66d9ef">if </span>title-parts
                                          where-clause
                                          where-clause-values))
             ps-params)
-<span style="color:#75715e">;...</span>
+<span style="color:#75715e">;...</span>
 </code></pre></div><p>By the end of this, in <code>ps-params</code>, I had all I wanted to create the prepared
 statement to pass to jdbc&rsquo;s <code>query</code> function.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#75715e">;...</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#75715e">;...</span>
 prepared-statement (-&gt; []
                        (conj (<span style="color:#e6db74">:query</span> ps-params))
                        (into (<span style="color:#e6db74">:params</span> ps-params)))
-<span style="color:#75715e">;...</span>
+<span style="color:#75715e">;...</span>
 </code></pre></div><p>Which really left the body of the <code>filter-titles</code> function to be as simple as</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#a6e22e">j/query</span> conn
          prepared-statement)
@@ -408,8 +408,8 @@ beginner like me with their first project.</p>
 	</article>
 </main>
 <footer>
-<hr><a class="soc" href="https://github.com/shrayasr" title="GitHub"><i data-feather="github"></i></a>|<a class="soc" href="https://twitter.com/shrayasr" title="Twitter"><i data-feather="twitter"></i></a>|⚡️
-	2020  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+<hr><a class="soc" href="https://github.com/shrayasr" title="GitHub"><i data-feather="github"></i></a>|<a class="soc" href="https://twitter.com/shrayasr" title="Twitter"><i data-feather="twitter"></i></a>|<a class="soc" href="mailto:shrayasr@gmail.com" title="Email"><i data-feather="mail"></i></a>|⚡️
+	2021  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
 </footer>
 
 

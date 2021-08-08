@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Quick access with SystemTrayMenu - Shrayas</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="Quick access with SystemTrayMenu" />
+<meta property="og:description" content="Problem Being head of engineering at a firm means having to juggle a lot of context. And in this quest, I am always looking for ways to optimize my workflow. I can (greatly) simplify all of the work I do into these categories:
+ Talking to folks &ndash; Zoom  Usually via pre defined links - My personal link / Standup link / My founder&rsquo;s personal link   My own work &ndash; Visual Studio  Open a project in Visual Studio from my local directory of projects   Collaboration &ndash; GitHub  Open a project in GitHub to log an issue / review a pull request    A tool that I already use quite extensively is Key Pirinha which is the Alfred/Spotlight/Launchy equivalent for windows and is blazing fast." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://www.shrayas.com/posts/quick-access-everything-with-systemtraymenu/" />
+<meta property="article:published_time" content="2021-08-05T21:34:00+05:30" />
+<meta property="article:modified_time" content="2021-08-05T21:34:00+05:30" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Quick access with SystemTrayMenu"/>
+<meta name="twitter:description" content="Problem Being head of engineering at a firm means having to juggle a lot of context. And in this quest, I am always looking for ways to optimize my workflow. I can (greatly) simplify all of the work I do into these categories:
+ Talking to folks &ndash; Zoom  Usually via pre defined links - My personal link / Standup link / My founder&rsquo;s personal link   My own work &ndash; Visual Studio  Open a project in Visual Studio from my local directory of projects   Collaboration &ndash; GitHub  Open a project in GitHub to log an issue / review a pull request    A tool that I already use quite extensively is Key Pirinha which is the Alfred/Spotlight/Launchy equivalent for windows and is blazing fast."/>
+<script src="https://www.shrayas.com/js/feather.min.js"></script>
+	
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="screen" href="https://www.shrayas.com/css/main.css" />
+</head>
+<body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://www.shrayas.com/">Shrayas</a>
+	</div>
+	<nav>
+		
+		<a href="/">Home</a>
+		
+		<a href="/posts">Blog</a>
+		
+		<a href="/tags">Tags</a>
+		
+		<a href="/about">About</a>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">Quick access with SystemTrayMenu</h1>
+			<div class="meta">Posted on Aug 5, 2021</div>
+		</div>
+		
+
+		<section class="body">
+			<h1 id="problem">Problem</h1>
+<p>Being head of engineering at a firm means having to juggle a lot of context. And in this quest, I am always looking for ways to optimize my workflow. I can (greatly) simplify all of the work I do into these categories:</p>
+<ol>
+<li>Talking to folks &ndash; Zoom
+<ul>
+<li>Usually via pre defined links - My personal link / Standup link / My founder&rsquo;s personal link</li>
+</ul>
+</li>
+<li>My own work &ndash; Visual Studio
+<ul>
+<li>Open a project in Visual Studio from my local directory of projects</li>
+</ul>
+</li>
+<li>Collaboration &ndash; GitHub
+<ul>
+<li>Open a project in GitHub to log an issue / review a pull request</li>
+</ul>
+</li>
+</ol>
+<p>A tool that I already use quite extensively is <a href="https://keypirinha.com/">Key Pirinha</a> which is the Alfred/Spotlight/Launchy equivalent for windows and is blazing fast. I could do all of the above tasks in it in some fashion but it doesn&rsquo;t do much justice and needs a lot of setup.</p>
+<p>I was looking for a way to organize all of this together and have one place to access them from - without me having to code anything for it. In other words, I was looking for a better start menu - one that I could entirely control myself.</p>
+<h1 id="my-solution">My Solution</h1>
+<p>In my search for a solution, GitHub one day suggested a project on the home page - <a href="https://github.com/Hofknecht/SystemTrayMenu">SystemTrayMenu</a> by <a href="https://twitter.com/MarkusHofknecht">Markus Hofknecht</a>. I was intrigued just looking at the name and I checked it out.</p>
+<blockquote>
+<p>SystemTrayMenu is a free, open-source start menu alternative for Microsoft Windows. It offers a clear, personalized menu in the system tray. Files, links and folders are organized in several levels as drop-down menus.</p>
+</blockquote>
+<p><img src="https://user-images.githubusercontent.com/52528841/90009201-ee0c9680-dc9d-11ea-9b8a-b34108152f9b.gif" alt=""></p>
+<p>I was immediately sold! This seemed like the right tool for me to use to build out my requirement on.</p>
+<h2 id="projects">Projects</h2>
+<p>To get a feel for things, I begun by wanting to solve the hardest of my problems - #2 - Opening a project in VS from my local directory. I just gave my <code>~/work/code</code> directory to STM and was able to on demand open up any folder and its associated project file in my IDE - This improved my productivity greatly! The search is pretty great too, its not fuzzy but then it solves the problem well enough.</p>
+<p>With this confidence, I wanted to take it forward and apply it to the other parts of my workflow. The biggest problem in wanting to solve all 3 problems is that I <strong>did not</strong> want to rearrange any part of my folder structure to support usage via STM.</p>
+<p>STM has a fantastic feature of following links. This means that I can make a link called <code>projects</code> to my <code>~/work/code</code> folder in a <code>~/STM</code> folder and start STM pointing to <code>~/STM</code> and it will follow <code>projects -&gt; ~/work/code</code> and allow me to browse it. This makes it super easy for anyone to set up their &ldquo;quick access&rdquo; folders by just creating shortcuts.</p>
+<p>So with that in place, my STM folder started to take shape</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">STM/
+└── projects -&gt; ~/work/code
+</code></pre></div><h2 id="zoom-links">Zoom links</h2>
+<p>Since zoom links are fundamentally just URLs, I can just create shortcuts to them in another directory. To create a URL shortcut on windows, we have to create a file and do 2 things</p>
+<ol>
+<li>
+<p>Use the extension <code>.url</code></p>
+</li>
+<li>
+<p>Use the following content in the file</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">[InternetShortcut]
+URL=http://shrayas.com
+</code></pre></div></li>
+</ol>
+<p>So with this, I then created the required zoom URL links and put them into my STM folder under the subdirectory <code>zoom</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">STM/
+├── projects -&gt; ~/work/code
+└── zoom/
+    ├── standup.url
+    ├── my.url
+    └── name1.url
+</code></pre></div><h2 id="github">GitHub</h2>
+<p>This was the part that took me some time. On a daily basis, I have to review code in / file issues on / share links to a quite a sum of projects. And for that it is important that I can open the repo on GitHub quickly.</p>
+<p>I am not a fan of GitHub&rsquo;s search. I think its slow and many a time, doesn&rsquo;t throw up the result that I am expecting. Because of this, a while ago .. I wrote a small program for myself to help me with this and called it GitHub Browse</p>
+<p><img src="/img/STM/ghbrowse1.png" alt=""></p>
+<p><img src="/img/STM/ghbrowse2.png" alt=""></p>
+<p>It was a quick way for me to open any project that I was interested in. The data was stored as a JSON file that I could refresh using my Personal Access Token from GitHub. It worked fine.</p>
+<p>Since I was moving my workflow to STM, I thought it be wise to consolidate it over there instead of maintaining a separate program for this. So I modified the program to instead spit out <code>.url</code> files linking to all the repositories into a <code>gh</code> folder under the <code>STM</code> folder.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">STM/
+├── projects -&gt; ~/work/code
+├── zoom/
+│   ├── standup.url
+│   ├── my.url
+│   └── name1.url
+└── gh/
+    ├── project1.url
+    ├── project2.url
+    └── project3.url
+</code></pre></div><p>An unfortunate downside of this was that I lost the ability to directly go to issues or PRs or to just copy the link.. but those are usually just a click away so I was OK with making that compromise. This meant that I had one less piece of code to maintain :)</p>
+<h2 id="cleaning-up">Cleaning up</h2>
+<p>I would like to use the same STM folder for some personal stuff too, so I just cleaned things up my moving my projects and the GitHub links into a <code>work</code> folder</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">STM/
+├── work/
+│   ├── projects -&gt; ~/work/code
+│   └── gh/
+│       ├── project1.url
+│       ├── project2.url
+│       └── project3.url
+└── zoom/
+    ├── standup.url
+    ├── my.url
+    └── name1.url
+</code></pre></div><p>And I was done! It just works​!</p>
+<p><img src="/img/STM/stm.gif" alt=""></p>
+<h1 id="conclusion">Conclusion</h1>
+<p>If you&rsquo;re looking for a project that will help you to optimize your workflow and allow you to quickly access URLs or folders on your file system, do consider <a href="https://github.com/Hofknecht/SystemTrayMenu">SystemTrayMenu</a>. It is a fantastic tool to add to your arsenal.</p>
+<p>Always scratch your itch. It can lead down wonderful paths of exploration and learning. Being Head of Engineering means I don&rsquo;t spend too much time writing code. This experiment of mine allowed me to jump back into my coding roots and figure things out - I had a lot of fun! :) I even ended up automating the process of creating the <code>STM</code> directory into a nice little C# DSL that I ended up calling <em>Quick</em> and looks like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">new</span> QuickBase(
+  <span style="color:#66d9ef">new</span> QuickFolder(<span style="color:#e6db74">&#34;work&#34;</span>, 
+    <span style="color:#66d9ef">new</span> QuickFolder(<span style="color:#e6db74">&#34;gh&#34;</span>, <span style="color:#66d9ef">new</span> QuickGithubDump(GITHUB_ACCESS_TOKEN)),
+    <span style="color:#66d9ef">new</span> QuickFolderShortcut(<span style="color:#e6db74">&#34;projects&#34;</span>, <span style="color:#e6db74">@&#34;D:\work\code&#34;</span>)
+  ),
+  <span style="color:#66d9ef">new</span> QuickFolder(<span style="color:#e6db74">&#34;zoom&#34;</span>, 
+    <span style="color:#66d9ef">new</span> QuickURLShortcut(<span style="color:#e6db74">&#34;standup&#34;</span>, <span style="color:#e6db74">&#34;https://zoom.us/j/...&#34;</span>),
+    <span style="color:#66d9ef">new</span> QuickURLShortcut(<span style="color:#e6db74">&#34;me&#34;</span>, <span style="color:#e6db74">&#34;https://zoom.us/j/...&#34;</span>)
+  )
+);
+
+quick.Execute(<span style="color:#e6db74">@&#34;D:\quick&#34;</span>);
+</code></pre></div><p>With that, I&rsquo;m signing off. Take care, stay safe, get vaccinated.</p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			<nav class="nav tags">
+				<ul class="tags">
+					
+					<li><a href="/tags/windows">Windows</a></li>
+					
+					<li><a href="/tags/systemtraymenu">SystemTrayMenu</a></li>
+					
+					<li><a href="/tags/hacks">Hacks</a></li>
+					
+					<li><a href="/tags/workflow">Workflow</a></li>
+					
+				</ul>
+			</nav>
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr><a class="soc" href="https://github.com/shrayasr" title="GitHub"><i data-feather="github"></i></a>|<a class="soc" href="https://twitter.com/shrayasr" title="Twitter"><i data-feather="twitter"></i></a>|<a class="soc" href="mailto:shrayasr@gmail.com" title="Email"><i data-feather="mail"></i></a>|⚡️
+	2021  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-58698664-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+<script>
+      feather.replace()
+</script>
+
+</div>
+    </body>
+</html>

@@ -7,9 +7,10 @@
 We picked it up and started our experimentation - writing smaller applications and porting some of our side projects to the CoreCLR platform. As long as we didn&rsquo;t go to the place that needed WIN32 APIs, it worked seamlessly.
 With a small sum of experience, we took up the task of writing one of our internal dashboards with it." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.shrayas.com/posts/asp-net-5-npgsql-linux-mono-4-2/" />
+<meta property="og:url" content="https://www.shrayas.com/posts/asp-net-5-npgsql-linux-mono-4-2/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2015-12-09T21:30:00+05:30" />
 <meta property="article:modified_time" content="2015-12-09T21:30:00+05:30" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="ASP .NET 5, Npgsql, Linux &amp; Mono 4.2"/>
 <meta name="twitter:description" content="Background Logic Soft&rsquo;s primary application is a Windows based application written in C# using Windows.Forms. So when Microsoft announced ASP .NET 5 RC1, needless to say, we were quite excited.
@@ -82,7 +83,7 @@ it to <code>4.0.5.1</code> instead.</li>
 on windows but based on CoreCLR. After a few days of adding a major chunk of
 features, we decided to test the app out on Linux and instantly it failed with
 a <code>TimeoutException</code> when trying to open a connection to the Postgres DB.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">System.TimeoutException: The operation has timed out.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">System.TimeoutException: The operation has timed out.
 at Npgsql.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
 at Npgsql.NpgsqlConnector.RawOpen(NpgsqlTimeout timeout)
 at Npgsql.NpgsqlConnector.Open(NpgsqlTimeout timeout)
@@ -131,7 +132,7 @@ my project, and get cracking.</p>
 enthusiasm, I visited <code>http://localhost:5000</code> on my browser only to see it
 never finish. I switched back to the console to check and I saw that the
 request processing was stuck up at one stage:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">&gt; dnx web
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">&gt; dnx web
 Hosting environment: Production
 Now listening on: http://*:5004
 Application started. Press Ctrl+C to shut down.
@@ -153,7 +154,7 @@ issue I was facing, I thought.</p>
 did a <code>dnu restore</code> to bring down dependencies. Post this, I ran <code>dnx web</code> and
 navigated to the URL. To my surprise I <strong>again</strong> hit the same problem. It was
 getting stuck at precisely the same place as earlier:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">&gt; dnx web
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">&gt; dnx web
 Hosting environment: Production
 Now listening on: http://*:5004
 Application started. Press Ctrl+C to shut down.
@@ -177,7 +178,7 @@ filled with quite a few bugs and the recommendation is to pin the version to
 <p>Now, on my Ubuntu box, I had 4.2.1 installed which I now had to uninstall in
 order to replace it with 4.0.5. As with uninstalling any other package, I
 followed the usual steps:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">sudo apt-get remove mono-complete
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">sudo apt-get remove mono-complete
 sudo apt-get purge mono-complete
 sudo apt-get autoremove
 </code></pre></div><h3 id="enter-mono-405">Enter Mono (4.0.5?)</h3>
@@ -185,16 +186,16 @@ sudo apt-get autoremove
 releases</a>
 which was the one I followed in order to pin my Mono version to 4.0.5. I edited
 the <code>/etc/apt/sources.list.d/mono-xamarin.d</code> and changed the line to</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5 main
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5 main
 </code></pre></div><p>Following this I did a <code>sudo apt-get update</code> to bring update the package
 listing and soon enough ended up with this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">W: Conflicting distribution: http://download.mono-project.com wheezy/snapshots/4.0.5 InRelease <span style="color:#f92672">(</span>expected wheezy/snapshots but got wheezy<span style="color:#f92672">)</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">W: Conflicting distribution: http://download.mono-project.com wheezy/snapshots/4.0.5 InRelease <span style="color:#f92672">(</span>expected wheezy/snapshots but got wheezy<span style="color:#f92672">)</span>
 </code></pre></div><p>After some (rather hard) googling, I came across <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=24902">this
 issue</a> filed on Xamarin&rsquo;s
 bugzilla. However this was for installing the <code>3.12.0</code> version and a workaround
 was suggested to suffix a <code>/.</code> to the end of the version. I then updated the <code>mono-xamarin.d</code> file
 to have</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5/. main
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5/. main
 </code></pre></div><p>instead but to no avail. I ended up with the same error message again.</p>
 <p>After some digging around on Mono&rsquo;s <a href="http://download.mono-project.com/repo/debian">download
 server</a> for
@@ -202,7 +203,7 @@ server</a> for
 I noticed that the <a href="http://download.mono-project.com/repo/debian/dists/wheezy/snapshots/4.0.5/InRelease"><code>InRelease</code> file</a>
 for 4.0.5 had the Suite listed as 4.0.5.1. Off a whim, I tried replacing
 4.0.5 with 4.0.5.1 in my <code>mono-xamarin.d</code> file.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5.1/. main
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5.1/. main
 </code></pre></div><p>Running <code>sudo apt-get update</code> post this didn&rsquo;t leave me with the dreaded
 &ldquo;<code>Conflicting distribution</code>&rdquo; error anymore.  After this I just installed the
 <code>mono-complete</code> package as before.</p>
@@ -215,7 +216,7 @@ it to work.</p>
 <hr>
 <p>With mono 4.0.5 installed, I got back to my project and booted it up again
 with <code>dnx web</code>. I visited the URL and finally</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">&gt; dnx web
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">&gt; dnx web
 Hosting environment: DEVELOPMENT
 Now listening on: http://localhost:5000
 Application started. Press Ctrl+C to shut down.
@@ -277,7 +278,7 @@ people and seeking help too in the future.</p>
 </main>
 <footer>
 <hr><a class="soc" href="https://github.com/shrayasr" title="GitHub"><i data-feather="github"></i></a>|<a class="soc" href="https://twitter.com/shrayasr" title="Twitter"><i data-feather="twitter"></i></a>|<a class="soc" href="mailto:shrayasr@gmail.com" title="Email"><i data-feather="mail"></i></a>|⚡️
-	2021  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+	2022  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
 </footer>
 
 

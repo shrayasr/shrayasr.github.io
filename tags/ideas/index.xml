@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Shrayas</copyright>
-    <lastBuildDate>Sun, 16 Jul 2017 15:00:00 +0530</lastBuildDate>
-    
-	<atom:link href="https://www.shrayas.com/tags/ideas/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 16 Jul 2017 15:00:00 +0530</lastBuildDate><atom:link href="https://www.shrayas.com/tags/ideas/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Express solutions elegantly using your programming language</title>
       <link>https://www.shrayas.com/posts/express-solutions-elegantly-using-your-prog-lang/</link>

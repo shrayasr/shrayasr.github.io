@@ -7,11 +7,7 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>© Shrayas</copyright>
-    <lastBuildDate>Wed, 09 Dec 2015 21:30:00 +0530</lastBuildDate>
-    
-	<atom:link href="https://www.shrayas.com/tags/mono/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Wed, 09 Dec 2015 21:30:00 +0530</lastBuildDate><atom:link href="https://www.shrayas.com/tags/mono/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>ASP .NET 5, Npgsql, Linux &amp; Mono 4.2</title>
       <link>https://www.shrayas.com/posts/asp-net-5-npgsql-linux-mono-4-2/</link>

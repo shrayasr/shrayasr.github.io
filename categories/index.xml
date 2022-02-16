@@ -6,10 +6,6 @@
     <description>Recent content in Categories on Shrayas</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <copyright>© Shrayas</copyright>
-    
-	<atom:link href="https://www.shrayas.com/categories/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <copyright>© Shrayas</copyright><atom:link href="https://www.shrayas.com/categories/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

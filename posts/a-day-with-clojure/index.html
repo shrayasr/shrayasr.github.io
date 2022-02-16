@@ -6,9 +6,10 @@
 <meta property="og:description" content="It has been a hectic month for me at Logic Soft. I&rsquo;m working on quite a few design related activities for the upcoming book fairs and other internal office work. In doing all of this, most of my programming related activities have been put on hold.
 This was ok at first, but then it kind of started getting to me. I really enjoy design but then I find it less satisfying than writing programs." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.shrayas.com/posts/a-day-with-clojure/" />
+<meta property="og:url" content="https://www.shrayas.com/posts/a-day-with-clojure/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2015-01-19T00:15:00+05:30" />
 <meta property="article:modified_time" content="2015-01-19T00:15:00+05:30" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="A day with Clojure"/>
 <meta name="twitter:description" content="It has been a hectic month for me at Logic Soft. I&rsquo;m working on quite a few design related activities for the upcoming book fairs and other internal office work. In doing all of this, most of my programming related activities have been put on hold.
@@ -77,7 +78,7 @@ and I was marvelling at the simplicity of representing HTML within clojure. I ha
 heard about the ease of writing <a href="http://en.wikipedia.org/wiki/Domain-specific_language">DSLs</a>
 with Clojure but this just set things into perspective. Here is the first piece
 of Hiccup code I encountered:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">defn </span>common-layout [<span style="color:#f92672">&amp;</span> body]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">defn </span>common-layout [<span style="color:#f92672">&amp;</span> body]
   (<span style="color:#a6e22e">html5</span>
     [<span style="color:#e6db74">:head</span>
       [<span style="color:#e6db74">:title</span> <span style="color:#e6db74">&#34;Address Book&#34;</span>]
@@ -94,7 +95,7 @@ request but a combination of the <a href="https://github.com/marick/Midje">Midje
 framework and <a href="https://github.com/weavejester/ring-mock">ring request mocking</a> 
 provides a really nice platform to work with to write tests. This is one of the 
 more complex tests that we wrote in the project to test the delete functionality:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#a6e22e">fact</span> <span style="color:#e6db74">&#34;Test delete&#34;</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#a6e22e">fact</span> <span style="color:#e6db74">&#34;Test delete&#34;</span>
    (<span style="color:#a6e22e">query/insert-contact&lt;!</span> {<span style="color:#e6db74">:name</span> <span style="color:#e6db74">&#34;A&#34;</span>
                              <span style="color:#e6db74">:phone</span> <span style="color:#e6db74">&#34;1&#34;</span>
                              <span style="color:#e6db74">:email</span> <span style="color:#e6db74">&#34;a@x.com&#34;</span>})
@@ -128,7 +129,7 @@ Clojure&rsquo;s <a href="http://clojuredocs.org/clojure.core/-%3E%3E">Thread las
 <a href="http://www.jarrodctaylor.com/posts/Compojure-Address-Book-Part-3/">part 3</a> of
 the tutorial, Jarrod writes a function <code>next-id</code> to calculate the next id to be
 used when a new contact is being created and the code is like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">defn </span>next-id []
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">defn </span>next-id []
   (<span style="color:#a6e22e">-&gt;&gt;</span>
     <span style="color:#f92672">@</span>contacts
     (map <span style="color:#e6db74">:id</span>)
@@ -141,7 +142,7 @@ last item in the next form. This means that the result of <code>@contacts</code>
 as the last item to <code>(map :id)</code>. Further, the result of that is inserted as the
 last item to <code>(apply max)</code> and so on. The expression, overall would be something
 like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(+ <span style="color:#ae81ff">1</span> (apply max (map <span style="color:#e6db74">:id</span> <span style="color:#f92672">@</span>contacts)))
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(+ <span style="color:#ae81ff">1</span> (apply max (map <span style="color:#e6db74">:id</span> <span style="color:#f92672">@</span>contacts)))
 </code></pre></div><p>Using the thread last macro makes this much easier to read. It feels like
 reading a set of steps and that boosts the understandability of the code. Here 
 is the output at each step:</p>
@@ -185,18 +186,18 @@ to define queries based on the queries in the <code>.sql</code> files.</p>
 <p>To illustrate, <a href="http://www.jarrodctaylor.com/posts/Compojure-Address-Book-Part-4/">Part 4</a>
 of the tutorial talks about replacing the <code>@contacts</code> atom with an actual db.
 Consider the query to select the list of all contacts from the db. It would be:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- name: all-contacts
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#75715e">-- name: all-contacts
 </span><span style="color:#75715e">-- Returns a lits of all the contacts 
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">SELECT</span> name, phone, email <span style="color:#66d9ef">from</span> CONTACTS
-</code></pre></div><p>once you use <code>Yesql.core</code>'s <code>defqueries</code> on a file containing the above sql, it
+</code></pre></div><p>once you use <code>Yesql.core</code>&rsquo;s <code>defqueries</code> on a file containing the above sql, it
 will generate a <code>all-contacts</code> function that we can use for firing the query on
 the db. Here is how we use the <a href="https://github.com/krisajenkins/yesql#one-file-many-queries"><code>defqueries</code></a> 
 method to define a query out of this sql file:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#a6e22e">defqueries</span> <span style="color:#e6db74">&#34;path/to/sql/file.sql&#34;</span> ...)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#a6e22e">defqueries</span> <span style="color:#e6db74">&#34;path/to/sql/file.sql&#34;</span> ...)
 </code></pre></div><p>What this does, is it looks through <code>file.sql</code> and within the module, creates
 methods taking the name from the comment above the query (<code>-- name: all-contacts</code>). 
 Further, this module can be imported from other places and used like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#e6db74">:require</span> path.to.module <span style="color:#e6db74">:as</span> query)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#e6db74">:require</span> path.to.module <span style="color:#e6db74">:as</span> query)
 (print (<span style="color:#a6e22e">query/all-contacts</span>))
 </code></pre></div><p>This would fire the corresponding SQL from the file on the DB.</p>
 <p>I found this a rather interesting coming from a world where queries were written 
@@ -245,7 +246,7 @@ language and its concepts.</p>
 </main>
 <footer>
 <hr><a class="soc" href="https://github.com/shrayasr" title="GitHub"><i data-feather="github"></i></a>|<a class="soc" href="https://twitter.com/shrayasr" title="Twitter"><i data-feather="twitter"></i></a>|<a class="soc" href="mailto:shrayasr@gmail.com" title="Email"><i data-feather="mail"></i></a>|⚡️
-	2021  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+	2022  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
 </footer>
 
 

@@ -7,9 +7,10 @@
 Since a while now,this has been seeing a change. For small installations, usually an instance on the cloud works out cheaper and better. So we&rsquo;ve begun suggesting people to move to AWS when the installation is small enough.
 Turns out, if we&rsquo;re diligent about turning the instances off when we don&rsquo;t need them, a windows box on AWS is actually pretty affordable." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.shrayas.com/posts/generate-a-quick-aws-dashboard-using-linqpad/" />
+<meta property="og:url" content="https://www.shrayas.com/posts/generate-a-quick-aws-dashboard-using-linqpad/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2017-07-31T22:30:00+05:30" />
 <meta property="article:modified_time" content="2017-07-31T22:30:00+05:30" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Generate a quick AWS dashboard using LINQPad"/>
 <meta name="twitter:description" content="Context Logic Soft&rsquo;s mainline product &ndash; WINBDS is an on premise software i.e. we install it at the client location and we support them remotely.
@@ -88,14 +89,14 @@ LINQPad has NuGet integration built in so we can install packages for each of
 the queries that we write.</p>
 <p>We have instances across regions, so let&rsquo;s use a list to keep track of the
 regions we&rsquo;re interested in:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">var</span> regions = <span style="color:#66d9ef">new</span> List&lt;RegionEndpoint&gt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">var</span> regions = <span style="color:#66d9ef">new</span> List&lt;RegionEndpoint&gt;
 {
   RegionEndpoint.USEast1,
   RegionEndpoint.EUWest1,
   RegionEndpoint.APSouthEast1
 }
 </code></pre></div><p>For each of these regions, let&rsquo;s create an AWS client</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> region <span style="color:#66d9ef">in</span> regions)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> region <span style="color:#66d9ef">in</span> regions)
 {
   <span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> AmazonEC2Client(<span style="color:#e6db74">&#34;&lt;AWS Access Key&gt;&#34;</span>, <span style="color:#e6db74">&#34;&lt;AWS Secret Access Key&gt;&#34;</span>, region);
 </code></pre></div><p>For the <code>Access Key</code> and <code>Secret Access Key</code>, the recommended practice is to
@@ -103,7 +104,7 @@ create a user specifically for this purpose from the <a href="https://console.aw
 console</a> and use those
 credentials.</p>
 <h3 id="creating-users-and-policies-on-iam">Creating users and policies on IAM</h3>
-<p>IAM is AWS&rsquo; identity management platform. Here you can create users, attach
+<p>IAM is AWS' identity management platform. Here you can create users, attach
 policies, manage roles, etc. Basically everything to do with managing who and
 how they use your AWS account.</p>
 <p>For our task today, we have to create a user with programmatic access only.
@@ -119,7 +120,7 @@ that we want to be able to run this action on <strong>should</strong> be <code>*
 <code>DescribeInstaces</code> doesn&rsquo;t allow to be specified for a particular resource so
 we <em>have</em> to use the <code>*</code> identifier for the resource (<a href="https://forums.aws.amazon.com/thread.jspa?messageID=512129">relevant thread</a>).</p>
 <p>Our policy looks like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
     <span style="color:#f92672">&#34;Version&#34;</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
     <span style="color:#f92672">&#34;Statement&#34;</span>: [
         {
@@ -139,7 +140,7 @@ we <em>have</em> to use the <code>*</code> identifier for the resource (<a href=
 previous step.</p>
 <p>From here, we call the <code>DescribeInstances</code> function that returns the data
 required for me to proceed. A wee bit of LINQ and we&rsquo;re good to go:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">client
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">client
   .DescribeInstances()
   .Reservations
   .SelectMany(r =&gt; r.Instances)
@@ -168,7 +169,7 @@ makes LINQPad <em>such</em> a compelling tool to work with.</p>
 <p><code>Dump</code> is a function that is available on <strong>every</strong> object within you LINQPad
 queries. It attempts to show your object in the best way possible.</p>
 <p>Let&rsquo;s consider a simple list:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">string</span>&gt; 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">string</span>&gt; 
 {
   <span style="color:#e6db74">&#34;Ramu&#34;</span>,
   <span style="color:#e6db74">&#34;Shamu&#34;</span>,
@@ -176,7 +177,7 @@ queries. It attempts to show your object in the best way possible.</p>
   <span style="color:#e6db74">&#34;Kaalia&#34;</span>
 }
 </code></pre></div><p>And call the <code>.Dump()</code> function on it like so:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">string</span>&gt; 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">string</span>&gt; 
 {
   <span style="color:#e6db74">&#34;Ramu&#34;</span>,
   <span style="color:#e6db74">&#34;Shamu&#34;</span>,
@@ -187,7 +188,7 @@ queries. It attempts to show your object in the best way possible.</p>
 <p><img src="/img/dashboard/simpledump.png" alt="List dump output"></p>
 <p>Neat and concise, right?</p>
 <p>It gets even better. Let&rsquo;s bump it up, consider an object:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">new</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">new</span>
 {
   Name = <span style="color:#e6db74">&#34;Ramu&#34;</span>,
   Siblings = <span style="color:#66d9ef">new</span> [] { <span style="color:#e6db74">&#34;Shamu&#34;</span> },
@@ -200,7 +201,7 @@ queries. It attempts to show your object in the best way possible.</p>
 well formatted too.</p>
 <p>Optionally, if we provide the <code>.Dump()</code> function a string argument, it will
 display it as a title for what is being dumped. Eg:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">new</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">new</span>
 {
   Name = <span style="color:#e6db74">&#34;Ramu&#34;</span>,
   Siblings = <span style="color:#66d9ef">new</span> [] { <span style="color:#e6db74">&#34;Shamu&#34;</span> },
@@ -214,16 +215,16 @@ where we query a DB using LINQ.</p>
 query and run LINQ queries on tables on your DB. Consider a table called
 <code>cities</code> that contains the list of cities in your system. To query and fetch
 the first row, you would do:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">Cities.FirstOrDefault()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">Cities.FirstOrDefault()
 </code></pre></div><p>To print them? <code>.Dump()</code>! So:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">Cities.FirstOrDefault().Dump();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">Cities.FirstOrDefault().Dump();
 </code></pre></div><p>Would give us:</p>
 <p><img src="/img/dashboard/db-city.png" alt="FirstOrDefault dump output"></p>
 <p>Just like an object that we printed before.</p>
 <p>But it gets <em>even</em> better! Consider a <code>Prescription</code> table that has FK
 relations out to 3 other tables &ndash; <code>Representative</code>, <code>Dealer</code> and <code>School</code>. Now
 when I pick up the first record in this list with</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">Prescriptions.FirstOrDefault().Dump();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">Prescriptions.FirstOrDefault().Dump();
 </code></pre></div><p><img src="/img/dashboard/db-fk.png" alt="FK dump output"></p>
 <p>It resolves these dependencies and puts them in place! Absolutely wicked!</p>
 <p>When you&rsquo;re exploring a Database, The <code>Dump()</code> function can be a blessing.
@@ -236,7 +237,7 @@ objects. Nothing special about that.</p>
 <p><img src="/img/dashboard/dump-all-the-thangs.png" alt="DUMP all the things meme"></p>
 <p>We&rsquo;ll call the <code>.Dump()</code> function with <code>region</code> as the argument. This should
 give us a nicely formatted region wise list of instances and their status.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">client
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">client
   .DescribeInstances()
   .Reservations
   .SelectMany(r =&gt; r.Instances)
@@ -312,7 +313,7 @@ cases &ndash; You can scale when the necessity arises</li>
 </main>
 <footer>
 <hr><a class="soc" href="https://github.com/shrayasr" title="GitHub"><i data-feather="github"></i></a>|<a class="soc" href="https://twitter.com/shrayasr" title="Twitter"><i data-feather="twitter"></i></a>|<a class="soc" href="mailto:shrayasr@gmail.com" title="Email"><i data-feather="mail"></i></a>|⚡️
-	2021  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+	2022  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
 </footer>
 
 

@@ -6,9 +6,10 @@
 <meta property="og:description" content="Problem Being head of engineering at a firm means having to juggle a lot of context. And in this quest, I am always looking for ways to optimize my workflow. I can (greatly) simplify all of the work I do into these categories:
  Talking to folks &ndash; Zoom  Usually via pre defined links - My personal link / Standup link / My founder&rsquo;s personal link   My own work &ndash; Visual Studio  Open a project in Visual Studio from my local directory of projects   Collaboration &ndash; GitHub  Open a project in GitHub to log an issue / review a pull request    A tool that I already use quite extensively is Key Pirinha which is the Alfred/Spotlight/Launchy equivalent for windows and is blazing fast." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.shrayas.com/posts/quick-access-everything-with-systemtraymenu/" />
+<meta property="og:url" content="https://www.shrayas.com/posts/quick-access-everything-with-systemtraymenu/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-08-05T21:34:00+05:30" />
 <meta property="article:modified_time" content="2021-08-05T21:34:00+05:30" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Quick access with SystemTrayMenu"/>
 <meta name="twitter:description" content="Problem Being head of engineering at a firm means having to juggle a lot of context. And in this quest, I am always looking for ways to optimize my workflow. I can (greatly) simplify all of the work I do into these categories:
@@ -80,7 +81,7 @@
 <p>With this confidence, I wanted to take it forward and apply it to the other parts of my workflow. The biggest problem in wanting to solve all 3 problems is that I <strong>did not</strong> want to rearrange any part of my folder structure to support usage via STM.</p>
 <p>STM has a fantastic feature of following links. This means that I can make a link called <code>projects</code> to my <code>~/work/code</code> folder in a <code>~/STM</code> folder and start STM pointing to <code>~/STM</code> and it will follow <code>projects -&gt; ~/work/code</code> and allow me to browse it. This makes it super easy for anyone to set up their &ldquo;quick access&rdquo; folders by just creating shortcuts.</p>
 <p>So with that in place, my STM folder started to take shape</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">STM/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">STM/
 └── projects -&gt; ~/work/code
 </code></pre></div><h2 id="zoom-links">Zoom links</h2>
 <p>Since zoom links are fundamentally just URLs, I can just create shortcuts to them in another directory. To create a URL shortcut on windows, we have to create a file and do 2 things</p>
@@ -90,12 +91,12 @@
 </li>
 <li>
 <p>Use the following content in the file</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">[InternetShortcut]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">[InternetShortcut]
 URL=http://shrayas.com
 </code></pre></div></li>
 </ol>
 <p>So with this, I then created the required zoom URL links and put them into my STM folder under the subdirectory <code>zoom</code></p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">STM/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">STM/
 ├── projects -&gt; ~/work/code
 └── zoom/
     ├── standup.url
@@ -108,7 +109,7 @@ URL=http://shrayas.com
 <p><img src="/img/STM/ghbrowse2.png" alt=""></p>
 <p>It was a quick way for me to open any project that I was interested in. The data was stored as a JSON file that I could refresh using my Personal Access Token from GitHub. It worked fine.</p>
 <p>Since I was moving my workflow to STM, I thought it be wise to consolidate it over there instead of maintaining a separate program for this. So I modified the program to instead spit out <code>.url</code> files linking to all the repositories into a <code>gh</code> folder under the <code>STM</code> folder.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">STM/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">STM/
 ├── projects -&gt; ~/work/code
 ├── zoom/
 │   ├── standup.url
@@ -121,7 +122,7 @@ URL=http://shrayas.com
 </code></pre></div><p>An unfortunate downside of this was that I lost the ability to directly go to issues or PRs or to just copy the link.. but those are usually just a click away so I was OK with making that compromise. This meant that I had one less piece of code to maintain :)</p>
 <h2 id="cleaning-up">Cleaning up</h2>
 <p>I would like to use the same STM folder for some personal stuff too, so I just cleaned things up my moving my projects and the GitHub links into a <code>work</code> folder</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">STM/
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">STM/
 ├── work/
 │   ├── projects -&gt; ~/work/code
 │   └── gh/
@@ -137,7 +138,7 @@ URL=http://shrayas.com
 <h1 id="conclusion">Conclusion</h1>
 <p>If you&rsquo;re looking for a project that will help you to optimize your workflow and allow you to quickly access URLs or folders on your file system, do consider <a href="https://github.com/Hofknecht/SystemTrayMenu">SystemTrayMenu</a>. It is a fantastic tool to add to your arsenal.</p>
 <p>Always scratch your itch. It can lead down wonderful paths of exploration and learning. Being Head of Engineering means I don&rsquo;t spend too much time writing code. This experiment of mine allowed me to jump back into my coding roots and figure things out - I had a lot of fun! :) I even ended up automating the process of creating the <code>STM</code> directory into a nice little C# DSL that I ended up calling <em>Quick</em> and looks like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">new</span> QuickBase(
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp"><span style="color:#66d9ef">new</span> QuickBase(
   <span style="color:#66d9ef">new</span> QuickFolder(<span style="color:#e6db74">&#34;work&#34;</span>, 
     <span style="color:#66d9ef">new</span> QuickFolder(<span style="color:#e6db74">&#34;gh&#34;</span>, <span style="color:#66d9ef">new</span> QuickGithubDump(GITHUB_ACCESS_TOKEN)),
     <span style="color:#66d9ef">new</span> QuickFolderShortcut(<span style="color:#e6db74">&#34;projects&#34;</span>, <span style="color:#e6db74">@&#34;D:\work\code&#34;</span>)
@@ -176,7 +177,7 @@ quick.Execute(<span style="color:#e6db74">@&#34;D:\quick&#34;</span>);
 </main>
 <footer>
 <hr><a class="soc" href="https://github.com/shrayasr" title="GitHub"><i data-feather="github"></i></a>|<a class="soc" href="https://twitter.com/shrayasr" title="Twitter"><i data-feather="twitter"></i></a>|<a class="soc" href="mailto:shrayasr@gmail.com" title="Email"><i data-feather="mail"></i></a>|⚡️
-	2021  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+	2022  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
 </footer>
 
 

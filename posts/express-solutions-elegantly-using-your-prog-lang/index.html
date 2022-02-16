@@ -7,9 +7,10 @@
 Although we use the C# programming language here,the ideas shared in this post aren&rsquo;t specific to it and can be applied to any high level language you are working with.
 Problem Recently, for a customer requirement we had to work with a document that has both metadata and data." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://www.shrayas.com/posts/express-solutions-elegantly-using-your-prog-lang/" />
+<meta property="og:url" content="https://www.shrayas.com/posts/express-solutions-elegantly-using-your-prog-lang/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2017-07-16T15:00:00+05:30" />
 <meta property="article:modified_time" content="2017-07-16T15:00:00+05:30" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Express solutions elegantly using your programming language"/>
 <meta name="twitter:description" content="Introduction The post features a case study of a real life problem and the C# programming language. It explains how we went about trying to best express the solution within the bounds of the C# language.
@@ -62,7 +63,7 @@ has both metadata and data. This doc needed to be parsed and interpreted.
 Metadata is enclosed within <code>#</code> symbols and the associated value is provided
 just after it.</p>
 <p>Example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">...
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">...
 #BookName#Foobar
 #ChapterName#Adventures of Foo
 #SectionName#Introducing Foo
@@ -81,10 +82,10 @@ within these tags.</p>
 <p>A loop that iterates paragraph by paragraph must now check the contents of the
 para for respective tags. For this, the tags have to be declared upfront. One
 way to do this is by declaring simple constants in the class:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> chapterNameTag = <span style="color:#e6db74">&#34;#ChapterName#&#34;</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> chapterNameTag = <span style="color:#e6db74">&#34;#ChapterName#&#34;</span>;
 <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">string</span> sectionNameTag = <span style="color:#e6db74">&#34;#SectionName#&#34;</span>;
 </code></pre></div><p>So the check block becomes:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">if</span> (text.Has(chapterNameTag))
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">if</span> (text.Has(chapterNameTag))
 {
   <span style="color:#75715e">// ...
 </span><span style="color:#75715e"></span>}
@@ -92,7 +93,7 @@ way to do this is by declaring simple constants in the class:</p>
 on top of the <code>StartsWith</code> function to do the check case insensitively.)</p>
 <p>Simple constants work but I could do better, so I pulled out all the tags and
 moved them to a nested private class as public constants, so:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Parser</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Parser</span>
 {
   <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tags</span>
   {
@@ -102,7 +103,7 @@ moved them to a nested private class as public constants, so:</p>
 </span><span style="color:#75715e"></span>  }
 }
 </code></pre></div><p>The checks now become:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">if</span> (text.Has(Tags.ClassName))
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">if</span> (text.Has(Tags.ClassName))
 {
   <span style="color:#75715e">// ...
 </span><span style="color:#75715e"></span>}
@@ -113,7 +114,7 @@ declared as just constants in the class</p>
 <p>Once we have identified the tag, the next step is to extract the <code>&lt;name&gt;</code>
 portion from it. In our case, we&rsquo;d like to get out the <strong>Introduction to Foo</strong> from
 the <code>#SectionName#</code> tag. The simplest and initial approach to this was:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">if</span> (text.Has(Tags.SectionName))
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">if</span> (text.Has(Tags.SectionName))
 {
   parsedDocument.SectionName = ExtractTextFromTag(text, Tags.SectionName);
 }
@@ -121,7 +122,7 @@ the <code>#SectionName#</code> tag. The simplest and initial approach to this wa
 kind of didn&rsquo;t <em>sit</em> for me (Pun intended). I thought it belongs better inside
 the <code>Tags</code> class.</p>
 <p>To satisfy my want, here&rsquo;s what I <em>could</em> do:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">if</span> (text.Has(Tags.SectionName))
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">if</span> (text.Has(Tags.SectionName))
 {
   parsedDocument.SectionName = Tags.ExtractFromText(text, Tags.SectionName));
 }
@@ -129,7 +130,7 @@ the <code>Tags</code> class.</p>
 repetition of <code>Tags.SectionName</code>. I wanted to be able to call a method on
 <code>Tags.SectionName</code> to parse it out. Think of it like calling <code>DateTime.Parse</code>.</p>
 <p>This is what I <em>wanted</em>:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">parsedDocument.SectionName = Tags.SectionName.Parse(text);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">parsedDocument.SectionName = Tags.SectionName.Parse(text);
 </code></pre></div><p>Hard to achieve, I thought since we&rsquo;ve declared <code>Tags.SectionName</code> as a string.</p>
 <p>The first thought was to add an <strong>extension</strong> method on the string class (like
 we did for the <code>Has</code> function). But this is a dead end since it would be
@@ -146,30 +147,30 @@ if it is treated as another type. Think of it like explicit type casting (a la
 <code>OtherType otherType = (OtherType)myType</code>) but just implicit.</p>
 <p>With that in mind, I defined a <code>Tag</code> class like so:</p>
 <p>(Note: Error handling avoided for the same of brevity and discussion)</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tag</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tag</span>
 {
-    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">string</span> _value;
+    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">string</span> <span style="color:#ae81ff">_</span><span style="color:#66d9ef">value</span>;
     
     <span style="color:#66d9ef">public</span> Tag(<span style="color:#66d9ef">string</span> tag) 
-        =&gt; _value = tag;
+        =&gt; <span style="color:#ae81ff">_</span><span style="color:#66d9ef">value</span> = tag;
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">string</span> Parse(<span style="color:#66d9ef">string</span> textWithTag)
-        =&gt; Regex.Replace(textWithTag, _value, <span style="color:#e6db74">&#34;&#34;</span>, RegexOptions.IgnoreCase);
+        =&gt; Regex.Replace(textWithTag, <span style="color:#ae81ff">_</span><span style="color:#66d9ef">value</span>, <span style="color:#e6db74">&#34;&#34;</span>, RegexOptions.IgnoreCase);
 
     <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">implicit</span> <span style="color:#66d9ef">operator</span> <span style="color:#66d9ef">string</span>(Tag t)
-        =&gt; t._value;
+        =&gt; t.<span style="color:#ae81ff">_</span><span style="color:#66d9ef">value</span>;
 }
 </code></pre></div><p>Internally a <code>Tag</code> is just a value, so we mandate a tag to contain a value by
 accepting it in its constructor.</p>
 <p>This is followed by the definition of the <code>Parse</code> function. It takes the text
 with the tag (say <code>#SectionName#Introduction to Foo</code>) and strips out the
-<code>#SectionName#</code> part ignoring the case. We use <code>System.Text</code>'s <code>Regex</code> class to
+<code>#SectionName#</code> part ignoring the case. We use <code>System.Text</code>&rsquo;s <code>Regex</code> class to
 do this for us. Simple and straightforward.</p>
 <p>What follows next is the usage of the <code>implicit operator string</code> which tells
 C#: <em>&ldquo;When this class is used as a <code>string</code>, return the <code>value</code> property&rdquo;</em>.</p>
 <p><strong>SUUUPER neat. WOO!</strong></p>
 <p>Now this allowed me to redefine the original <code>Tags</code> class like so:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Parser</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Parser</span>
 {
   <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Tags</span>
   {
@@ -180,7 +181,7 @@ C#: <em>&ldquo;When this class is used as a <code>string</code>, return the <cod
 }
 </code></pre></div><p>Which means that I can now use this as <strong>both</strong> a string, and an instance on which
 I have a parse method. So my <code>if</code> condition and the parse block becomes:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">if</span> (text.Has(Tags.SectionName))
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">if</span> (text.Has(Tags.SectionName))
 {
     parsedDocument.SectionName = Tags.SectionName.Parse(text);
 }
@@ -227,7 +228,7 @@ off of on a lazy Sunday morning.</p>
 </main>
 <footer>
 <hr><a class="soc" href="https://github.com/shrayasr" title="GitHub"><i data-feather="github"></i></a>|<a class="soc" href="https://twitter.com/shrayasr" title="Twitter"><i data-feather="twitter"></i></a>|<a class="soc" href="mailto:shrayasr@gmail.com" title="Email"><i data-feather="mail"></i></a>|⚡️
-	2021  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+	2022  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
 </footer>
 
 

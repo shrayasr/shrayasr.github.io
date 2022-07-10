@@ -83,33 +83,33 @@ REPL before using it in the project itself.</p>
 <p>These are my dependencies both in <code>lein-try</code> format for you to throw into the
 command line or in <code>project.clj</code> format.</p>
 <h4 id="lein-try">lein-try</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">$ lein try org.clojure/java.jdbc &#34;0.3.0&#34; org.postgresql/postgresql &#34;9.2-1003-jdbc4&#34;
-</code></pre></div><h4 id="projectclj">project.clj</h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#e6db74">:dependencies</span> [<span style="color:#75715e">;...</span>
-               [org.clojure/java.jdbc <span style="color:#e6db74">&#34;0.3.0&#34;</span>]
-               [org.postgresql/postgresql <span style="color:#e6db74">&#34;9.2-1003-jdbc4&#34;</span>]]
-</code></pre></div><h3 id="querying">Querying</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>$ lein try org.clojure/java.jdbc &#34;0.3.0&#34; org.postgresql/postgresql &#34;9.2-1003-jdbc4&#34;
+</span></span></code></pre></div><h4 id="projectclj">project.clj</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span><span style="color:#e6db74">:dependencies</span> [<span style="color:#75715e">;...</span>
+</span></span><span style="display:flex;"><span>               [org.clojure/java.jdbc <span style="color:#e6db74">&#34;0.3.0&#34;</span>]
+</span></span><span style="display:flex;"><span>               [org.postgresql/postgresql <span style="color:#e6db74">&#34;9.2-1003-jdbc4&#34;</span>]]
+</span></span></code></pre></div><h3 id="querying">Querying</h3>
 <p>Issuing queries on to a db with <code>clojure.java.jdbc</code> is really super simple.
 Let us start off by <code>require</code>ing the <code>clojure.java.jdbc</code> namespace in the REPL</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#a6e22e">require</span> <span style="color:#f92672">&#39;</span>[clojure.java.jdbc <span style="color:#e6db74">:as</span> j])
-</code></pre></div><p>A <code>map</code> is used to define the connection parameters.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">def </span>conn {<span style="color:#e6db74">:classname</span> <span style="color:#e6db74">&#34;org.postgresql.Driver&#34;</span>
-           <span style="color:#e6db74">:subprotocol</span> <span style="color:#e6db74">&#34;postgresql&#34;</span>
-           <span style="color:#e6db74">:subname</span> <span style="color:#e6db74">&#34;//localhost:5432/DB&#34;</span>
-           <span style="color:#e6db74">:user</span> <span style="color:#e6db74">&#34;postgres&#34;</span>
-           <span style="color:#e6db74">:password</span> <span style="color:#e6db74">&#34;postgres&#34;</span>})
-</code></pre></div><p>With that defined, we can fire a query to get a list of authors from the DB:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#a6e22e">j/query</span> conn
-         [<span style="color:#e6db74">&#34;select id, trim(name) as name from author order by id&#34;</span>])
-</code></pre></div><p>To fetch a <em>particular</em> author, we use <code>?</code> in the query followed by the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#a6e22e">require</span> <span style="color:#f92672">&#39;</span>[clojure.java.jdbc <span style="color:#e6db74">:as</span> j])
+</span></span></code></pre></div><p>A <code>map</code> is used to define the connection parameters.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">def </span>conn {<span style="color:#e6db74">:classname</span> <span style="color:#e6db74">&#34;org.postgresql.Driver&#34;</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#e6db74">:subprotocol</span> <span style="color:#e6db74">&#34;postgresql&#34;</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#e6db74">:subname</span> <span style="color:#e6db74">&#34;//localhost:5432/DB&#34;</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#e6db74">:user</span> <span style="color:#e6db74">&#34;postgres&#34;</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#e6db74">:password</span> <span style="color:#e6db74">&#34;postgres&#34;</span>})
+</span></span></code></pre></div><p>With that defined, we can fire a query to get a list of authors from the DB:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#a6e22e">j/query</span> conn
+</span></span><span style="display:flex;"><span>         [<span style="color:#e6db74">&#34;select id, trim(name) as name from author order by id&#34;</span>])
+</span></span></code></pre></div><p>To fetch a <em>particular</em> author, we use <code>?</code> in the query followed by the
 parameter in the vector we pass to the <code>query</code> method:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#a6e22e">j/query</span> db/conn
-         [<span style="color:#e6db74">&#34;select id, trim(name) as name from author where id = ?&#34;</span> <span style="color:#ae81ff">1</span>])
-</code></pre></div><p>To insert a new author:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#a6e22e">j/insert!</span> conn
-           <span style="color:#e6db74">:author</span>
-           {<span style="color:#e6db74">:name</span> name}))
-</code></pre></div><p>You can find a lot more great documentation for <code>clojure.java.jdbc</code> over on the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#a6e22e">j/query</span> db/conn
+</span></span><span style="display:flex;"><span>         [<span style="color:#e6db74">&#34;select id, trim(name) as name from author where id = ?&#34;</span> <span style="color:#ae81ff">1</span>])
+</span></span></code></pre></div><p>To insert a new author:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#a6e22e">j/insert!</span> conn
+</span></span><span style="display:flex;"><span>           <span style="color:#e6db74">:author</span>
+</span></span><span style="display:flex;"><span>           {<span style="color:#e6db74">:name</span> name}))
+</span></span></code></pre></div><p>You can find a lot more great documentation for <code>clojure.java.jdbc</code> over on the
 <a href="http://clojure-doc.org/articles/ecosystem/java_jdbc/home.html">API Reference</a>
 or on the <a href="http://clojure-doc.org/articles/ecosystem/java_jdbc/home.html">community driven documentation
 site</a></p>
@@ -119,54 +119,54 @@ author, the publisher and parts of the title itself. The base query to get the
 columns is quite simple for this:</p>
 <p><strong>Note:</strong> let us for the sake of not diverging from the topic, not discuss the
 <em>reasoning</em> behind the schema</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">select</span>  i.isbn, 
-        i.title. 
-        a.name <span style="color:#66d9ef">as</span> author, 
-        p.name <span style="color:#66d9ef">as</span> publisher
-
-<span style="color:#66d9ef">from</span> item <span style="color:#66d9ef">as</span> i
-
-<span style="color:#66d9ef">inner</span> <span style="color:#66d9ef">join</span> author <span style="color:#66d9ef">as</span> a 
-  <span style="color:#66d9ef">on</span> i.author_id <span style="color:#f92672">=</span> a.id
-
-<span style="color:#66d9ef">inner</span> <span style="color:#66d9ef">join</span> publisher <span style="color:#66d9ef">as</span> p 
-  <span style="color:#66d9ef">on</span> i.publisher_id <span style="color:#f92672">=</span> p.id
-
-<span style="color:#66d9ef">where</span> i.<span style="color:#66d9ef">type</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-</code></pre></div><p>If an Author is provided, the query needs to be appended with</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">and</span> a.id <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
-</code></pre></div><p>If a Publisher is provided, the query needs to be appended with</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">and</span> p.id <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
-</code></pre></div><p>If parts of a title are provided, say <strong>Art</strong> and <strong>Programming</strong>, then the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">select</span>  i.isbn, 
+</span></span><span style="display:flex;"><span>        i.title. 
+</span></span><span style="display:flex;"><span>        a.name <span style="color:#66d9ef">as</span> author, 
+</span></span><span style="display:flex;"><span>        p.name <span style="color:#66d9ef">as</span> publisher
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">from</span> item <span style="color:#66d9ef">as</span> i
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">inner</span> <span style="color:#66d9ef">join</span> author <span style="color:#66d9ef">as</span> a 
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">on</span> i.author_id <span style="color:#f92672">=</span> a.id
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">inner</span> <span style="color:#66d9ef">join</span> publisher <span style="color:#66d9ef">as</span> p 
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">on</span> i.publisher_id <span style="color:#f92672">=</span> p.id
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">where</span> i.<span style="color:#66d9ef">type</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>If an Author is provided, the query needs to be appended with</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">and</span> a.id <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>If a Publisher is provided, the query needs to be appended with</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">and</span> p.id <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p>If parts of a title are provided, say <strong>Art</strong> and <strong>Programming</strong>, then the
 query needs to be appended with</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sql" data-lang="sql"><span style="color:#66d9ef">and</span> <span style="color:#66d9ef">upper</span>(i.title) <span style="color:#66d9ef">like</span> <span style="color:#e6db74">&#39;%ART%&#39;</span> <span style="color:#66d9ef">and</span> <span style="color:#66d9ef">upper</span>(i.title) <span style="color:#66d9ef">like</span> <span style="color:#e6db74">&#39;%PROGRAMMING%&#39;</span>
-</code></pre></div><h3 id="preparing-the-prepared-statement">Preparing the Prepared Statement</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">and</span> <span style="color:#66d9ef">upper</span>(i.title) <span style="color:#66d9ef">like</span> <span style="color:#e6db74">&#39;%ART%&#39;</span> <span style="color:#66d9ef">and</span> <span style="color:#66d9ef">upper</span>(i.title) <span style="color:#66d9ef">like</span> <span style="color:#e6db74">&#39;%PROGRAMMING%&#39;</span>
+</span></span></code></pre></div><h3 id="preparing-the-prepared-statement">Preparing the Prepared Statement</h3>
 <p>We now know that for substitution, we just need to have <code>?</code> in the query string
 and pass in the arguments appropriately. So considering all the filter are
 applied as in the last section, our call to <code>query</code> should be something like
 this</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#a6e22e">j/query</span> conn
-         [<span style="color:#e6db74">&#34;select i.isbn, 
-</span><span style="color:#e6db74">                  i.title,
-</span><span style="color:#e6db74">                  a.name as author, 
-</span><span style="color:#e6db74">                  p.name as publisher
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">          from item as i
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">          inner join author as a 
-</span><span style="color:#e6db74">          on i.author_id = a.id
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">          inner join publisher as p 
-</span><span style="color:#e6db74">          on i.publisher_id = p.id
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">          where i.type = 1
-</span><span style="color:#e6db74">                and a.id = ?
-</span><span style="color:#e6db74">                and p.id = ?
-</span><span style="color:#e6db74">                and upper(i.title) like ?
-</span><span style="color:#e6db74">                and upper(i.title) like ?&#34;</span>
-
-          <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#e6db74">&#34;%ART%&#34;</span> <span style="color:#e6db74">&#34;%PROGRAMMING%&#34;</span>])
-</code></pre></div><p>How hard can this be?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#a6e22e">j/query</span> conn
+</span></span><span style="display:flex;"><span>         [<span style="color:#e6db74">&#34;select i.isbn, 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                  i.title,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                  a.name as author, 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                  p.name as publisher
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          from item as i
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          inner join author as a 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          on i.author_id = a.id
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          inner join publisher as p 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          on i.publisher_id = p.id
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">          where i.type = 1
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                and a.id = ?
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                and p.id = ?
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                and upper(i.title) like ?
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                and upper(i.title) like ?&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#e6db74">&#34;%ART%&#34;</span> <span style="color:#e6db74">&#34;%PROGRAMMING%&#34;</span>])
+</span></span></code></pre></div><p>How hard can this be?</p>
 <p>Since the core of clojure&rsquo;s data structures are immutable, thinking about how
 to do such a thing <em>dynamically</em> took me a bit to figure out.</p>
 <p>I took to expressing the construction of the prepared statement in terms of a
@@ -175,25 +175,25 @@ vector of params to be passed in relative to all the <code>?</code>s in the <cod
 <p>This went into a <code>let</code> block in a function <code>filter-titles</code>. All of the prepared
 statement construction had to happen with the <code>let</code> block since that is one
 among the only places where one can <em>define</em> things in clojure.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">defn </span>filter-titles [author publisher title-parts]
-  (<span style="color:#66d9ef">let </span>[ps-params {<span style="color:#e6db74">:query</span> <span style="color:#e6db74">&#34;select i.isbn, 
-</span><span style="color:#e6db74">                                  i.title. 
-</span><span style="color:#e6db74">                                  a.name as author, 
-</span><span style="color:#e6db74">                                  p.name as publisher
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">                           from item as i
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">                           inner join author as a 
-</span><span style="color:#e6db74">                           on i.author_id = a.id
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">                           inner join publisher as p 
-</span><span style="color:#e6db74">                           on i.publisher_id = p.id
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">                           where i.type = 1&#34;</span>
-                   <span style="color:#e6db74">:params</span> []}
-
-        <span style="color:#75715e">;...</span>
-</code></pre></div><p>Based on the presence of the filters I had to append a piece of text to the 
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">defn </span>filter-titles [author publisher title-parts]
+</span></span><span style="display:flex;"><span>  (<span style="color:#66d9ef">let </span>[ps-params {<span style="color:#e6db74">:query</span> <span style="color:#e6db74">&#34;select i.isbn, 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                                  i.title. 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                                  a.name as author, 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                                  p.name as publisher
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                           from item as i
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                           inner join author as a 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                           on i.author_id = a.id
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                           inner join publisher as p 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                           on i.publisher_id = p.id
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                           where i.type = 1&#34;</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#e6db74">:params</span> []}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">;...</span>
+</span></span></code></pre></div><p>Based on the presence of the filters I had to append a piece of text to the 
 query and an argument to the argument list.</p>
 <p>For discussion purposes I&rsquo;ve abstracted the part that ensures that <code>author</code>,
 <code>publisher</code> and <code>title-parts</code> either has some value or <code>nil</code>. This means that
@@ -204,50 +204,50 @@ to <code>:query</code> and the respective parameter to <code>:params</code>, I w
 takes the old <code>ps-params</code>, a <code>where-clause</code> to be appended and a
 <code>where-clause-value</code> to be substituted, if any and returns a new map with the
 query and parameter appended</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">defn </span>add-to-prepared-statement [prepared-statement
-                                 where-clause
-                                 where-clause-value]
-  (<span style="color:#66d9ef">let </span>[{<span style="color:#e6db74">:keys</span> [query params]} prepared-statement]
-    {<span style="color:#e6db74">:query</span> (str query <span style="color:#e6db74">&#34; &#34;</span> where-clause)
-     <span style="color:#e6db74">:params</span> (<span style="color:#66d9ef">if </span>where-clause-value
-               (conj params where-clause-value)
-               params)}))
-</code></pre></div><p>It first extracts the <code>:query</code> and <code>:params</code> from the given prepared statement</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">let </span>[{<span style="color:#e6db74">:keys</span> [query params]} prepared-statement]
-</code></pre></div><p>then, return a map with the where clause appended to <code>:query</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">{<span style="color:#e6db74">:query</span> (str query <span style="color:#e6db74">&#34; &#34;</span> where-clause)
-</code></pre></div><p>And if there is a <code>where-clause-value</code>, <code>conj</code> that into the <code>:params</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#e6db74">:params</span> (<span style="color:#66d9ef">if </span>where-clause-value
-         (conj params where-clause-value)
-         params)}
-</code></pre></div><p>With the <code>add-to-prepared-statement</code> function in my arsenal, appending to
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">defn </span>add-to-prepared-statement [prepared-statement
+</span></span><span style="display:flex;"><span>                                 where-clause
+</span></span><span style="display:flex;"><span>                                 where-clause-value]
+</span></span><span style="display:flex;"><span>  (<span style="color:#66d9ef">let </span>[{<span style="color:#e6db74">:keys</span> [query params]} prepared-statement]
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">:query</span> (str query <span style="color:#e6db74">&#34; &#34;</span> where-clause)
+</span></span><span style="display:flex;"><span>     <span style="color:#e6db74">:params</span> (<span style="color:#66d9ef">if </span>where-clause-value
+</span></span><span style="display:flex;"><span>               (conj params where-clause-value)
+</span></span><span style="display:flex;"><span>               params)}))
+</span></span></code></pre></div><p>It first extracts the <code>:query</code> and <code>:params</code> from the given prepared statement</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">let </span>[{<span style="color:#e6db74">:keys</span> [query params]} prepared-statement]
+</span></span></code></pre></div><p>then, return a map with the where clause appended to <code>:query</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>{<span style="color:#e6db74">:query</span> (str query <span style="color:#e6db74">&#34; &#34;</span> where-clause)
+</span></span></code></pre></div><p>And if there is a <code>where-clause-value</code>, <code>conj</code> that into the <code>:params</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span><span style="color:#e6db74">:params</span> (<span style="color:#66d9ef">if </span>where-clause-value
+</span></span><span style="display:flex;"><span>         (conj params where-clause-value)
+</span></span><span style="display:flex;"><span>         params)}
+</span></span></code></pre></div><p>With the <code>add-to-prepared-statement</code> function in my arsenal, appending to
 <code>ps-params</code> became easier and the <code>let</code> definition of <code>filter-titles</code> could be
 extended with</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#75715e">;...</span>
-ps-params (<span style="color:#66d9ef">if </span>author
-            (<span style="color:#a6e22e">add-to-prepared-statement</span> ps-params
-                                       <span style="color:#e6db74">&#34;and a.id = ?&#34;</span>
-                                       author)
-            ps-params)
-ps-params (<span style="color:#66d9ef">if </span>publisher
-            (<span style="color:#a6e22e">add-to-prepared-statement</span> ps-params
-                                       <span style="color:#e6db74">&#34;and p.id = ?&#34;</span>
-                                       publisher)
-            ps-params)
-<span style="color:#75715e">;...</span>
-</code></pre></div><p>Okay! So far so good.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span><span style="color:#75715e">;...</span>
+</span></span><span style="display:flex;"><span>ps-params (<span style="color:#66d9ef">if </span>author
+</span></span><span style="display:flex;"><span>            (<span style="color:#a6e22e">add-to-prepared-statement</span> ps-params
+</span></span><span style="display:flex;"><span>                                       <span style="color:#e6db74">&#34;and a.id = ?&#34;</span>
+</span></span><span style="display:flex;"><span>                                       author)
+</span></span><span style="display:flex;"><span>            ps-params)
+</span></span><span style="display:flex;"><span>ps-params (<span style="color:#66d9ef">if </span>publisher
+</span></span><span style="display:flex;"><span>            (<span style="color:#a6e22e">add-to-prepared-statement</span> ps-params
+</span></span><span style="display:flex;"><span>                                       <span style="color:#e6db74">&#34;and p.id = ?&#34;</span>
+</span></span><span style="display:flex;"><span>                                       publisher)
+</span></span><span style="display:flex;"><span>            ps-params)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;...</span>
+</span></span></code></pre></div><p>Okay! So far so good.</p>
 <p>At this point though, I hit another road block because based on the amount of
 words in <code>title-part</code>, I had to dynamically append that many <code>and upper(i.title) like ?</code> clauses into <code>:query</code> and that many values into
 <code>:params</code>.</p>
 <p>I could&rsquo;ve done this with a loop but decided that I want to do it functionally.</p>
 <p>So first, I had to write a function to clean and split the given <code>title-parts</code>
 string</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">defn </span>clean-and-split [title-parts]
-  (-&gt; title-parts
-      (<span style="color:#a6e22e">str/trim</span>)
-      (<span style="color:#a6e22e">str/replace</span> <span style="color:#f92672">#</span><span style="color:#e6db74">&#34;\ +&#34;</span> <span style="color:#e6db74">&#34; &#34;</span>)
-      (<span style="color:#a6e22e">str/split</span> <span style="color:#f92672">#</span><span style="color:#e6db74">&#34; &#34;</span>)))
-</code></pre></div><p>For this, I first trim the string, replace multiple spaces with a single space
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">defn </span>clean-and-split [title-parts]
+</span></span><span style="display:flex;"><span>  (-&gt; title-parts
+</span></span><span style="display:flex;"><span>      (<span style="color:#a6e22e">str/trim</span>)
+</span></span><span style="display:flex;"><span>      (<span style="color:#a6e22e">str/replace</span> <span style="color:#f92672">#</span><span style="color:#e6db74">&#34;\ +&#34;</span> <span style="color:#e6db74">&#34; &#34;</span>)
+</span></span><span style="display:flex;"><span>      (<span style="color:#a6e22e">str/split</span> <span style="color:#f92672">#</span><span style="color:#e6db74">&#34; &#34;</span>)))
+</span></span></code></pre></div><p>For this, I first trim the string, replace multiple spaces with a single space
 and split it at the space character to get a list of words. This function uses
 another neat clojure feature called the <strong>Thread first macro</strong> (<code>-&gt;</code>) which I
 spoke a little about in my <a href="http://www.shrayas.com/a-day-with-clojure.html">previous
@@ -259,124 +259,124 @@ out</a>.</p>
 <a href="https://clojuredocs.org/clojure.core/repeat"><code>repeat</code> function</a> in clojure
 which returns a lazy, or if a length is specified, that many number of
 occurrences of whatever is specified.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">let </span>[title-part-splits (<span style="color:#a6e22e">clean-and-split</span> title-parts)
-      no-of-parts (count title-part-splits)
-      title-part-queries (repeat no-of-parts <span style="color:#e6db74">&#34;and upper(i.title) = ?&#34;</span>)
-      <span style="color:#75715e">;...</span>
-</code></pre></div><p>Now that I had a vector containing as many parts I wanted to be appended into the
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">let </span>[title-part-splits (<span style="color:#a6e22e">clean-and-split</span> title-parts)
+</span></span><span style="display:flex;"><span>      no-of-parts (count title-part-splits)
+</span></span><span style="display:flex;"><span>      title-part-queries (repeat no-of-parts <span style="color:#e6db74">&#34;and upper(i.title) = ?&#34;</span>)
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">;...</span>
+</span></span></code></pre></div><p>Now that I had a vector containing as many parts I wanted to be appended into the
 query, I just used a simple <code>reduce</code> to put them all together.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">let </span>[title-part-splits (<span style="color:#a6e22e">clean-and-split</span> title-parts)
-      no-of-parts (count title-part-splits)
-      where-clause (reduce <span style="color:#f92672">#</span>(str %1 <span style="color:#e6db74">&#34; &#34;</span> %2)
-                           (repeat no-of-parts 
-                                   <span style="color:#e6db74">&#34;and upper(i.title) = ?&#34;</span>))
-      <span style="color:#75715e">;...</span>
-</code></pre></div><p>before calling <code>add-to-prepared-statement</code>, I needed to append and prepend a
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">let </span>[title-part-splits (<span style="color:#a6e22e">clean-and-split</span> title-parts)
+</span></span><span style="display:flex;"><span>      no-of-parts (count title-part-splits)
+</span></span><span style="display:flex;"><span>      where-clause (reduce <span style="color:#f92672">#</span>(str %1 <span style="color:#e6db74">&#34; &#34;</span> %2)
+</span></span><span style="display:flex;"><span>                           (repeat no-of-parts 
+</span></span><span style="display:flex;"><span>                                   <span style="color:#e6db74">&#34;and upper(i.title) = ?&#34;</span>))
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">;...</span>
+</span></span></code></pre></div><p>before calling <code>add-to-prepared-statement</code>, I needed to append and prepend a
 <code>%</code> character to all the parts of the title and convert them to upper case.
 This was simple enough with a map function</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">let </span>[title-part-splits (<span style="color:#a6e22e">clean-and-split</span> title-parts)
-      no-of-parts (count title-part-splits)
-      where-clause (reduce <span style="color:#f92672">#</span>(str %1 <span style="color:#e6db74">&#34; &#34;</span> %2)
-                           (repeat no-of-parts 
-                                   <span style="color:#e6db74">&#34;and upper(i.title) = ?&#34;</span>))
-      where-clause-values (map <span style="color:#f92672">#</span>(str <span style="color:#e6db74">&#34;%&#34;</span> (<span style="color:#a6e22e">str/upper-case</span> %) <span style="color:#e6db74">&#34;%&#34;</span>)
-                               title-part-splits)
-      <span style="color:#75715e">;...</span>
-</code></pre></div><p>Soon enough I hit the next road block with the <code>add-to-prepared-statement</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">let </span>[title-part-splits (<span style="color:#a6e22e">clean-and-split</span> title-parts)
+</span></span><span style="display:flex;"><span>      no-of-parts (count title-part-splits)
+</span></span><span style="display:flex;"><span>      where-clause (reduce <span style="color:#f92672">#</span>(str %1 <span style="color:#e6db74">&#34; &#34;</span> %2)
+</span></span><span style="display:flex;"><span>                           (repeat no-of-parts 
+</span></span><span style="display:flex;"><span>                                   <span style="color:#e6db74">&#34;and upper(i.title) = ?&#34;</span>))
+</span></span><span style="display:flex;"><span>      where-clause-values (map <span style="color:#f92672">#</span>(str <span style="color:#e6db74">&#34;%&#34;</span> (<span style="color:#a6e22e">str/upper-case</span> %) <span style="color:#e6db74">&#34;%&#34;</span>)
+</span></span><span style="display:flex;"><span>                               title-part-splits)
+</span></span><span style="display:flex;"><span>      <span style="color:#75715e">;...</span>
+</span></span></code></pre></div><p>Soon enough I hit the next road block with the <code>add-to-prepared-statement</code>
 function since I had originally only intended for it to take a <strong>single</strong>
 <code>where-clause-value</code>. Now I had a vector whose contents needed to be appended
 into the <code>:params</code> vector.</p>
 <p>To do this, I changed the <code>add-to-prepared-statement</code> function and checked if
 the parameter provided was a single value or a <code>sequential</code> and accordingly
 either did a <code>conj</code> or did an <code>into</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">defn </span>add-to-prepared-statement [prepared-statement 
-                                 where-clause 
-                                 where-clause-value]
-  (<span style="color:#66d9ef">let </span>[{<span style="color:#e6db74">:keys</span> [query params]} prepared-statement
-        new-query (str query <span style="color:#e6db74">&#34; &#34;</span> where-clause)
-        new-params (<span style="color:#66d9ef">if </span>where-clause-value
-                     (<span style="color:#66d9ef">if </span>(<span style="color:#a6e22e">sequential?</span> where-clause-value)
-                       (into params where-clause-value)
-                       (conj params where-clause-value))
-                     params)]
-    {<span style="color:#e6db74">:query</span>  new-query
-     <span style="color:#e6db74">:params</span> new-params}))
-</code></pre></div><p><a href="http://www.brainonfire.net/files/seqs-and-colls/main.html">This</a> was a great
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">defn </span>add-to-prepared-statement [prepared-statement 
+</span></span><span style="display:flex;"><span>                                 where-clause 
+</span></span><span style="display:flex;"><span>                                 where-clause-value]
+</span></span><span style="display:flex;"><span>  (<span style="color:#66d9ef">let </span>[{<span style="color:#e6db74">:keys</span> [query params]} prepared-statement
+</span></span><span style="display:flex;"><span>        new-query (str query <span style="color:#e6db74">&#34; &#34;</span> where-clause)
+</span></span><span style="display:flex;"><span>        new-params (<span style="color:#66d9ef">if </span>where-clause-value
+</span></span><span style="display:flex;"><span>                     (<span style="color:#66d9ef">if </span>(<span style="color:#a6e22e">sequential?</span> where-clause-value)
+</span></span><span style="display:flex;"><span>                       (into params where-clause-value)
+</span></span><span style="display:flex;"><span>                       (conj params where-clause-value))
+</span></span><span style="display:flex;"><span>                     params)]
+</span></span><span style="display:flex;"><span>    {<span style="color:#e6db74">:query</span>  new-query
+</span></span><span style="display:flex;"><span>     <span style="color:#e6db74">:params</span> new-params}))
+</span></span></code></pre></div><p><a href="http://www.brainonfire.net/files/seqs-and-colls/main.html">This</a> was a great
 guide that helped me understand when to use <code>coll?</code>, <code>sequential?</code> and the
 other collection/sequence comparison functions.</p>
 <p>With these modifications, I could now extend the <code>let</code> of the original
 <code>filter-titles</code> function</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#75715e">;...</span>
-ps-params (<span style="color:#66d9ef">if </span>title-parts
-            (<span style="color:#66d9ef">let </span>[title-part-splits (<span style="color:#a6e22e">clean-and-split</span> title-parts)
-                  no-of-parts (count title-part-splits)
-                  where-clause (reduce <span style="color:#f92672">#</span>(str %1 <span style="color:#e6db74">&#34; &#34;</span> %2)
-                                       (repeat no-of-parts 
-                                               <span style="color:#e6db74">&#34;and upper(i.title) = ?&#34;</span>))
-                  where-clause-values (map <span style="color:#f92672">#</span>(str <span style="color:#e6db74">&#34;%&#34;</span> (<span style="color:#a6e22e">str/upper-case</span> %) <span style="color:#e6db74">&#34;%&#34;</span>)
-                                           title-part-splits)]
-              (<span style="color:#a6e22e">add-to-prepared-statement</span> ps-params
-                                         where-clause
-                                         where-clause-values))
-            ps-params)
-<span style="color:#75715e">;...</span>
-</code></pre></div><p>By the end of this, in <code>ps-params</code>, I had all I wanted to create the prepared
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span><span style="color:#75715e">;...</span>
+</span></span><span style="display:flex;"><span>ps-params (<span style="color:#66d9ef">if </span>title-parts
+</span></span><span style="display:flex;"><span>            (<span style="color:#66d9ef">let </span>[title-part-splits (<span style="color:#a6e22e">clean-and-split</span> title-parts)
+</span></span><span style="display:flex;"><span>                  no-of-parts (count title-part-splits)
+</span></span><span style="display:flex;"><span>                  where-clause (reduce <span style="color:#f92672">#</span>(str %1 <span style="color:#e6db74">&#34; &#34;</span> %2)
+</span></span><span style="display:flex;"><span>                                       (repeat no-of-parts 
+</span></span><span style="display:flex;"><span>                                               <span style="color:#e6db74">&#34;and upper(i.title) = ?&#34;</span>))
+</span></span><span style="display:flex;"><span>                  where-clause-values (map <span style="color:#f92672">#</span>(str <span style="color:#e6db74">&#34;%&#34;</span> (<span style="color:#a6e22e">str/upper-case</span> %) <span style="color:#e6db74">&#34;%&#34;</span>)
+</span></span><span style="display:flex;"><span>                                           title-part-splits)]
+</span></span><span style="display:flex;"><span>              (<span style="color:#a6e22e">add-to-prepared-statement</span> ps-params
+</span></span><span style="display:flex;"><span>                                         where-clause
+</span></span><span style="display:flex;"><span>                                         where-clause-values))
+</span></span><span style="display:flex;"><span>            ps-params)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;...</span>
+</span></span></code></pre></div><p>By the end of this, in <code>ps-params</code>, I had all I wanted to create the prepared
 statement to pass to jdbc&rsquo;s <code>query</code> function.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure"><span style="color:#75715e">;...</span>
-prepared-statement (-&gt; []
-                       (conj (<span style="color:#e6db74">:query</span> ps-params))
-                       (into (<span style="color:#e6db74">:params</span> ps-params)))
-<span style="color:#75715e">;...</span>
-</code></pre></div><p>Which really left the body of the <code>filter-titles</code> function to be as simple as</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#a6e22e">j/query</span> conn
-         prepared-statement)
-</code></pre></div><p>With this approach, I was able to <em>dynamically</em> create the prepared statement I
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span><span style="color:#75715e">;...</span>
+</span></span><span style="display:flex;"><span>prepared-statement (-&gt; []
+</span></span><span style="display:flex;"><span>                       (conj (<span style="color:#e6db74">:query</span> ps-params))
+</span></span><span style="display:flex;"><span>                       (into (<span style="color:#e6db74">:params</span> ps-params)))
+</span></span><span style="display:flex;"><span><span style="color:#75715e">;...</span>
+</span></span></code></pre></div><p>Which really left the body of the <code>filter-titles</code> function to be as simple as</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#a6e22e">j/query</span> conn
+</span></span><span style="display:flex;"><span>         prepared-statement)
+</span></span></code></pre></div><p>With this approach, I was able to <em>dynamically</em> create the prepared statement I
 wanted without just appending everything into one single query string.</p>
 <p>Here is the whole <code>filter-titles</code> function for completion sakes</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-clojure" data-lang="clojure">(<span style="color:#66d9ef">defn </span>filter-titles [author publisher title-parts]
-  (<span style="color:#66d9ef">let </span>[ps-params {<span style="color:#e6db74">:query</span> <span style="color:#e6db74">&#34;select i.isbn, 
-</span><span style="color:#e6db74">                                  i.title. 
-</span><span style="color:#e6db74">                                  a.name as author, 
-</span><span style="color:#e6db74">                                  p.name as publisher
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">                           from item as i
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">                           inner join author as a 
-</span><span style="color:#e6db74">                           on i.author_id = a.id
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">                           inner join publisher as p 
-</span><span style="color:#e6db74">                           on i.publisher_id = p.id
-</span><span style="color:#e6db74">
-</span><span style="color:#e6db74">                           where i.type = 1&#34;</span>
-                   <span style="color:#e6db74">:params</span> []}
-        ps-params (<span style="color:#66d9ef">if </span>author
-                    (<span style="color:#a6e22e">add-to-prepared-statement</span> ps-params
-                                               <span style="color:#e6db74">&#34;and a.id = ?&#34;</span>
-                                               author)
-                    ps-params)
-        ps-params (<span style="color:#66d9ef">if </span>publisher
-                    (<span style="color:#a6e22e">add-to-prepared-statement</span> ps-params
-                                               <span style="color:#e6db74">&#34;and p.id = ?&#34;</span>
-                                               publisher)
-                    ps-params)
-        ps-params (<span style="color:#66d9ef">if </span>title-parts
-                    (<span style="color:#66d9ef">let </span>[title-part-splits (<span style="color:#a6e22e">clean-and-split</span> title-parts)
-                          no-of-parts (count title-part-splits)
-                          where-clause (reduce <span style="color:#f92672">#</span>(str %1 <span style="color:#e6db74">&#34; &#34;</span> %2)
-                                               (repeat no-of-parts 
-                                                       <span style="color:#e6db74">&#34;and upper(i.title) = ?&#34;</span>))
-                          where-clause-values (map <span style="color:#f92672">#</span>(str <span style="color:#e6db74">&#34;%&#34;</span> (<span style="color:#a6e22e">str/upper-case</span> %) <span style="color:#e6db74">&#34;%&#34;</span>)
-                                                   title-part-splits)]
-                      (<span style="color:#a6e22e">add-to-prepared-statement</span> ps-params
-                                                 where-clause
-                                                 where-clause-values))
-                    ps-params)
-        prepared-statement (-&gt; []
-                               (conj (<span style="color:#e6db74">:query</span> ps-params))
-                               (into (<span style="color:#e6db74">:params</span> ps-params)))]
-    (<span style="color:#a6e22e">j/query</span> conn
-             prepared-statement)))
-</code></pre></div><h3 id="conclusion">Conclusion</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#66d9ef">defn </span>filter-titles [author publisher title-parts]
+</span></span><span style="display:flex;"><span>  (<span style="color:#66d9ef">let </span>[ps-params {<span style="color:#e6db74">:query</span> <span style="color:#e6db74">&#34;select i.isbn, 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                                  i.title. 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                                  a.name as author, 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                                  p.name as publisher
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                           from item as i
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                           inner join author as a 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                           on i.author_id = a.id
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                           inner join publisher as p 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                           on i.publisher_id = p.id
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">                           where i.type = 1&#34;</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#e6db74">:params</span> []}
+</span></span><span style="display:flex;"><span>        ps-params (<span style="color:#66d9ef">if </span>author
+</span></span><span style="display:flex;"><span>                    (<span style="color:#a6e22e">add-to-prepared-statement</span> ps-params
+</span></span><span style="display:flex;"><span>                                               <span style="color:#e6db74">&#34;and a.id = ?&#34;</span>
+</span></span><span style="display:flex;"><span>                                               author)
+</span></span><span style="display:flex;"><span>                    ps-params)
+</span></span><span style="display:flex;"><span>        ps-params (<span style="color:#66d9ef">if </span>publisher
+</span></span><span style="display:flex;"><span>                    (<span style="color:#a6e22e">add-to-prepared-statement</span> ps-params
+</span></span><span style="display:flex;"><span>                                               <span style="color:#e6db74">&#34;and p.id = ?&#34;</span>
+</span></span><span style="display:flex;"><span>                                               publisher)
+</span></span><span style="display:flex;"><span>                    ps-params)
+</span></span><span style="display:flex;"><span>        ps-params (<span style="color:#66d9ef">if </span>title-parts
+</span></span><span style="display:flex;"><span>                    (<span style="color:#66d9ef">let </span>[title-part-splits (<span style="color:#a6e22e">clean-and-split</span> title-parts)
+</span></span><span style="display:flex;"><span>                          no-of-parts (count title-part-splits)
+</span></span><span style="display:flex;"><span>                          where-clause (reduce <span style="color:#f92672">#</span>(str %1 <span style="color:#e6db74">&#34; &#34;</span> %2)
+</span></span><span style="display:flex;"><span>                                               (repeat no-of-parts 
+</span></span><span style="display:flex;"><span>                                                       <span style="color:#e6db74">&#34;and upper(i.title) = ?&#34;</span>))
+</span></span><span style="display:flex;"><span>                          where-clause-values (map <span style="color:#f92672">#</span>(str <span style="color:#e6db74">&#34;%&#34;</span> (<span style="color:#a6e22e">str/upper-case</span> %) <span style="color:#e6db74">&#34;%&#34;</span>)
+</span></span><span style="display:flex;"><span>                                                   title-part-splits)]
+</span></span><span style="display:flex;"><span>                      (<span style="color:#a6e22e">add-to-prepared-statement</span> ps-params
+</span></span><span style="display:flex;"><span>                                                 where-clause
+</span></span><span style="display:flex;"><span>                                                 where-clause-values))
+</span></span><span style="display:flex;"><span>                    ps-params)
+</span></span><span style="display:flex;"><span>        prepared-statement (-&gt; []
+</span></span><span style="display:flex;"><span>                               (conj (<span style="color:#e6db74">:query</span> ps-params))
+</span></span><span style="display:flex;"><span>                               (into (<span style="color:#e6db74">:params</span> ps-params)))]
+</span></span><span style="display:flex;"><span>    (<span style="color:#a6e22e">j/query</span> conn
+</span></span><span style="display:flex;"><span>             prepared-statement)))
+</span></span></code></pre></div><h3 id="conclusion">Conclusion</h3>
 <p>This was the approach that I took for the rest of the reports implemented in
 the system as well. Because of my history with mutating variables all around
 and not <em>thinking functionally</em>, it was hard to reason this out initially. But

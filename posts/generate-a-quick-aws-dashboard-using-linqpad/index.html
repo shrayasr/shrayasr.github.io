@@ -89,22 +89,22 @@ LINQPad has NuGet integration built in so we can install packages for each of
 the queries that we write.</p>
 <p>We have instances across regions, so let&rsquo;s use a list to keep track of the
 regions we&rsquo;re interested in:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">var</span> regions = <span style="color:#66d9ef">new</span> List&lt;RegionEndpoint&gt;
-{
-  RegionEndpoint.USEast1,
-  RegionEndpoint.EUWest1,
-  RegionEndpoint.APSouthEast1
-}
-</code></pre></div><p>For each of these regions, let&rsquo;s create an AWS client</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> region <span style="color:#66d9ef">in</span> regions)
-{
-  <span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> AmazonEC2Client(<span style="color:#e6db74">&#34;&lt;AWS Access Key&gt;&#34;</span>, <span style="color:#e6db74">&#34;&lt;AWS Secret Access Key&gt;&#34;</span>, region);
-</code></pre></div><p>For the <code>Access Key</code> and <code>Secret Access Key</code>, the recommended practice is to
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> regions = <span style="color:#66d9ef">new</span> List&lt;RegionEndpoint&gt;
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  RegionEndpoint.USEast1,
+</span></span><span style="display:flex;"><span>  RegionEndpoint.EUWest1,
+</span></span><span style="display:flex;"><span>  RegionEndpoint.APSouthEast1
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>For each of these regions, let&rsquo;s create an AWS client</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">foreach</span> (<span style="color:#66d9ef">var</span> region <span style="color:#66d9ef">in</span> regions)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">var</span> client = <span style="color:#66d9ef">new</span> AmazonEC2Client(<span style="color:#e6db74">&#34;&lt;AWS Access Key&gt;&#34;</span>, <span style="color:#e6db74">&#34;&lt;AWS Secret Access Key&gt;&#34;</span>, region);
+</span></span></code></pre></div><p>For the <code>Access Key</code> and <code>Secret Access Key</code>, the recommended practice is to
 create a user specifically for this purpose from the <a href="https://console.aws.amazon.com/iam/home#/home">IAM
 console</a> and use those
 credentials.</p>
 <h3 id="creating-users-and-policies-on-iam">Creating users and policies on IAM</h3>
-<p>IAM is AWS' identity management platform. Here you can create users, attach
+<p>IAM is AWS&rsquo; identity management platform. Here you can create users, attach
 policies, manage roles, etc. Basically everything to do with managing who and
 how they use your AWS account.</p>
 <p>For our task today, we have to create a user with programmatic access only.
@@ -120,46 +120,46 @@ that we want to be able to run this action on <strong>should</strong> be <code>*
 <code>DescribeInstaces</code> doesn&rsquo;t allow to be specified for a particular resource so
 we <em>have</em> to use the <code>*</code> identifier for the resource (<a href="https://forums.aws.amazon.com/thread.jspa?messageID=512129">relevant thread</a>).</p>
 <p>Our policy looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
-    <span style="color:#f92672">&#34;Version&#34;</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
-    <span style="color:#f92672">&#34;Statement&#34;</span>: [
-        {
-            <span style="color:#f92672">&#34;Effect&#34;</span>: <span style="color:#e6db74">&#34;Allow&#34;</span>,
-            <span style="color:#f92672">&#34;Action&#34;</span>: [
-                <span style="color:#e6db74">&#34;ec2:DescribeInstances&#34;</span>
-            ],
-            <span style="color:#f92672">&#34;Resource&#34;</span>: [
-                <span style="color:#e6db74">&#34;*&#34;</span>
-            ]
-        }
-    ]
-}
-</code></pre></div><p>Now, assign this to a user and pick up the user&rsquo;s <code>Access Key</code> and <code>Secret  Access Key</code>. This is what we&rsquo;ll use to create the client</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Version&#34;</span>: <span style="color:#e6db74">&#34;2012-10-17&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;Statement&#34;</span>: [
+</span></span><span style="display:flex;"><span>        {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Effect&#34;</span>: <span style="color:#e6db74">&#34;Allow&#34;</span>,
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Action&#34;</span>: [
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;ec2:DescribeInstances&#34;</span>
+</span></span><span style="display:flex;"><span>            ],
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;Resource&#34;</span>: [
+</span></span><span style="display:flex;"><span>                <span style="color:#e6db74">&#34;*&#34;</span>
+</span></span><span style="display:flex;"><span>            ]
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Now, assign this to a user and pick up the user&rsquo;s <code>Access Key</code> and <code>Secret  Access Key</code>. This is what we&rsquo;ll use to create the client</p>
 <hr>
 <p>Let&rsquo;s get back to the client and throw in the credentials we picked up in the
 previous step.</p>
 <p>From here, we call the <code>DescribeInstances</code> function that returns the data
 required for me to proceed. A wee bit of LINQ and we&rsquo;re good to go:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-csharp" data-lang="csharp">client
-  .DescribeInstances()
-  .Reservations
-  .SelectMany(r =&gt; r.Instances)
-  .Select(instance =&gt;
-  {
-      <span style="color:#66d9ef">var</span> isUp = (instance.State.Name == InstanceStateName.Running);
-      <span style="color:#66d9ef">var</span> upSince = isUp ? (DateTime.Now - instance.LaunchTime) : TimeSpan.FromSeconds(<span style="color:#ae81ff">0</span>);
-      
-      <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> 
-      { 
-          Id              = instance.InstanceId, 
-          Name            = instance.KeyName, 
-          LastLaunchTime  = instance.LaunchTime,
-          UpSince         = upSince,  
-          IsUp            = isUp,
-          State           = instance.State.Name.Value
-      };
-  })
-</code></pre></div><p>The really exciting part here, for me is how terse and readable the code is.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-csharp" data-lang="csharp"><span style="display:flex;"><span>client
+</span></span><span style="display:flex;"><span>  .DescribeInstances()
+</span></span><span style="display:flex;"><span>  .Reservations
+</span></span><span style="display:flex;"><span>  .SelectMany(r =&gt; r.Instances)
+</span></span><span style="display:flex;"><span>  .Select(instance =&gt;
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">var</span> isUp = (instance.State.Name == InstanceStateName.Running);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">var</span> upSince = isUp ? (DateTime.Now - instance.LaunchTime) : TimeSpan.FromSeconds(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> 
+</span></span><span style="display:flex;"><span>      { 
+</span></span><span style="display:flex;"><span>          Id              = instance.InstanceId, 
+</span></span><span style="display:flex;"><span>          Name            = instance.KeyName, 
+</span></span><span style="display:flex;"><span>          LastLaunchTime  = instance.LaunchTime,
+</span></span><span style="display:flex;"><span>          UpSince         = upSince,  
+</span></span><span style="display:flex;"><span>          IsUp            = isUp,
+</span></span><span style="display:flex;"><span>          State           = instance.State.Name.Value
+</span></span><span style="display:flex;"><span>      };
+</span></span><span style="display:flex;"><span>  })
+</span></span></code></pre></div><p>The really exciting part here, for me is how terse and readable the code is.
 There&rsquo;s no explanation of <em>how</em> to do something viz a viz <em>what</em> to do.</p>
 <p>With this done, we have the data we need, in the format that we need it. The
 next question is how does this magically become a <em>&ldquo;dashboard&rdquo;</em>?</p>
@@ -169,63 +169,63 @@ makes LINQPad <em>such</em> a compelling tool to work with.</p>
 <p><code>Dump</code> is a function that is available on <strong>every</strong> object within you LINQPad
 queries. It attempts to show your object in the best way possible.</p>
 <p>Let&rsquo;s consider a simple list:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">string</span>&gt; 
-{
-  <span style="color:#e6db74">&#34;Ramu&#34;</span>,
-  <span style="color:#e6db74">&#34;Shamu&#34;</span>,
-  <span style="color:#e6db74">&#34;Suppandi&#34;</span>,
-  <span style="color:#e6db74">&#34;Kaalia&#34;</span>
-}
-</code></pre></div><p>And call the <code>.Dump()</code> function on it like so:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">string</span>&gt; 
-{
-  <span style="color:#e6db74">&#34;Ramu&#34;</span>,
-  <span style="color:#e6db74">&#34;Shamu&#34;</span>,
-  <span style="color:#e6db74">&#34;Suppandi&#34;</span>,
-  <span style="color:#e6db74">&#34;Kaalia&#34;</span>
-}.Dump();
-</code></pre></div><p>And this is what we get:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">string</span>&gt; 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;Ramu&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;Shamu&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;Suppandi&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;Kaalia&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And call the <code>.Dump()</code> function on it like so:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">new</span> List&lt;<span style="color:#66d9ef">string</span>&gt; 
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;Ramu&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;Shamu&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;Suppandi&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#e6db74">&#34;Kaalia&#34;</span>
+</span></span><span style="display:flex;"><span>}.Dump();
+</span></span></code></pre></div><p>And this is what we get:</p>
 <p><img src="/img/dashboard/simpledump.png" alt="List dump output"></p>
 <p>Neat and concise, right?</p>
 <p>It gets even better. Let&rsquo;s bump it up, consider an object:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">new</span>
-{
-  Name = <span style="color:#e6db74">&#34;Ramu&#34;</span>,
-  Siblings = <span style="color:#66d9ef">new</span> [] { <span style="color:#e6db74">&#34;Shamu&#34;</span> },
-  Genre = <span style="color:#e6db74">&#34;Comedy&#34;</span>,
-  Age = <span style="color:#ae81ff">5</span>
-}.Dump();
-</code></pre></div><p>We get:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">new</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  Name = <span style="color:#e6db74">&#34;Ramu&#34;</span>,
+</span></span><span style="display:flex;"><span>  Siblings = <span style="color:#66d9ef">new</span> [] { <span style="color:#e6db74">&#34;Shamu&#34;</span> },
+</span></span><span style="display:flex;"><span>  Genre = <span style="color:#e6db74">&#34;Comedy&#34;</span>,
+</span></span><span style="display:flex;"><span>  Age = <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>}.Dump();
+</span></span></code></pre></div><p>We get:</p>
 <p><img src="/img/dashboard/objectdump.png" alt="Object dump output"></p>
 <p>Wonderfully formatted into key value pairs, and the list within the object is
 well formatted too.</p>
 <p>Optionally, if we provide the <code>.Dump()</code> function a string argument, it will
 display it as a title for what is being dumped. Eg:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs"><span style="color:#66d9ef">new</span>
-{
-  Name = <span style="color:#e6db74">&#34;Ramu&#34;</span>,
-  Siblings = <span style="color:#66d9ef">new</span> [] { <span style="color:#e6db74">&#34;Shamu&#34;</span> },
-  Genre = <span style="color:#e6db74">&#34;Comedy&#34;</span>,
-  Age = <span style="color:#ae81ff">5</span>
-}.Dump(<span style="color:#e6db74">&#34;Ramu -- Details&#34;</span>);
-</code></pre></div><p><img src="/img/dashboard/objectdump-title.png" alt="Dump with title"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span><span style="color:#66d9ef">new</span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  Name = <span style="color:#e6db74">&#34;Ramu&#34;</span>,
+</span></span><span style="display:flex;"><span>  Siblings = <span style="color:#66d9ef">new</span> [] { <span style="color:#e6db74">&#34;Shamu&#34;</span> },
+</span></span><span style="display:flex;"><span>  Genre = <span style="color:#e6db74">&#34;Comedy&#34;</span>,
+</span></span><span style="display:flex;"><span>  Age = <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>}.Dump(<span style="color:#e6db74">&#34;Ramu -- Details&#34;</span>);
+</span></span></code></pre></div><p><img src="/img/dashboard/objectdump-title.png" alt="Dump with title"></p>
 <p>It just doesn&rsquo;t stop there. It gets <strong>even more</strong> powerful when used in a context
 where we query a DB using LINQ.</p>
 <p>Once you&rsquo;ve created a <em>connection</em>, you&rsquo;re able to drop that connection into a
 query and run LINQ queries on tables on your DB. Consider a table called
 <code>cities</code> that contains the list of cities in your system. To query and fetch
 the first row, you would do:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">Cities.FirstOrDefault()
-</code></pre></div><p>To print them? <code>.Dump()</code>! So:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">Cities.FirstOrDefault().Dump();
-</code></pre></div><p>Would give us:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>Cities.FirstOrDefault()
+</span></span></code></pre></div><p>To print them? <code>.Dump()</code>! So:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>Cities.FirstOrDefault().Dump();
+</span></span></code></pre></div><p>Would give us:</p>
 <p><img src="/img/dashboard/db-city.png" alt="FirstOrDefault dump output"></p>
 <p>Just like an object that we printed before.</p>
 <p>But it gets <em>even</em> better! Consider a <code>Prescription</code> table that has FK
 relations out to 3 other tables &ndash; <code>Representative</code>, <code>Dealer</code> and <code>School</code>. Now
 when I pick up the first record in this list with</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">Prescriptions.FirstOrDefault().Dump();
-</code></pre></div><p><img src="/img/dashboard/db-fk.png" alt="FK dump output"></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>Prescriptions.FirstOrDefault().Dump();
+</span></span></code></pre></div><p><img src="/img/dashboard/db-fk.png" alt="FK dump output"></p>
 <p>It resolves these dependencies and puts them in place! Absolutely wicked!</p>
 <p>When you&rsquo;re exploring a Database, The <code>Dump()</code> function can be a blessing.
 This is one of the reasons why LINQPad forms such a core part of my development
@@ -237,30 +237,30 @@ objects. Nothing special about that.</p>
 <p><img src="/img/dashboard/dump-all-the-thangs.png" alt="DUMP all the things meme"></p>
 <p>We&rsquo;ll call the <code>.Dump()</code> function with <code>region</code> as the argument. This should
 give us a nicely formatted region wise list of instances and their status.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cs" data-lang="cs">client
-  .DescribeInstances()
-  .Reservations
-  .SelectMany(r =&gt; r.Instances)
-  .Select(instance =&gt;
-  {
-      <span style="color:#66d9ef">var</span> isUp = (instance.State.Name == InstanceStateName.Running);
-      <span style="color:#66d9ef">var</span> upSince = isUp ? (DateTime.Now - instance.LaunchTime) : TimeSpan.FromSeconds(<span style="color:#ae81ff">0</span>);
-      
-      <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> 
-      { 
-          Id              = instance.InstanceId, 
-          Name            = instance.KeyName, 
-          LastLaunchTime  = instance.LaunchTime,
-          UpSince         = upSince,  
-          IsUp            = isUp,
-          State           = instance.State.Name.Value
-      };
-  }).Dump(region.DisplayName);
-</code></pre></div><p>Anddddd:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cs" data-lang="cs"><span style="display:flex;"><span>client
+</span></span><span style="display:flex;"><span>  .DescribeInstances()
+</span></span><span style="display:flex;"><span>  .Reservations
+</span></span><span style="display:flex;"><span>  .SelectMany(r =&gt; r.Instances)
+</span></span><span style="display:flex;"><span>  .Select(instance =&gt;
+</span></span><span style="display:flex;"><span>  {
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">var</span> isUp = (instance.State.Name == InstanceStateName.Running);
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">var</span> upSince = isUp ? (DateTime.Now - instance.LaunchTime) : TimeSpan.FromSeconds(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> 
+</span></span><span style="display:flex;"><span>      { 
+</span></span><span style="display:flex;"><span>          Id              = instance.InstanceId, 
+</span></span><span style="display:flex;"><span>          Name            = instance.KeyName, 
+</span></span><span style="display:flex;"><span>          LastLaunchTime  = instance.LaunchTime,
+</span></span><span style="display:flex;"><span>          UpSince         = upSince,  
+</span></span><span style="display:flex;"><span>          IsUp            = isUp,
+</span></span><span style="display:flex;"><span>          State           = instance.State.Name.Value
+</span></span><span style="display:flex;"><span>      };
+</span></span><span style="display:flex;"><span>  }).Dump(region.DisplayName);
+</span></span></code></pre></div><p>Anddddd:</p>
 <p><img src="/img/dashboard/dashboard.png" alt="Dashboard output"></p>
 <p>Awesome! It <strong>works</strong>, its <strong>maintainable</strong> and to top it off, it is <strong>low tech</strong>. All but
 for one question lingers in my mind:</p>
-<p><em>&ldquo;You don&rsquo;t expect me to run this all the time to check the results, right?&quot;</em></p>
+<p><em>&ldquo;You don&rsquo;t expect me to run this all the time to check the results, right?&rdquo;</em></p>
 <p>Rest assured, LINQPad has got you covered there as well :)</p>
 <h2 id="lprun-for-command-line-scripting-purposes">lprun for command line scripting purposes</h2>
 <p><a href="https://www.linqpad.net/lprun.aspx">lprun</a> is LINQPad&rsquo;s offering for running

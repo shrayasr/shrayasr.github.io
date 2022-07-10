@@ -83,16 +83,16 @@ it to <code>4.0.5.1</code> instead.</li>
 on windows but based on CoreCLR. After a few days of adding a major chunk of
 features, we decided to test the app out on Linux and instantly it failed with
 a <code>TimeoutException</code> when trying to open a connection to the Postgres DB.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">System.TimeoutException: The operation has timed out.
-at Npgsql.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
-at Npgsql.NpgsqlConnector.RawOpen(NpgsqlTimeout timeout)
-at Npgsql.NpgsqlConnector.Open(NpgsqlTimeout timeout)
-at Npgsql.NpgsqlConnector.Open()
-at Npgsql.NpgsqlConnectorPool.GetPooledConnector(NpgsqlConnection Connection)
-at Npgsql.NpgsqlConnectorPool.RequestConnector(NpgsqlConnection connection)
-at Npgsql.NpgsqlConnection.OpenInternal(NpgsqlTimeout timeout)
-at Npgsql.NpgsqlConnection.Open()
-</code></pre></div><p>This didn&rsquo;t make sense to me because when I used <code>psql</code>, I was able to connect
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>System.TimeoutException: The operation has timed out.
+</span></span><span style="display:flex;"><span>at Npgsql.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+</span></span><span style="display:flex;"><span>at Npgsql.NpgsqlConnector.RawOpen(NpgsqlTimeout timeout)
+</span></span><span style="display:flex;"><span>at Npgsql.NpgsqlConnector.Open(NpgsqlTimeout timeout)
+</span></span><span style="display:flex;"><span>at Npgsql.NpgsqlConnector.Open()
+</span></span><span style="display:flex;"><span>at Npgsql.NpgsqlConnectorPool.GetPooledConnector(NpgsqlConnection Connection)
+</span></span><span style="display:flex;"><span>at Npgsql.NpgsqlConnectorPool.RequestConnector(NpgsqlConnection connection)
+</span></span><span style="display:flex;"><span>at Npgsql.NpgsqlConnection.OpenInternal(NpgsqlTimeout timeout)
+</span></span><span style="display:flex;"><span>at Npgsql.NpgsqlConnection.Open()
+</span></span></code></pre></div><p>This didn&rsquo;t make sense to me because when I used <code>psql</code>, I was able to connect
 to the Postgres DB. So I begun investigating.</p>
 <p>My investigation led me to <a href="https://github.com/npgsql/npgsql/issues/874">this
 issue</a> filed on Npgsql&rsquo;s repo. It
@@ -132,15 +132,15 @@ my project, and get cracking.</p>
 enthusiasm, I visited <code>http://localhost:5000</code> on my browser only to see it
 never finish. I switched back to the console to check and I saw that the
 request processing was stuck up at one stage:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">&gt; dnx web
-Hosting environment: Production
-Now listening on: http://*:5004
-Application started. Press Ctrl+C to shut down.
-info: Microsoft.AspNet.Hosting.Internal.HostingEngine[1]
-      Request starting HTTP/1.1 GET http://localhost:5004/  
-info: Microsoft.AspNet.Mvc.Controllers.ControllerActionInvoker[1]
-      Executing action method MvcSample.Web.HomeController.Index with arguments () - ModelState is Valid&#39;
-</code></pre></div><p>No matter how long I&rsquo;d let it be, the response wouldn&rsquo;t come through.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&gt; dnx web
+</span></span><span style="display:flex;"><span>Hosting environment: Production
+</span></span><span style="display:flex;"><span>Now listening on: http://*:5004
+</span></span><span style="display:flex;"><span>Application started. Press Ctrl+C to shut down.
+</span></span><span style="display:flex;"><span>info: Microsoft.AspNet.Hosting.Internal.HostingEngine[1]
+</span></span><span style="display:flex;"><span>      Request starting HTTP/1.1 GET http://localhost:5004/  
+</span></span><span style="display:flex;"><span>info: Microsoft.AspNet.Mvc.Controllers.ControllerActionInvoker[1]
+</span></span><span style="display:flex;"><span>      Executing action method MvcSample.Web.HomeController.Index with arguments () - ModelState is Valid&#39;
+</span></span></code></pre></div><p>No matter how long I&rsquo;d let it be, the response wouldn&rsquo;t come through.
 Roadblock.</p>
 <p>After a while of fiddling with <code>DNX</code> by setting <code>DNX_TRACE=1</code>, I decided that
 the best way of understanding better would be to run a &ldquo;Microsoft certified&rdquo;
@@ -154,15 +154,15 @@ issue I was facing, I thought.</p>
 did a <code>dnu restore</code> to bring down dependencies. Post this, I ran <code>dnx web</code> and
 navigated to the URL. To my surprise I <strong>again</strong> hit the same problem. It was
 getting stuck at precisely the same place as earlier:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">&gt; dnx web
-Hosting environment: Production
-Now listening on: http://*:5004
-Application started. Press Ctrl+C to shut down.
-info: Microsoft.AspNet.Hosting.Internal.HostingEngine[1]
-      Request starting HTTP/1.1 GET http://localhost:5004/  
-info: Microsoft.AspNet.Mvc.Controllers.ControllerActionInvoker[1]
-      Executing action method MvcSample.Web.HomeController.Index with arguments () - ModelState is Valid&#39;
-</code></pre></div><p>Initially, I was quite skeptical of myself and was convinced that I was doing
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&gt; dnx web
+</span></span><span style="display:flex;"><span>Hosting environment: Production
+</span></span><span style="display:flex;"><span>Now listening on: http://*:5004
+</span></span><span style="display:flex;"><span>Application started. Press Ctrl+C to shut down.
+</span></span><span style="display:flex;"><span>info: Microsoft.AspNet.Hosting.Internal.HostingEngine[1]
+</span></span><span style="display:flex;"><span>      Request starting HTTP/1.1 GET http://localhost:5004/  
+</span></span><span style="display:flex;"><span>info: Microsoft.AspNet.Mvc.Controllers.ControllerActionInvoker[1]
+</span></span><span style="display:flex;"><span>      Executing action method MvcSample.Web.HomeController.Index with arguments () - ModelState is Valid&#39;
+</span></span></code></pre></div><p>Initially, I was quite skeptical of myself and was convinced that I was doing
 something wrong. So I double checked everything again - <code>dnx</code>, <code>dnu</code> and <code>dnvm</code>
 versions. I reinstalled everything and tried again but alas - Same issue.</p>
 <p>With nothing else possible, I opened an issue on the aspnet/home repo:
@@ -178,33 +178,33 @@ filled with quite a few bugs and the recommendation is to pin the version to
 <p>Now, on my Ubuntu box, I had 4.2.1 installed which I now had to uninstall in
 order to replace it with 4.0.5. As with uninstalling any other package, I
 followed the usual steps:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">sudo apt-get remove mono-complete
-sudo apt-get purge mono-complete
-sudo apt-get autoremove
-</code></pre></div><h3 id="enter-mono-405">Enter Mono (4.0.5?)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>sudo apt-get remove mono-complete
+</span></span><span style="display:flex;"><span>sudo apt-get purge mono-complete
+</span></span><span style="display:flex;"><span>sudo apt-get autoremove
+</span></span></code></pre></div><h3 id="enter-mono-405">Enter Mono (4.0.5?)</h3>
 <p>The Mono install page has a section on <a href="http://www.mono-project.com/docs/getting-started/install/linux/#accessing-older-releases">how to access older
 releases</a>
 which was the one I followed in order to pin my Mono version to 4.0.5. I edited
 the <code>/etc/apt/sources.list.d/mono-xamarin.d</code> and changed the line to</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5 main
-</code></pre></div><p>Following this I did a <code>sudo apt-get update</code> to bring update the package
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5 main
+</span></span></code></pre></div><p>Following this I did a <code>sudo apt-get update</code> to bring update the package
 listing and soon enough ended up with this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">W: Conflicting distribution: http://download.mono-project.com wheezy/snapshots/4.0.5 InRelease <span style="color:#f92672">(</span>expected wheezy/snapshots but got wheezy<span style="color:#f92672">)</span>
-</code></pre></div><p>After some (rather hard) googling, I came across <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=24902">this
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>W: Conflicting distribution: http://download.mono-project.com wheezy/snapshots/4.0.5 InRelease <span style="color:#f92672">(</span>expected wheezy/snapshots but got wheezy<span style="color:#f92672">)</span>
+</span></span></code></pre></div><p>After some (rather hard) googling, I came across <a href="https://bugzilla.xamarin.com/show_bug.cgi?id=24902">this
 issue</a> filed on Xamarin&rsquo;s
 bugzilla. However this was for installing the <code>3.12.0</code> version and a workaround
 was suggested to suffix a <code>/.</code> to the end of the version. I then updated the <code>mono-xamarin.d</code> file
 to have</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5/. main
-</code></pre></div><p>instead but to no avail. I ended up with the same error message again.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5/. main
+</span></span></code></pre></div><p>instead but to no avail. I ended up with the same error message again.</p>
 <p>After some digging around on Mono&rsquo;s <a href="http://download.mono-project.com/repo/debian">download
 server</a> for
 <a href="http://download.mono-project.com/repo/debian/dists/wheezy/snapshots/4.0.5/">4.0.5</a>,
 I noticed that the <a href="http://download.mono-project.com/repo/debian/dists/wheezy/snapshots/4.0.5/InRelease"><code>InRelease</code> file</a>
 for 4.0.5 had the Suite listed as 4.0.5.1. Off a whim, I tried replacing
 4.0.5 with 4.0.5.1 in my <code>mono-xamarin.d</code> file.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5.1/. main
-</code></pre></div><p>Running <code>sudo apt-get update</code> post this didn&rsquo;t leave me with the dreaded
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>deb http://download.mono-project.com/repo/debian wheezy/snapshots/4.0.5.1/. main
+</span></span></code></pre></div><p>Running <code>sudo apt-get update</code> post this didn&rsquo;t leave me with the dreaded
 &ldquo;<code>Conflicting distribution</code>&rdquo; error anymore.  After this I just installed the
 <code>mono-complete</code> package as before.</p>
 <hr>
@@ -216,23 +216,23 @@ it to work.</p>
 <hr>
 <p>With mono 4.0.5 installed, I got back to my project and booted it up again
 with <code>dnx web</code>. I visited the URL and finally</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback">&gt; dnx web
-Hosting environment: DEVELOPMENT
-Now listening on: http://localhost:5000
-Application started. Press Ctrl+C to shut down.
-info: Microsoft.AspNet.Hosting.Internal.HostingEngine[1]
-      Request starting HTTP/1.1 GET http://localhost:5000/  
-info: Microsoft.AspNet.Mvc.Controllers.ControllerActionInvoker[1]
-      Executing action method SessyDash.Controllers.HomeController.Index with arguments () - ModelState is Valid&#39;
-info: Microsoft.AspNet.Mvc.ViewFeatures.ViewResultExecutor[1]
-      Executing ViewResult, running view at path /Views/Home/Index.cshtml.
-info: Microsoft.Extensions.DependencyInjection.DataProtectionServices[0]
-      User profile is available. Using &#39;/home/shrayasr/.local/share/ASP.NET/DataProtection-Keys&#39; as key repository; keys will not be encrypted at rest.
-info: Microsoft.AspNet.Mvc.Infrastructure.MvcRouteHandler[2]
-      Executed action SessyDash.Controllers.HomeController.Index in 0.4223ms
-info: Microsoft.AspNet.Hosting.Internal.HostingEngine[2]
-      Request finished in 0.468ms 200 text/html; charset=utf-8
-</code></pre></div><p>The page rendered successfully and all the connections to the PostgreSQL DB
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-fallback" data-lang="fallback"><span style="display:flex;"><span>&gt; dnx web
+</span></span><span style="display:flex;"><span>Hosting environment: DEVELOPMENT
+</span></span><span style="display:flex;"><span>Now listening on: http://localhost:5000
+</span></span><span style="display:flex;"><span>Application started. Press Ctrl+C to shut down.
+</span></span><span style="display:flex;"><span>info: Microsoft.AspNet.Hosting.Internal.HostingEngine[1]
+</span></span><span style="display:flex;"><span>      Request starting HTTP/1.1 GET http://localhost:5000/  
+</span></span><span style="display:flex;"><span>info: Microsoft.AspNet.Mvc.Controllers.ControllerActionInvoker[1]
+</span></span><span style="display:flex;"><span>      Executing action method SessyDash.Controllers.HomeController.Index with arguments () - ModelState is Valid&#39;
+</span></span><span style="display:flex;"><span>info: Microsoft.AspNet.Mvc.ViewFeatures.ViewResultExecutor[1]
+</span></span><span style="display:flex;"><span>      Executing ViewResult, running view at path /Views/Home/Index.cshtml.
+</span></span><span style="display:flex;"><span>info: Microsoft.Extensions.DependencyInjection.DataProtectionServices[0]
+</span></span><span style="display:flex;"><span>      User profile is available. Using &#39;/home/shrayasr/.local/share/ASP.NET/DataProtection-Keys&#39; as key repository; keys will not be encrypted at rest.
+</span></span><span style="display:flex;"><span>info: Microsoft.AspNet.Mvc.Infrastructure.MvcRouteHandler[2]
+</span></span><span style="display:flex;"><span>      Executed action SessyDash.Controllers.HomeController.Index in 0.4223ms
+</span></span><span style="display:flex;"><span>info: Microsoft.AspNet.Hosting.Internal.HostingEngine[2]
+</span></span><span style="display:flex;"><span>      Request finished in 0.468ms 200 text/html; charset=utf-8
+</span></span></code></pre></div><p>The page rendered successfully and all the connections to the PostgreSQL DB
 went through as well. Success!</p>
 <h3 id="conclusion">Conclusion</h3>
 <p>This meant that the set of features that we had written for the dashboard now

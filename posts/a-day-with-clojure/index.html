@@ -49,32 +49,32 @@ This was ok at first, but then it kind of started getting to me. I really enjoy 
 
 		<section class="body">
 			<p>It has been a hectic month for me at <a href="http://www.logicsoft.co.in">Logic Soft</a>.
-I&rsquo;m working on quite a few <a href="https://twitter.com/LogicsoftInd/status/553498441192456192">design</a> 
-related activities for the upcoming book fairs and other internal office work. In 
+I&rsquo;m working on quite a few <a href="https://twitter.com/LogicsoftInd/status/553498441192456192">design</a>
+related activities for the upcoming book fairs and other internal office work. In
 doing all of this, most of my programming related activities have been put on hold.</p>
 <p>This was ok at first, but then it kind of started getting to me. I really enjoy
 design but then I find it less satisfying than writing programs.</p>
 <p>Yesterday morning, as I was performing my early morning browse-reddit-for-cool-
-stuff routine I noticed an inviting link that said <a href="http://www.reddit.com/r/Clojure/comments/2sr5fp/part_6_of_building_a_compojure_address_book/"><strong>&ldquo;Part 6 of building a 
-Compojure address book: Deployment&rdquo;</strong></a> 
+stuff routine I noticed an inviting link that said <a href="http://www.reddit.com/r/Clojure/comments/2sr5fp/part_6_of_building_a_compojure_address_book/"><strong>&ldquo;Part 6 of building a
+Compojure address book: Deployment&rdquo;</strong></a>
 on <a href="http://www.reddit.com/r/clojure">/r/clojure</a>. From my previous experience, I
-knew Compojure had something to do with web apps so I opened this up and checked 
-if all the other parts from 1 through 5 were there for completeness sake. After 
+knew Compojure had something to do with web apps so I opened this up and checked
+if all the other parts from 1 through 5 were there for completeness sake. After
 a quick browse, I decided that I&rsquo;d spend my day with this.</p>
-<p>I&rsquo;ve dabbled <a href="https://github.com/shrayasr/learning-clojure">on</a> and 
+<p>I&rsquo;ve dabbled <a href="https://github.com/shrayasr/learning-clojure">on</a> and
 <a href="https://github.com/shrayasr/githuj">off</a> with Clojure but i&rsquo;ve never really had
-the time to go through with any of them. This seemed small enough for me to 
+the time to go through with any of them. This seemed small enough for me to
 complete within a day and substantial enough for me to learn some nice Clojure
-concepts. Clojure to me has been really fascinating for a variety of reasons 
+concepts. Clojure to me has been really fascinating for a variety of reasons
 ranging from <em>It is a lisp</em> to <em>Immutability</em> to <em>Rich Hickey</em>&rsquo;s talks; but that
 is a post for another day.</p>
-<p>This post details some of my learnings, both good and bad in and about Clojure 
-as I followed this tutorial.  You can find my interpretation of the tutorial code 
+<p>This post details some of my learnings, both good and bad in and about Clojure
+as I followed this tutorial.  You can find my interpretation of the tutorial code
 <a href="https://github.com/shrayasr/learning-clojure-address-book">here</a>.</p>
 <h3 id="1-hiccup">1. Hiccup</h3>
 <p><a href="http://www.jarrodctaylor.com/posts/Compojure-Address-Book-Part-2/">Part 2</a> of the
 tutorial introduced HTML templating using <a href="https://github.com/weavejester/hiccup">Hiccup</a>
-and I was marvelling at the simplicity of representing HTML within clojure. I have 
+and I was marvelling at the simplicity of representing HTML within clojure. I have
 heard about the ease of writing <a href="http://en.wikipedia.org/wiki/Domain-specific_language">DSLs</a>
 with Clojure but this just set things into perspective. Here is the first piece
 of Hiccup code I encountered:</p>
@@ -86,14 +86,14 @@ of Hiccup code I encountered:</p>
 </span></span><span style="display:flex;"><span>    [<span style="color:#e6db74">:body</span>
 </span></span><span style="display:flex;"><span>      [<span style="color:#e6db74">:h1#content-title</span> <span style="color:#e6db74">&#34;Address Book&#34;</span>]
 </span></span><span style="display:flex;"><span>      body]))
-</span></span></code></pre></div><p>There is a lot of readability and a great level of expressiveness in this code. 
-Jarrod uses much complex HTML structures in later parts of his tutorial but everything 
+</span></span></code></pre></div><p>There is a lot of readability and a great level of expressiveness in this code.
+Jarrod uses much complex HTML structures in later parts of his tutorial but everything
 falls under the same level of readability and expressiveness as this one.</p>
 <h3 id="2-tests">2. Tests</h3>
-<p>I find writing tests for a web app non trivial since we have to <em>mock</em> the 
-request but a combination of the <a href="https://github.com/marick/Midje">Midje</a> 
-framework and <a href="https://github.com/weavejester/ring-mock">ring request mocking</a> 
-provides a really nice platform to work with to write tests. This is one of the 
+<p>I find writing tests for a web app non trivial since we have to <em>mock</em> the
+request but a combination of the <a href="https://github.com/marick/Midje">Midje</a>
+framework and <a href="https://github.com/weavejester/ring-mock">ring request mocking</a>
+provides a really nice platform to work with to write tests. This is one of the
 more complex tests that we wrote in the project to test the delete functionality:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#a6e22e">fact</span> <span style="color:#e6db74">&#34;Test delete&#34;</span>
 </span></span><span style="display:flex;"><span>   (<span style="color:#a6e22e">query/insert-contact&lt;!</span> {<span style="color:#e6db74">:name</span> <span style="color:#e6db74">&#34;A&#34;</span>
@@ -110,17 +110,17 @@ more complex tests that we wrote in the project to test the delete functionality
 </span></span><span style="display:flex;"><span>                                      <span style="color:#e6db74">:name</span> <span style="color:#e6db74">&#34;B&#34;</span>
 </span></span><span style="display:flex;"><span>                                      <span style="color:#e6db74">:phone</span> <span style="color:#e6db74">&#34;2&#34;</span>
 </span></span><span style="display:flex;"><span>                                      <span style="color:#e6db74">:email</span> <span style="color:#e6db74">&#34;b@x.com&#34;</span>}))))
-</span></span></code></pre></div><p>The way that the entire pain of mocking a request is taken care of by 
+</span></span></code></pre></div><p>The way that the entire pain of mocking a request is taken care of by
 <code>(app (mock/request :post &quot;/delete/1&quot;))</code> and nothing more was something I found,
-calm. It is really non trivial to read this code and understand what this test is 
-trying to do as opposed to having lines and lines of monkey patching to mock a 
+calm. It is really non trivial to read this code and understand what this test is
+trying to do as opposed to having lines and lines of monkey patching to mock a
 request.</p>
 <h3 id="3-atoms">3. Atoms</h3>
 <p>In <a href="http://www.jarrodctaylor.com/posts/Compojure-Address-Book-Part-3/">part 3</a> of
 the tutorial, Jarrod uses <a href="http://clojure.org/atoms">Atoms</a> to manage the list of
-contacts in memory. I was under the impression that Atoms in Clojure are the same 
-as in Scheme but I was mistaken. Atoms are a way of managing shared, synchronous 
-and independent state in Clojure. The documentation on Atoms in Clojure is a very 
+contacts in memory. I was under the impression that Atoms in Clojure are the same
+as in Scheme but I was mistaken. Atoms are a way of managing shared, synchronous
+and independent state in Clojure. The documentation on Atoms in Clojure is a very
 nice read to understand how and when to use Atoms</p>
 <h3 id="4-thread-last-macro">4. Thread last macro</h3>
 <p>The one thing that I&rsquo;ve heard most lisp-ers talk about is the power of macros.
@@ -137,39 +137,39 @@ used when a new contact is being created and the code is like this:</p>
 </span></span><span style="display:flex;"><span>    (+ <span style="color:#ae81ff">1</span>)))
 </span></span></code></pre></div><p>When I understood what this does, I just put my hand on my mouth and smiled like
 a kid getting a new toy. This, was <strong>beautiful</strong>. Let me try and explain this.</p>
-<p>The thread last macro takes the result of an expression and inserts it in as the 
+<p>The thread last macro takes the result of an expression and inserts it in as the
 last item in the next form. This means that the result of <code>@contacts</code> is inserted
 as the last item to <code>(map :id)</code>. Further, the result of that is inserted as the
 last item to <code>(apply max)</code> and so on. The expression, overall would be something
 like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(+ <span style="color:#ae81ff">1</span> (apply max (map <span style="color:#e6db74">:id</span> <span style="color:#f92672">@</span>contacts)))
 </span></span></code></pre></div><p>Using the thread last macro makes this much easier to read. It feels like
-reading a set of steps and that boosts the understandability of the code. Here 
+reading a set of steps and that boosts the understandability of the code. Here
 is the output at each step:</p>
 <ol>
 <li>
-<p><code>@contacts</code> <a href="https://clojuredocs.org/clojure.core/deref">dereferences</a> the 
-<code>contacts</code> atom and gives us <code>[{:id 1 :name &quot;A&quot;} {:id 2 :name &quot;B&quot;}]</code>. This output 
+<p><code>@contacts</code> <a href="https://clojuredocs.org/clojure.core/deref">dereferences</a> the
+<code>contacts</code> atom and gives us <code>[{:id 1 :name &quot;A&quot;} {:id 2 :name &quot;B&quot;}]</code>. This output
 is inserted as the last item to the map function</p>
 </li>
 <li>
-<p>The <a href="https://clojuredocs.org/clojure.core/map"><code>map</code> function</a> takes input 
-from Step 1 and becomes like so <code>(map :id [{:id 1 :name &quot;A&quot;} {:id 2 :name &quot;B&quot;}])</code>. 
-This will apply the <code>:id</code> function on to each of the map in the list and return 
-an array of the id&rsquo;s in the map VIZ <code>[1 2]</code>.  This output is inserted as the last 
+<p>The <a href="https://clojuredocs.org/clojure.core/map"><code>map</code> function</a> takes input
+from Step 1 and becomes like so <code>(map :id [{:id 1 :name &quot;A&quot;} {:id 2 :name &quot;B&quot;}])</code>.
+This will apply the <code>:id</code> function on to each of the map in the list and return
+an array of the id&rsquo;s in the map VIZ <code>[1 2]</code>.  This output is inserted as the last
 item to the apply function</p>
 </li>
 <li>
-<p>The <a href="https://clojuredocs.org/clojure.core/apply"><code>apply</code> function</a> applies a 
-function to a given list of arguments. In this case we apply the <code>max</code> function to 
-the input from step 2. So <code>(apply max [1 2])</code> becomes <code>(max 1 2)</code> and gives us 
+<p>The <a href="https://clojuredocs.org/clojure.core/apply"><code>apply</code> function</a> applies a
+function to a given list of arguments. In this case we apply the <code>max</code> function to
+the input from step 2. So <code>(apply max [1 2])</code> becomes <code>(max 1 2)</code> and gives us
 <code>3</code> which is inserted as the last item to the + function.</p>
 </li>
 <li>
 <p>The <code>+</code> function adds 1 to the result in step 3 and returns it</p>
 </li>
 </ol>
-<p>The way all this was expressed in such a short and sweet manner using the Thread 
+<p>The way all this was expressed in such a short and sweet manner using the Thread
 last macro really left me in awe.</p>
 <h3 id="5-yesql">5. Yesql</h3>
 <p><a href="https://github.com/krisajenkins/yesql">Yesql</a> is a library for interacting with
@@ -180,7 +180,7 @@ program in 2 ways:</p>
 <li>Using ORMs like <a href="http://www.sqlalchemy.org/">SQLAlchemy</a></li>
 <li>Plain vanilla SQL inside language specific strings</li>
 </ol>
-<p>Yesql brings a new thought process to the table where we keep our sql as sql 
+<p>Yesql brings a new thought process to the table where we keep our sql as sql
 within <code>.sql</code> files. You then use the <code>defqueries</code> function within <code>Yesql.core</code>
 to define queries based on the queries in the <code>.sql</code> files.</p>
 <p>To illustrate, <a href="http://www.jarrodctaylor.com/posts/Compojure-Address-Book-Part-4/">Part 4</a>
@@ -191,39 +191,39 @@ Consider the query to select the list of all contacts from the db. It would be:<
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">SELECT</span> name, phone, email <span style="color:#66d9ef">from</span> CONTACTS
 </span></span></code></pre></div><p>once you use <code>Yesql.core</code>&rsquo;s <code>defqueries</code> on a file containing the above sql, it
 will generate a <code>all-contacts</code> function that we can use for firing the query on
-the db. Here is how we use the <a href="https://github.com/krisajenkins/yesql#one-file-many-queries"><code>defqueries</code></a> 
+the db. Here is how we use the <a href="https://github.com/krisajenkins/yesql#one-file-many-queries"><code>defqueries</code></a>
 method to define a query out of this sql file:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#a6e22e">defqueries</span> <span style="color:#e6db74">&#34;path/to/sql/file.sql&#34;</span> ...)
 </span></span></code></pre></div><p>What this does, is it looks through <code>file.sql</code> and within the module, creates
-methods taking the name from the comment above the query (<code>-- name: all-contacts</code>). 
+methods taking the name from the comment above the query (<code>-- name: all-contacts</code>).
 Further, this module can be imported from other places and used like this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-clojure" data-lang="clojure"><span style="display:flex;"><span>(<span style="color:#e6db74">:require</span> path.to.module <span style="color:#e6db74">:as</span> query)
 </span></span><span style="display:flex;"><span>(print (<span style="color:#a6e22e">query/all-contacts</span>))
 </span></span></code></pre></div><p>This would fire the corresponding SQL from the file on the DB.</p>
-<p>I found this a rather interesting coming from a world where queries were written 
+<p>I found this a rather interesting coming from a world where queries were written
 in rather primitive formats.</p>
 <h3 id="5-general-readability-of-clojure-and-lisps">5. General readability of Clojure and Lisps</h3>
-<p>I&rsquo;ve always been a giant fan of Lisps. I find the <a href="http://en.wikipedia.org/wiki/S-expression">S-Expression</a> 
-notation very readable and far more understandable after a point when compared to 
+<p>I&rsquo;ve always been a giant fan of Lisps. I find the <a href="http://en.wikipedia.org/wiki/S-expression">S-Expression</a>
+notation very readable and far more understandable after a point when compared to
 the infix notation.</p>
 <p>This was my first experiment with writing <strong>proper</strong> Clojure. I.e. Clojure that
 actually makes an application run and I should say that my notion of increased
 readability with Lisps has been strengthened. There were very few parts on the
 tutorial that I got stuck because of me <strong>not</strong> understanding the code.</p>
-<p>This I think is the power that Lisps come with. Once you get a sense of 
+<p>This I think is the power that Lisps come with. Once you get a sense of
 S-Expressions, they become a breeze to read.</p>
 <h3 id="6-compile-time">6. Compile time</h3>
 <p>One of the things that I felt that would be an instant discouragement to newcomers
-is the amount of time it takes to run a Clojure project. At the end of <a href="http://www.jarrodctaylor.com/posts/Compojure-Address-Book-Part-1/">Part 1</a> of the tutorial, 
-we had a very simple <code>GET</code> and <code>POST</code> based web server and some tests behind it. 
-Running <code>lein midje :autotest</code> for the tests took a noticable 10s <em>at the least</em> 
+is the amount of time it takes to run a Clojure project. At the end of <a href="http://www.jarrodctaylor.com/posts/Compojure-Address-Book-Part-1/">Part 1</a> of the tutorial,
+we had a very simple <code>GET</code> and <code>POST</code> based web server and some tests behind it.
+Running <code>lein midje :autotest</code> for the tests took a noticable 10s <em>at the least</em>
 and running <code>lein ring server</code> to bring up the server took more time than that.</p>
 <p>This I felt was an instant discouragement because it breaks the flow in your
 head and doesn&rsquo;t allow for easy experimentation and rapid learning.</p>
 <hr>
-<p>All in all, I had a great day learning Clojure and I really have to thank 
+<p>All in all, I had a great day learning Clojure and I really have to thank
 <a href="https://twitter.com/JarrodCTaylor">Jarrod</a> for his amazing 5 part tutorial which
-is what made all this happen. Please feel free to point out any mistakes I might 
+is what made all this happen. Please feel free to point out any mistakes I might
 have made in this post, for I am still learning my ways around this beautiful
 language and its concepts.</p>
 
@@ -246,7 +246,7 @@ language and its concepts.</p>
 </main>
 <footer>
 <hr><a class="soc" href="https://github.com/shrayasr" title="GitHub"><i data-feather="github"></i></a>|<a class="soc" href="https://twitter.com/shrayasr" title="Twitter"><i data-feather="twitter"></i></a>|<a class="soc" href="mailto:shrayasr@gmail.com" title="Email"><i data-feather="mail"></i></a>|⚡️
-	2022  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+	2024  © Shrayas |  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
 </footer>
 
 
